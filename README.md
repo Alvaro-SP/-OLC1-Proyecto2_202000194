@@ -23,7 +23,7 @@ El curso de Organización de Lenguajes y Compiladores 1, ha puesto en marcha un 
 
 # Arquitectura Cliente-Servidor
 <p align="center">
-  <a href="#"><img src="https://www.itecad.com/images/2020/09/26/Server2.gif" width="100px"/></a>
+  <a href="#"><img src="https://www.itecad.com/images/2020/09/26/Server2.gif" width="500px"/></a>
 </p>
 
 ## Comenzando 🚀
