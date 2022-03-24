@@ -5,8 +5,8 @@ const instruccionesAPI = {
 		operations.push({valor: valor});
 	},
 
-    getOperations: function() {
-		return operations;
+    getActive: function() {
+		return true;
 	}
 }
 

@@ -12,103 +12,166 @@
 
 <div class="content" role="main">
 
+<!--! BOTONES ENVIAR RESET -->
+    <section class="holaaaaa">
+        <button id="enviarCargado" onclick="EnviarProceso()" type="button" class="btn btn-success fa-2x"
+            enabled>Compilar</button>
+        <button onclick="restart()" href="http://localhost:4000" type="button" class="btn btn-danger fa-2x"
+            enabled>Reset</button>
+    </section>
+<!--! TEXTOS -->
+    <section>
+        <div>
+            <br>
+            <table>
+                <tr align="center">
+                    <td>
+                        <h2>ENTRADA</h2>
+                    </td>
+                    <td>
+                        <h2>SALIDA</h2>
+                    </td>
+                </tr>
+                <tr align="center">
+                    <td>
+                        <textarea name="input" wrap="on" id="textareaENTRADA" cols="70" rows="20" wrap="on"
+                            enabled>{{ Entrada }}</textarea>
+                    </td>
+                    <td>
+                        <textarea name="output" wrap="on" id="textareaSALIDA" cols="70" rows="20"
+                            enabled>{{ Salida }}</textarea>
+                    </td>
+                </tr>
+            </table>
+            <br>
 
+            <table>
+                <tr align="center">
+                    <h2>SALIDA ENTENDIBLE: </h2>
+                </tr>
+                <tr>
+                    <div id="outputentendible">
+                        <textarea name="output2" id="textareaSALIDA2" wrap="on" cols="120" rows="35"
+                            enabled>{{ Salida2 }} </textarea>
 
-  <!-- Footer -->
-  <footer id="footer" data-stellar-background-ratio="5">
-    <div class="container">
-        <div class="row">
-
-            <div class="col-md-4 col-sm-4">
-                <div class="footer-thumb">
-                    <h4 class="wow fadeInUp" data-wow-delay="0.4s">Contáctenos</h4>
-                    <p>202000194</p>
-
-                    <div class="contact-info">
-                        <p><i class="fa fa-phone"></i> +502 57707472</p>
-                        <p><i class="fa fa-envelope-o"></i> <a href="#">3034161730108@ingenieria.usac.edu.gt</a></p>
                     </div>
-                </div>
-            </div>
+                </tr>
+            </table>
+            <br>
 
-            <div class="col-md-4 col-sm-4">
-                <div class="footer-thumb">
-                    <h4 class="wow fadeInUp" data-wow-delay="0.4s">Ultimas Actualizaciones</h4>
-                    <div class="latest-stories">
-                        <div class="stories-image">
-                            <!-- <a href="#"><img src="images/news-image.jpg" class="img-responsive" alt=""></a> -->
-                        </div>
-                        <div class="stories-info">
-                            <a href="#">
-                                <h5>Amazing Technology</h5>
-                            </a>
-                            <span>March 08, 2018</span>
-                        </div>
+
+            <table>
+                <tr align="center">
+                    <h2>ERRORES</h2>
+                </tr>
+                <tr>
+                    <div >
+                        <textarea id="error" wrap="on" id="textareaError" name="textareaError" cols="100" rows="15"
+                        enabled></textarea>
+
                     </div>
-
-                    <div class="latest-stories">
-                        <div class="stories-image">
-                            <!-- <a href="#"><img src="images/news-image.jpg" class="img-responsive" alt=""></a> -->
-                        </div>
-                        <div class="stories-info">
-                            <a href="#">
-                                <h5>New Healing Process</h5>
-                            </a>
-                            <span>February 20, 2018</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4 col-sm-4">
-                <div class="footer-thumb">
-                    <div class="opening-hours">
-                        <h4 class="wow fadeInUp" data-wow-delay="0.4s">Horario de Atención</h4>
-                        <p>Lunes - Viernes <span>06:00 AM - 10:00 PM</span></p>
-                        <p>Sabado <span>09:00 AM - 08:00 PM</span></p>
-                        <p>Domingo <span>Cerrado, es dia de Dios</span></p>
-                    </div>
-
-                    <ul class="social-icon">
-                        <li><a href="#" class="fa fa-facebook-square" attr="facebook icon"></a></li>
-                        <li><a href="#" class="fa fa-twitter"></a></li>
-                        <li><a href="#" class="fa fa-instagram"></a></li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="col-md-12 col-sm-12 border-top">
-                <div class="col-md-4 col-sm-6">
-                    <div class="copyright-text">
-                        <p>Copyright &copy; 2022 PROYECTO 3
-
-                            | Diseño: El Bootstrap :v</p>
-                    </div>
-                </div>
-                <div class="col-md-6 col-sm-6">
-                    <div class="footer-link">
-                        <a href="https://www.who.int/es">OMS</a>
-                        <a href="https://www.mspas.gob.gt">MSPAS</a>
-                        <a href="https://www.gob.pe/minsa/">MINSA</a>
-                        <a href="https://covid19.who.int">COVID 19 INFO</a>
-                    </div>
-                </div>
-                <div class="col-md-2 col-sm-2 text-align-center">
-                    <div class="angle-up-btn">
-                        <a href="#top" class="smoothScroll wow fadeInUp" data-wow-delay="1.2s"><i
-                                class="fa fa-angle-up"></i></a>
-                    </div>
-                </div>
-            </div>
-
+                </tr>
+            </table>
+            <br>
+            <br>
         </div>
-    </div>
-  </footer>
 
-  <svg id="clouds" xmlns="http://www.w3.org/2000/svg" width="2611.084" height="485.677" viewBox="0 0 2611.084 485.677">
-    <title>Gray Clouds Background</title>
-    <path id="Path_39" data-name="Path 39" d="M2379.709,863.793c10-93-77-171-168-149-52-114-225-105-264,15-75,3-140,59-152,133-30,2.83-66.725,9.829-93.5,26.25-26.771-16.421-63.5-23.42-93.5-26.25-12-74-77-130-152-133-39-120-212-129-264-15-54.084-13.075-106.753,9.173-138.488,48.9-31.734-39.726-84.4-61.974-138.487-48.9-52-114-225-105-264,15a162.027,162.027,0,0,0-103.147,43.044c-30.633-45.365-87.1-72.091-145.206-58.044-52-114-225-105-264,15-75,3-140,59-152,133-53,5-127,23-130,83-2,42,35,72,70,86,49,20,106,18,157,5a165.625,165.625,0,0,0,120,0c47,94,178,113,251,33,61.112,8.015,113.854-5.72,150.492-29.764a165.62,165.62,0,0,0,110.861-3.236c47,94,178,113,251,33,31.385,4.116,60.563,2.495,86.487-3.311,25.924,5.806,55.1,7.427,86.488,3.311,73,80,204,61,251-33a165.625,165.625,0,0,0,120,0c51,13,108,15,157-5a147.188,147.188,0,0,0,33.5-18.694,147.217,147.217,0,0,0,33.5,18.694c49,20,106,18,157,5a165.625,165.625,0,0,0,120,0c47,94,178,113,251,33C2446.709,1093.793,2554.709,922.793,2379.709,863.793Z" transform="translate(142.69 -634.312)" fill="#eee"/>
-  </svg>
+    </section>
+    <!-- Footer -->
+    <footer id="footer" data-stellar-background-ratio="5">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-md-4 col-sm-4">
+                    <div class="footer-thumb">
+                        <h4 class="wow fadeInUp" data-wow-delay="0.4s">Contáctenos</h4>
+                        <p>202000194</p>
+
+                        <div class="contact-info">
+                            <p><i class="fa fa-phone"></i> +502 57707472</p>
+                            <p><i class="fa fa-envelope-o"></i> <a href="#">3034161730108@ingenieria.usac.edu.gt</a></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-sm-4">
+                    <div class="footer-thumb">
+                        <h4 class="wow fadeInUp" data-wow-delay="0.4s">Ultimas Actualizaciones</h4>
+                        <div class="latest-stories">
+                            <div class="stories-image">
+                                <!-- <a href="#"><img src="images/news-image.jpg" class="img-responsive" alt=""></a> -->
+                            </div>
+                            <div class="stories-info">
+                                <a href="#">
+                                    <h5>Amazing Technology</h5>
+                                </a>
+                                <span>March 08, 2018</span>
+                            </div>
+                        </div>
+
+                        <div class="latest-stories">
+                            <div class="stories-image">
+                                <!-- <a href="#"><img src="images/news-image.jpg" class="img-responsive" alt=""></a> -->
+                            </div>
+                            <div class="stories-info">
+                                <a href="#">
+                                    <h5>New Healing Process</h5>
+                                </a>
+                                <span>February 20, 2018</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-sm-4">
+                    <div class="footer-thumb">
+                        <div class="opening-hours">
+                            <h4 class="wow fadeInUp" data-wow-delay="0.4s">Horario de Atención</h4>
+                            <p>Lunes - Viernes <span>06:00 AM - 10:00 PM</span></p>
+                            <p>Sabado <span>09:00 AM - 08:00 PM</span></p>
+                            <p>Domingo <span>Cerrado, es dia de Dios</span></p>
+                        </div>
+
+                        <ul class="social-icon">
+                            <li><a href="#" class="fa fa-facebook-square" attr="facebook icon"></a></li>
+                            <li><a href="#" class="fa fa-twitter"></a></li>
+                            <li><a href="#" class="fa fa-instagram"></a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-md-12 col-sm-12 border-top">
+                    <div class="col-md-4 col-sm-6">
+                        <div class="copyright-text">
+                            <p>Copyright &copy; 2022 PROYECTO 3
+
+                                | Diseño: El Bootstrap :v</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6">
+                        <div class="footer-link">
+                            <a href="https://www.who.int/es">OMS</a>
+                            <a href="https://www.mspas.gob.gt">MSPAS</a>
+                            <a href="https://www.gob.pe/minsa/">MINSA</a>
+                            <a href="https://covid19.who.int">COVID 19 INFO</a>
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-sm-2 text-align-center">
+                        <div class="angle-up-btn">
+                            <a href="#top" class="smoothScroll wow fadeInUp" data-wow-delay="1.2s"><i
+                                    class="fa fa-angle-up"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </footer>
+
+    <svg id="clouds" xmlns="http://www.w3.org/2000/svg" width="2611.084" height="485.677" viewBox="0 0 2611.084 485.677">
+        <title>Gray Clouds Background</title>
+        <path id="Path_39" data-name="Path 39" d="M2379.709,863.793c10-93-77-171-168-149-52-114-225-105-264,15-75,3-140,59-152,133-30,2.83-66.725,9.829-93.5,26.25-26.771-16.421-63.5-23.42-93.5-26.25-12-74-77-130-152-133-39-120-212-129-264-15-54.084-13.075-106.753,9.173-138.488,48.9-31.734-39.726-84.4-61.974-138.487-48.9-52-114-225-105-264,15a162.027,162.027,0,0,0-103.147,43.044c-30.633-45.365-87.1-72.091-145.206-58.044-52-114-225-105-264,15-75,3-140,59-152,133-53,5-127,23-130,83-2,42,35,72,70,86,49,20,106,18,157,5a165.625,165.625,0,0,0,120,0c47,94,178,113,251,33,61.112,8.015,113.854-5.72,150.492-29.764a165.62,165.62,0,0,0,110.861-3.236c47,94,178,113,251,33,31.385,4.116,60.563,2.495,86.487-3.311,25.924,5.806,55.1,7.427,86.488,3.311,73,80,204,61,251-33a165.625,165.625,0,0,0,120,0c51,13,108,15,157-5a147.188,147.188,0,0,0,33.5-18.694,147.217,147.217,0,0,0,33.5,18.694c49,20,106,18,157,5a165.625,165.625,0,0,0,120,0c47,94,178,113,251,33C2446.709,1093.793,2554.709,922.793,2379.709,863.793Z" transform="translate(142.69 -634.312)" fill="#eee"/>
+    </svg>
 
 </div>
 

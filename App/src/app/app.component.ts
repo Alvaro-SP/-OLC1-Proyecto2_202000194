@@ -7,4 +7,7 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'App';
+  Salida2 = 'texto salida 2';
+  Salida = 'texto Salida';
+  Entrada = 'texto Entrada';
 }

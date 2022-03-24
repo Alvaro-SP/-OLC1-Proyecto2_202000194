@@ -8,5 +8,9 @@ npm install -g @angular/cli
  
 - Set-ExecutionPolicy Unrestricted
 
+### corriendo el server:
+
+- ng serve
+
 ## Usando React mejor por el Aux
 

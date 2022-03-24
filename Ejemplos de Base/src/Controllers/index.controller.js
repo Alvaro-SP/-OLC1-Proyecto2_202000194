@@ -8,8 +8,8 @@ exports.index = async(req, res) => {
         if (err) res.send({state: false, err: err});
 
         parser.parse(data.toString());
-        console.log(interprete.instruccionesAPI.getOperations());
-        res.send({valores: interprete.instruccionesAPI.getOperations()});
+        // console.log(interprete.instruccionesAPI.getOperations());
+        res.send({Estado: interprete.instruccionesAPI.getActive(), Message: 'Server On Port todo fresh...'});
     });
 }
 // ! Se envia la respuesta asi:
