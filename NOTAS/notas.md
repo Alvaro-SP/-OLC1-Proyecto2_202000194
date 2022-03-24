@@ -24,8 +24,39 @@ npm install jison -g
 node /ruta
 <project-description></p>
 
+### Explicacion de Proyecto
 
-Example of table
+- en el operando del operador, puede ser una funcion como getALGO() debe retornar el valor
+    ejemplo:
+            String name= age>18? getdate() false;
+        solo como expresion.
+
+- En los signos de agrupacion se tiene en cuenta la precedencia y parentesis y corchetes.
+
+- Recordar ponerle el default a las variables.
+
+- Las variables no pueden cambiar de tipo NUNCA!
+
+- solo se pueden cambiar los tipos de variables con los CASTEOS
+
+- al tener el ++ en una suma despues se le suma 
+
+- los vectores son de tamano fijo solo almacenan un TIPO solo de 1 o 2 dimensiones. 
+
+- EN LAS expresiones IF's solo pueden ser expresiones booleanas
+
+- sino viene una de tipo booleano es error semantico.
+
+- lo del BREAK es en ciclos for y si esta dentro de un if o switch se sale del for por la precedencia.
+
+- lista de llamadas para las funciones
+
+- d3_Graphviz
+
+- para el Char solo los asciis imprimibles (semantico).
+
+- si no hay break hay paso libre. en los switch
+## Example of table
 
 
 | Left-aligned | Center-aligned | Right-aligned |
