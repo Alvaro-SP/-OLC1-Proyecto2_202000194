@@ -56,7 +56,7 @@ node /ruta
 - para el Char solo los asciis imprimibles (semantico).
 
 - si no hay break hay paso libre. en los switch
-## Example of table
+## Example of table 
 
 
 | Left-aligned | Center-aligned | Right-aligned |
@@ -77,3 +77,7 @@ node /ruta
 Contributions, issues, and feature requests are welcome!
 
 Give a ⭐️ if you like this notes!
+
+git add .
+git commit -m "add new commit"
+git push
