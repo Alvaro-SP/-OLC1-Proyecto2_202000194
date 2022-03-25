@@ -26,7 +26,7 @@ deberá soportar dos tipos de comentarios que son los siguientes:
 \s+					{}
 [ \t\r\n\f]         {}
 
-/*----------------- LEXICO ----------------------- */
+/*▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬ LEXICO ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬ */
 /* 5.3 Tipos de Datos RESERVADAS */
 "Int"                return 'ENTERO';
 "Double"             return 'DOUBLE';
@@ -169,7 +169,7 @@ relacionales. */
 
 %start ini
 
-%% /* Definición de la gramática */
+%% /* ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬Definición de la gramática▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬ */
 
 ini
 	: instrucciones EOF
@@ -180,15 +180,34 @@ instrucciones
 	| instruccion
 	| error { console.error('Este es un error sintáctico: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column); }
 ;
-
+/* ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬*/
+/* ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬*/
 instruccion
-	: declaracion	{  }
-	| 
+	: declaracion	{  } /* 5.12 Declaración y asignación de variables*/
+	| casteos		{  } /* 5.13 Casteos*/
+
+	/*| incredecre	{  }  5.14 Incremento y Decremento*/
+;
+/* ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬*/
+/* ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬*/
+
+/* -------------------------- DECLARACION ASIGNACION VARIABLES ------------------------------ */
+declaracion
+	: tipo VARIABLE PTCOMA	{  }					/*<TIPO> identificador;*/
+	| tipo notacioncomas PTCOMA		{  }				/*<TIPO> id1, id2, id3, id4;*/
+	| tipo VARIABLE IGUAL expresion PTCOMA	{  }			/*<TIPO> identificador = <EXPRESION>;*/
+	| tipo notacioncomas IGUAL expresion PTCOMA 	{  }		/*<TIPO> id1, id2, id3, id4 = <EXPRESION>;*/
+	| VARIABLE IGUAL expresion PTCOMA;						/*identificador = <EXPRESION>;*/
 ;
 
-declaracion
-	: tipo VARIABLE PTCOMA{  }
+notacioncomas  
+	: VARIABLE notacioncomas2 {  }
 ;
+
+notacioncomas2
+	: coma VARIABLE notacioncomas2 {  }
+;
+/* ------------------------------------ EXPRESIONES ------------------------------------ */
 expresion
 	: MENOS expresion %prec UMENOS  { $$ = $2 *-1; }
 	| expresion MAS expresion       { $$ = $1 + $3; }
@@ -198,4 +217,14 @@ expresion
 	| ENTERO                        { $$ = Number($1); }
 	| DECIMAL                       { $$ = Number($1); }
 	| PARIZQ expresion PARDER       { $$ = $2; }
+	| VARIABLE MAS MAS PTCOMA		{  } /*int edad = (int) 18.6;*/
 ;
+/* --------------------------------------- CASTEOS ----------------------------------- */
+casteos
+	: tipo VARIABLE IGUAL PARA tipo PARC expresion PTCOMA	{  } /*int edad = (int) 18.6;*/
+;
+
+/* -------------------------- 5.14 Incremento y Decremento ------------------------------ 
+incredecre
+	: VARIABLE IGUAL VARIABLE MAS MAS PTCOMA	{  }
+;*/
