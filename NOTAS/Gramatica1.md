@@ -26,12 +26,10 @@ deberá soportar dos tipos de comentarios que son los siguientes:
 "Char"               return 'CARACTER';
 "String"             return 'ENTERO';
 [0-9]+\b 	            return 'VENTERO';
-[0-9]+("."[0-9]+)?\b  	return 'VDECIMAL';
+[0-9]+("."[0-9]+)?\b  	return 'VDOUBLE';
 "true"          return 'TRUE'
 "false"         return 'FALSE'
-
 /* 5.4 Secuencias de Escape  */
-[\"].*[\"]           return 'CADENA';
 
 /* 5.5 Operadores Aritméticos */
 "+"             return 'MAS'
@@ -149,8 +147,7 @@ relacionales. */
 /* 5.26. Run (RESERVADAS) */
 "run"         return 'RUN'
 
-[0-9]+\b                return 'VENTERO';
-[0-9]+("."[0-9]+)?\b    return 'VDOUBLE';
+
 
 
 /*---------------------------- GRAMATICA --------------------------- */
