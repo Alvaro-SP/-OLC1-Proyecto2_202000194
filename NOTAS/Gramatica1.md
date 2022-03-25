@@ -6,10 +6,12 @@ Pasar todo a minusculas ya que es Case Insensitive.
 deberá soportar dos tipos de comentarios que son los siguientes:
 */
 /* Comentarios de una línea*/
-"/""/".*            {}
+(\/\/.*\r\n)|(\/\/.*\n)|(\/\/.*\r)            {}
 
-/* Comentarios de multilínea*/
-[/][*][^*/]*[*][/]  {}
+
+/* "<!""!"*([^!>]|[^!]">"|"!"[^>])*"!"*"!>" */
+/* Comentarios de multilínea */
+(\/\*(\s*|.*?)*\*\/)|(\/\/.*)                 {}
 
 /* Espacios*/
 \n                  {}
@@ -23,6 +25,10 @@ deberá soportar dos tipos de comentarios que son los siguientes:
 "Boolean"            return 'BOOLEANO';
 "Char"               return 'CARACTER';
 "String"             return 'ENTERO';
+[0-9]+\b 	            return 'VENTERO';
+[0-9]+("."[0-9]+)?\b  	return 'VDECIMAL';
+"true"          return 'TRUE'
+"false"         return 'FALSE'
 
 /* 5.4 Secuencias de Escape  */
 [\"].*[\"]           return 'CADENA';
@@ -96,6 +102,7 @@ relacionales. */
 /* 5.16 Sentencias de control (RESERVADAS)*/
 "if"            return 'IF'
 "else"          return 'ELSE'
+
 "{"             return 'LLAIZQ'
 "}"             return 'LLADER'
 "switch"        return 'SWITCH'
@@ -146,7 +153,7 @@ relacionales. */
 [0-9]+("."[0-9]+)?\b    return 'VDOUBLE';
 
 
-/*----------------- GRAMATICA ----------------------- */
+/*---------------------------- GRAMATICA --------------------------- */
 /* 5.3 Tipos de Datos RESERVADAS */
 
 /* 5.4 Secuencias de Escape  */
