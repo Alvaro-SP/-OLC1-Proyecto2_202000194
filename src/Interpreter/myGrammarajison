@@ -185,8 +185,10 @@ instrucciones
 instruccion
 	: declaracion	{  } /* 5.12 Declaración y asignación de variables*/
 	| casteos		{  } /* 5.13 Casteos*/
+	| vectores		{  } /* 5.15.1. Vectores*/
 
 	/*| incredecre	{  }  5.14 Incremento y Decremento*/
+
 ;
 /* ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬*/
 /* ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬*/
@@ -214,16 +216,38 @@ expresion
 	| expresion MENOS expresion     { $$ = $1 - $3; }
 	| expresion POR expresion       { $$ = $1 * $3; }
 	| expresion DIVIDIDO expresion  { $$ = $1 / $3; }
+	| PARA tipo PARC expresion		{  } /* (int) 18.6*/
 	| ENTERO                        { $$ = Number($1); }
-	| DECIMAL                       { $$ = Number($1); }
+	| DOUBLE                       { $$ = Number($1); }
 	| PARIZQ expresion PARDER       { $$ = $2; }
-	| VARIABLE MAS MAS PTCOMA		{  } /*int edad = (int) 18.6;*/
-;
-/* --------------------------------------- CASTEOS ----------------------------------- */
-casteos
-	: tipo VARIABLE IGUAL PARA tipo PARC expresion PTCOMA	{  } /*int edad = (int) 18.6;*/
+	| VARIABLE MAS MAS 				{  } /* anio-- */
+	| MAS MAS VARIABLE 				{  } /* --anio */
+	| VARIABLE MENOS MENOS 			{  } /* edad-- */
+	| MENOS MENOS VARIABLE  		{  } /* --edad */
+
+	| VARIABLE MAS MAS 				{  } /**/
+	| VARIABLE MAS MAS 				{  } /**/
+	| VARIABLE MAS MAS 				{  } /**/
+	| VARIABLE MAS MAS 				{  } /**/
+	| VARIABLE MAS MAS 				{  } /**/
+	| VARIABLE MAS MAS 				{  } /**/
+	| VARIABLE MAS MAS 				{  } /**/
 ;
 
+/* --------------------------------------- 5.15.1. Vectores ----------------------------------- */
+vectores
+	: tipo VARIABLE IGUAL PARA tipo PARC expresion PTCOMA	{  } /*Int vector1[ ] = new int[4]; */
+	: tipo VARIABLE IGUAL PARA tipo PARC expresion PTCOMA	{  } /*Char vectorDosd[ ][ ] = new char [4] [4] ;  */
+	: tipo VARIABLE IGUAL PARA tipo PARC expresion PTCOMA	{  } /*string vector2[ ] = ["hola", "Mundo"]; */
+	: tipo VARIABLE IGUAL PARA tipo PARC expresion PTCOMA	{  } /*char vectordosd2 [ ][ ] = [[ 0 ,0],[0 , 0]]; */
+;
+
+
+/* --------------------------------------- CASTEOS ----------------------------------- 
+casteos
+	: tipo VARIABLE IGUAL PARA tipo PARC expresion PTCOMA	{  } /**/
+;
+*/
 /* -------------------------- 5.14 Incremento y Decremento ------------------------------ 
 incredecre
 	: VARIABLE IGUAL VARIABLE MAS MAS PTCOMA	{  }
