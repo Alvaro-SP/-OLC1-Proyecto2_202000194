@@ -1,5 +1,5 @@
 import React, {Fragment, useEffect, useState} from 'react'
-
+import './index.css';
 const API = 'http://localhost:4200';
 
 export const Home = (props)=>{
