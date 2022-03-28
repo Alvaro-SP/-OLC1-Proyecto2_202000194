@@ -1,14 +1,65 @@
 import React, {Fragment, useEffect, useState} from 'react'
 import './index.css';
-const API = 'http://localhost:4000';
+const API = 'http://localhost:4000/';
+
 
 export const Home = (props)=>{
     // const [Entrada, Salida, Salida2] = useState("");
+    const [Salida, setSalida] = useState("");
+    const [Salida2, setSalida2] = useState("");
+    const getMetodo = async () => {
+    const res = await fetch(`${API}`);
+    const data = await res.json();
+    console.log(data)
+    setSalida(data['Salida'])
+    setSalida2(data['Salida2'])
+    // setParameter(String(props.match.params.id))
+    };
+    const handleChange = (event) => {
+        setSalida(event.target.Salida);
+    };
+    const handleChange2 = (event) => {
+        setSalida2(event.target.Salida2);
+    };
+    useEffect(() => {
+        getMetodo();
+        // eslint-disable-next-line
+    }, []);
+    const guardar = (passForm) =>{
+        alert("guardado.")          
+        
+     }
+     // const WriteToFile = (passForm) =>{
+        
+    //     let fso = CreateObject("Scripting.FileSystemObject"); 
+    //     let s   = fso.CreateTextFile("<your Path>/filename.txt", true);
+     
+    //     var firstName = document.getElementById('FirstName');
+    //     var lastName  = document.getElementById('lastName');
+     
+    //     s.writeline("First Name :" + firstName);
+    //     s.writeline("Last Name :" + lastName);
+     
+    //     s.writeline("-----------------------------");
+    //     s.Close();
+    //  }
+    
+    // const TextFile = () => {
+    //     console.log("sientra")
+    //     const element = document.createElement("a");
+    //     const file = new Blob([document.getElementById('textareaENTRADA').value], {type: 'text/plain'});
+    //     element.href = URL.createObjectURL(file);
+    //     element.download = "myFile.txt";
+    //     document.body.appendChild(element); // Required for this to work in FireFox
+    //     element.click();
+    //   }
     return (
         <Fragment>
             {/* <!--! PRE LOADER --> */}
     
     {/* <!--! HEADER --> */}
+    <title>202000194</title>
+    
     <header>
         <div class="container">
             <div class="row">
@@ -45,13 +96,27 @@ export const Home = (props)=>{
                 <ul class="nav navbar-nav ">
                     <li>
                         <div>
+                        
+{/* <form onSubmit="WriteToFile(this)">
+<label>Type your first name:</label>
+<input type="text" name="FirstName" id="firstName" size="20"/>
+ 
+<label>Type your last name: </label>
+<input type="text" name="LastName" id="lastName" size="20"/>
+ 
+<input type="submit" value="submit"/>
+</form> */}
                         <h1 class="tituloini">Compscript</h1>
                             <form method="POST" class="div_file" enctype="multipart/form-data">
                                 <p class="texto">SELECCIONAR ARCHIVO</p>
-                                <input id="documentoXML" type="file" name="documentoXML[]" class="btn_enviar"
-                                    accept=".xml" multiple/>
+                                <input  id="documentoXML" type="file" name="documentoXML[]" class="btn_enviar"
+                                    accept=".cst" multiple/>
                             </form>
-
+                            {/* <form  class="div_file" enctype="multipart/form-data"> 
+                                <p class="texto">GUARDAR ARCHIVO</p>  
+                                <input onclick="guardar()" id="documentoXML"  name="Submit" type="button"  />                                                                                  
+                                
+                            </form> */}
                         </div>
                         </li>
                          {/* <li onclick="cerrarsesion()" class="appointment-btn">
@@ -61,43 +126,48 @@ export const Home = (props)=>{
             </div>
         </div>
     </section>
-
-            <title>202000194</title>
+    <div class="centrandoeldiv">
+        <button onclick="EnviarProceso()" id="enviarCargado" type="button" class="buttonS button1S">COMPILAR</button>
+        <button href="http://localhost:3000" type="button" class="buttonS button2S">RESET</button>
+    </div>
+            
             
             <div class="content" role="main">
-
-                <section class="holaaaaa">
-                    <button id="enviarCargado" onclick="EnviarProceso()" type="button" class="btn btn-success fa-2x"
+                
+                {/* <section class="holaaaaa">
+                    <button  onclick="EnviarProceso()" type="button" class="btn btn-success fa-2x"
                         enabled>Compilar</button>
                     <button onclick="restart()" href="http://localhost:4000" type="button" class="btn btn-danger fa-2x"
                         enabled>Reset</button>
-                </section>
+                </section> */}
+                
+                
+
                 <section>
                     <div>
                         <br/>
                         <table>
                             <tr align="center">
                                 <td>
-                                    <h2>ENTRADA</h2>
+                                    <h2 class="titulosbonis">ENTRADA</h2>
                                 </td>
                                 <td>
-                                    <h2>SALIDA</h2>
+                                    {/* <h1>{Salida}</h1> */}
+                                    <h2 class="titulosbonis">SALIDA</h2>
                                 </td>
                             </tr>
                             <tr align="center">
                                 <td>
-                                    <textarea name="input" wrap="on" id="textareaENTRADA" cols="70" rows="20" 
-                                        enabled>prueba</textarea>
+                                    <textarea name="input" wrap="on" id="textareaENTRADA" cols="70" rows="20" value={Salida} onChange={handleChange} enabled>{Salida}</textarea>
                                 </td>
                                 <td>
-                                    <textarea name="output" wrap="on" id="textareaSALIDA" cols="70" rows="20"
-                                        enabled>prueba</textarea>
+                                    <textarea name="output" wrap="on" id="textareaSALIDA" cols="70" rows="20" value={Salida2} onChange={handleChange2} enabled>{Salida2}</textarea>
                                 </td>
                             </tr>
                         </table>
                         <br/>
 
-                        <table>
+                        {/* <table>
                             <tr align="center">
                                 <h2>SALIDA ENTENDIBLE: </h2>
                             </tr>
@@ -108,20 +178,22 @@ export const Home = (props)=>{
 
                                 </div>
                             </tr>
-                        </table>
+                        </table> */}
                         <br/>
 
 
                         <table>
-                            <tr align="center">
-                                <h2>ERRORES</h2>
-                            </tr>
+                             <div class="centrandoeldiv">
+                                 <tr align="center">
+                                    <h2 class="titulosbonis">ERRORES</h2>
+                                </tr>
                             <tr>
                                 <div >
                                     <textarea  wrap="on" id="textareaError" name="textareaError" cols="100" rows="15"
                                     enabled></textarea>
                                 </div>
                             </tr>
+                        </div>
                         </table>
                         <br/>
                         <br/>
