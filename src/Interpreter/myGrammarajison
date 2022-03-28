@@ -60,8 +60,8 @@ deberá soportar dos tipos de comentarios que son los siguientes:
 ":"             return 'DOSPUNTOS'
 
 /* 5.8 Operadores Lógicos */
-"||"            return 'OR'
-"&&"            return 'AND'
+"|"            return 'OR'
+"&"            return 'AND'
 "!"             return 'NOT'
 
 /* 5.9 Signos de Agrupación 
@@ -183,10 +183,20 @@ instrucciones
 /* ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬*/
 /* ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬*/
 instruccion
-	: declaracion	{  } /* 5.12 Declaración y asignación de variables*/
-	| casteos		{  } /* 5.13 Casteos*/
-	| vectores		{  } /* 5.15.1. Vectores*/
-	| if		{  } /* 5.15.1. Vectores*/
+	: declaracion					{  } /* 5.12 Declaración y asignación de variables*/
+	| casteos						{  } /* 5.13 Casteos*/
+	| vectores						{  } /* 5.15.1. Vectores*/
+	| if							{  } /* 5.15.1. Vectores*/
+	| while							{  } /* 5.17 SenTencias cíclicas*/
+	| for							{  } /* 5.17 SenTencias cíclicas*/
+	| dowhile						{  } /* 5.17 SenTencias cíclicas*/
+	| funciones						{  } /* 5.19 Funciones*/
+	| metodos						{  } /* 5.20 Metodos*/
+	| llamadas PTCOMA				{  } /* 5.21 Llamadas*/
+    | BREAK PTCOMA                  {  }
+	| CONTINUE PTCOMA               {  }
+	| RETURN expresion PTCOMA      	{  }
+    | RETURN PTCOMA                	{  }
 
 	/*| incredecre	{  }  5.14 Incremento y Decremento*/
 
@@ -236,6 +246,21 @@ expresion
 	| expresion MENOS expresion     { $$ = $1 - $3; }
 	| expresion POR expresion       { $$ = $1 * $3; }
 	| expresion DIVIDIDO expresion  { $$ = $1 / $3; }
+	| expresion MOD expresion			                    {  }	
+    | expresion POT expresion			                    {  }	
+    | expresion MENORIGUALQ expresion	                    {  }	
+	| expresion MENORQUE IGUAL expresion	 		        {  }			   
+	| expresion MENORQUE expresion	 		                {  }	
+    | expresion MAYORIGUALQ expresion	                    {  }			
+    | expresion MAYORQUE IGUAL expresion                    {  }				  
+    | expresion MAYORQUE expresion                          {  }		
+    | expresion IGUALQUE expresion	  		                {  }			
+    | expresion IGUAL IGUAL expresion	  		                {  }			
+    | expresion IGUALA expresion	  		                {  }			
+    | expresion DIFERENTE expresion	   	                {  }
+    | expresion NOT IGUAL expresion	   	                {  }
+    | expresion OR OR expresion	  			                {  }
+    | expresion AND AND expresion			                    {  }
 	| PARA tipo PARC expresion		{  } /* (int) 18.6*//*(<TIPO>) <EXPRESION>*/
 	| VENTERO                        { $$ = Number($1); }
 	| VDOUBLE                       	{ $$ = Number($1); }
@@ -278,7 +303,115 @@ if
 /* ------------------------------------  SWITCH  ------------------------------------ */
 switch
     :SWITCH PARIZQ expresion PARDER LLAIZQ caselist default LLADER  {}/* switch   (   <EXPRESION>   )  { <CASES_LIST>   <DEFAULT> } */
-    |SWITCH PARIZQ expresion PARDER LLAIZQ caseList LLADER              {}/* switch   ( <EXPRESION>  )  {<CASES_LIST> } */
+    |SWITCH PARIZQ expresion PARDER LLAIZQ caselist LLADER              {}/* switch   ( <EXPRESION>  )  {<CASES_LIST> } */
     |SWITCH PARIZQ expresion PARDER LLAIZQ default LLADER           {}/* switch   ( <EXPRESION>  )   { <DEFAULT> } */
 
 ;
+/* ------------------------------------  caselist  ------------------------------------ */
+caselist
+    :caseList CASE expresion DOSPUNTOS instrucciones    {} 
+    |CASE expresion DOSPUNTOS instrucciones             {}/* case   <EXPRESION>   :  <INSTRUCCIONES> */
+;
+/* ------------------------------------  DEFAULT  ------------------------------------ */
+default
+    :DEFAULT DOSPUNTOS instrucciones {}
+;
+
+/*--------------------------------------5.17 SenTencias cíclicas----------------------------------*/
+ 
+ /*5.17.1. While  while   (  <EXPRESION>   )   {  <INSTRUCCIONES>  } */
+while
+    :WHILE PARIZQ expresion PARDER LLAIZQ instrucciones LLADER {$$ = new While($3, $6, @1.first_line, @1.first_column);}
+;
+/*5.17.2. For*/
+for
+	/* for  ((<DECLARACION>|<ASIGNACION>);<CONDICION>;< ACTUALIZACION>){<INSTRUCCIONES>} */
+    :FOR PARIZQ fordeclarar PTCOMA expresion PTCOMA actualizacion PARDER LLAIZQ instrucciones LLADER {}
+;
+fordeclarar
+    : tipo VARIABLE IGUAL expresion 			{  } /*TIPO> identificador = <EXPRESION>;*/
+	| VARIABLE IGUAL expresion 					{  } /*identificador = <EXPRESION>;*/
+;
+actualizacion
+    : VARIABLE MAS MAS 				{  } /* anio++ */
+	| VARIABLE MENOS MENOS 			{  } /* edad-- */
+	| VARIABLE IGUAL expresion 					{  } /*identificador = <EXPRESION>;*/
+;
+/*5.17.3. Do-While*/
+dowhile
+    :DO LLAIZQ instrucciones LLADER WHILE PARIZQ expresion PARDER PTCOMA  {}/*do{ <INSTRUCCIONES> }while(<EXPRESION>);*/
+;
+
+/*--------------------------------------  5.19 Funciones  ----------------------------------*/
+funciones
+    : VARIABLE PARIZQ parametros PARDER DOSPUNTOS tipo LLAIZQ instrucciones LLADER {  } /* <ID>(<PARAMETROS>):<TIPO>{ <INSTRUCCIONES>} */
+    | VARIABLE PARIZQ PARDER DOSPUNTOS tipo LLAIZQ instrucciones LLADER            		 {  }
+;
+parametros
+    :parametros COMA tipo VARIABLE   {  }
+    |tipo VARIABLE                   {  }         
+;
+
+/*--------------------------------------  5.20 Métodos  ----------------------------------*/
+metodos
+    : VARIABLE PARIZQ parametros PARDER DOSPUNTOS VOID LLAIZQ instrucciones LLADER {  } /* <ID>(<PARAMETROS>):<TIPO>{ <INSTRUCCIONES>} */
+    : VARIABLE PARIZQ parametros PARDER LLAIZQ instrucciones LLADER {  } /* <ID>(<PARAMETROS>){ <INSTRUCCIONES>} */
+    : VARIABLE PARIZQ PARDER DOSPUNTOS VOID LLAIZQ instrucciones LLADER {  } /* <ID>():<TIPO>{ <INSTRUCCIONES>} */
+    : VARIABLE PARIZQ PARDER LLAIZQ instrucciones LLADER {  } /* <ID>(){ <INSTRUCCIONES>} */
+;
+/*--------------------------------------  5.21 Llamadas  ----------------------------------*/
+
+llamadas
+    :VARIABLE PARIZQ paramllamada PARDER    {   }
+    |VARIABLE PARIZQ PARDER                 {   }
+;
+/*LLAMADA -> [<ID>] ( [<PARAMETROS_LLAMADA>] )
+| [<ID>] ( )*/
+
+paramllamada
+    :paramllamada COMA expresion      {  }
+    |expresion                        {  }
+;
+/*--------------------------------------  5.22 Función Print  ----------------------------------*/
+
+/*--------------------------------------  5.23 Función Println  ----------------------------------*/
+
+/*--------------------------------------  5.24 Función toLower  ----------------------------------*/
+
+/*--------------------------------------  5.25 Función toUpper  ----------------------------------*/
+
+/*--------------------------------------  5.26 Round  ----------------------------------*/
+
+/*--------------------------------------  5.25. Funciones nativas  ----------------------------------*/
+
+/* Print  (  <EXPRESION>  );*/
+/**/
+/* Println  (  <EXPRESION>  );*/
+/**/
+/* toLower  (  <EXPRESION>  );*/
+/**/
+/* toUpper  (  <EXPRESION>  );*/
+/**/
+/* round  (  )  ;     */
+/**/
+/*5.25. Funciones nativas*/
+/**/
+/* length  ( <VALOR>  )  ;*/
+/**/
+/* typeof  ( <VALOR>  )  ;*/
+/**/
+/* toString  ( <VALOR>  )  ;*/
+/**/
+/* toCharArray  ( <VALOR>  )  ;*/
+/**/
+/**/
+/*5.26. Run*/
+/**/
+/* run <ID>  ( )  ;*/
+/* run <ID>  ( <LISTAVALORES> )  ;*/
+/*LISTAVALORES->LISTAVALORES  , EXPRESION*/
+/*| EXPRESION
+
+
+
+
