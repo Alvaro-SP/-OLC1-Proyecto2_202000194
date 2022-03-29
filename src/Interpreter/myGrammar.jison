@@ -183,12 +183,12 @@ relacionales. */
 %% /* ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬Definición de la gramática▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬ */
 
 ini
-	: instrucciones EOF
+	: instrucciones EOF				{$$ = new Instruccion($1); return $$;}
 ;
 
 instrucciones 
-	: instruccion instrucciones
-	| instruccion
+	: instruccion instrucciones		{$$ = $1; $1.push($1);}
+	| instruccion					{$$=[$1];}
 	| error { console.error('Este es un error sintáctico: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column); }
 ;
 /* ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬*/
