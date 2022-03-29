@@ -178,7 +178,7 @@ relacionales. */
 %left 'MULTIPLICACION' 'DIVISION'
 %left UMENOS
 
-%start ini
+%start ini 
 
 %% /* ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬Definición de la gramática▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬ */
 
