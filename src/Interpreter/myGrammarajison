@@ -307,7 +307,7 @@ tipo
 	|DOUBLE       	{  }
 	|BOOLEANO       {  }
 	|CARACTER     	{  }
-	|STRING        	{  }
+	|STRING        	{  } 
 	|VOID           {  }
 ;
 
