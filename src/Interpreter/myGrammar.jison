@@ -186,7 +186,7 @@ ini
 	: instrucciones EOF
 ;
 
-instrucciones
+instrucciones 
 	: instruccion instrucciones
 	| instruccion
 	| error { console.error('Este es un error sintáctico: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column); }
