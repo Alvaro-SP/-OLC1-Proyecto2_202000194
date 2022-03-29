@@ -3,7 +3,7 @@
  */
 {%
 var acumoftext="";
-const {Tree} = require('../Instructions/Instruccion');
+const {Tree} = require('../Instructions/InstructionAST');
 %}
 /*------------------------ Definición Léxica --------------------------*/
 %lex
