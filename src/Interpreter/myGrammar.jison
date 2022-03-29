@@ -209,10 +209,9 @@ instruccion
 	| llamadas PTCOMA				{ $$ = $1; } /* 5.21 Llamadas*/
 	| print PTCOMA					{ $$ = $1; } 
 	| println PTCOMA				{ $$ = $1; } 
-    | BREAK PTCOMA                  { $$ = $1; }
-	| CONTINUE PTCOMA               { $$ = $1; }
-	| RETURN expresion PTCOMA      	{ $$ = $1; }
-    | RETURN PTCOMA                	{ $$ = $1; }
+    | BREAK PTCOMA                  {  }	/* BREAK */
+	| CONTINUE PTCOMA               {   }   /* CONTINUE */
+	| returns PTCOMA      	{ $$ = $1; }
     | run PTCOMA                	{ $$ = $1; }
 	| VARIABLE MAS MAS PTCOMA 		{  } /* anio++/
 	| MAS MAS VARIABLE PTCOMA		{  } /* ++anio */
@@ -223,7 +222,9 @@ instruccion
 ;
 /* ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬*/
 /* ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬*/
-
+returns	
+	: RETURN expresion       	{ $$ = $1; }
+    | RETURN                 	{ $$ = $1; }
 /* -------------------------- DECLARACION ASIGNACION VARIABLES ------------------------------ */
 declaracion
 
