@@ -182,7 +182,6 @@ relacionales. */
 %left UMENOS
 
 %start ini 
-
 %% /* ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬Definición de la gramática▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬ */
 ini
 	: instrucciones EOF				{$$ = new Instruccion($1); return $$;}
