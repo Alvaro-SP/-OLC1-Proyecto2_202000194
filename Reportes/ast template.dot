@@ -1,0 +1,22 @@
+digraph G {
+    layout=dot   
+    fontcolor="black" 
+    label="ARBOL DE DERIVACIÓN"    
+    labelloc = "t"
+    bgcolor="orange:red"    
+    edge [weight=1000 style=radial color=black ]
+    node [shape=ellipse style="filled"  color="green:lightblue" gradientangle="315"]
+    ___INICIO___[shape=ellipse color=green fontcolor=black]  
+
+    0 [ label="PRINT" ]
+    ___INICIO___ -> 0 
+    1 [ label="(" ]
+    0 -> 1 
+    2 [ label="Hola que ace" ]  
+    0 -> 2 
+    3 [ label=")" ]
+    0 -> 3 
+    4 [ label=";" ]
+    0 -> 4 
+
+ }
