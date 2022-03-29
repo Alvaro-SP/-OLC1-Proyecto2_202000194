@@ -197,7 +197,7 @@ instruccion
 	| CONTINUE PTCOMA               {  }
 	| RETURN expresion PTCOMA      	{  }
     | RETURN PTCOMA                	{  }
-
+    | run PTCOMA                	{  }
 	/*| incredecre	{  }  5.14 Incremento y Decremento*/
 
 ;
@@ -264,6 +264,7 @@ expresion
 	| PARA tipo PARC expresion		{  } /* (int) 18.6*//*(<TIPO>) <EXPRESION>*/
 	| VENTERO                        { $$ = Number($1); }
 	| VDOUBLE                       	{ $$ = Number($1); }
+	| CADENA						{  }
 	| TRUE                       	{  }
 	| FALSE                       	{  }
 	| PARIZQ expresion PARDER       { $$ = $2; }
@@ -275,11 +276,29 @@ expresion
 	| VARIABLE CORIZQ expresion CORDER CORIZQ expresion CORDER	{  } /* vectorDosd[0][0];*/
 	
 	| VARIABLE MAS MAS 				{  } /* vectorDosd[0][0]*/
-	| VARIABLE MAS MAS 				{  } /**/
-	| VARIABLE MAS MAS 				{  } /**/
-	| VARIABLE MAS MAS 				{  } /**/
-	| VARIABLE MAS MAS 				{  } /**/
-	| VARIABLE MAS MAS 				{  } /**/
+	| expresion INTERROGACION expresion DOSPUNTOS expresion  {  } /*Ternarios*/
+    
+    | TOLOWER PARIZQ expresion PARDER  {  } /* toLower  (  <EXPRESION>  );*/       
+    | TOUPPER PARIZQ expresion PARDER  {  } /* toUpper  (  <EXPRESION>  );*/      
+    | ROUND PARIZQ DOUBLE PARDER    {  } /* round  (  )  ;     */
+    | TYPEOF PARIZQ expresion PARDER   {  }
+    | TOSTRING PARIZQ expresion PARDER {  }
+    | llamar                           {  }
+			/*5.25. Funciones nativas*/
+	| LENGTH PARIZQ valor PARDER   {  } /* length  ( <VALOR>  )  ;*/
+	| TYPEOF PARIZQ valor PARDER   {  }/* typeof  ( <VALOR>  )  ;*/
+	| TOSTRING PARIZQ valor PARDER   {  }/* toString  ( <VALOR>  )  ;*/
+	| TOCHARARRAY PARIZQ valor PARDER   {  }/* toCharArray  ( <VALOR>  )  ;*/
+;
+/* ------------------------------------    VALOR    ------------------------------------ */
+ /*- lista
+ -vector
+ -cadena*/
+
+valor
+	:listavalores       	{  }
+	|CADENA       			{  }
+	|VARIABLE       		{  } 
 ;
 
 /* ------------------------------------    TIPOS    ------------------------------------ */
@@ -289,7 +308,7 @@ tipo
 	|BOOLEANO       {  }
 	|CARACTER     	{  }
 	|STRING        	{  }
-	|TVOID          {  }
+	|VOID          {  }
 ;
 
 /* ------------------------------------    IF    ------------------------------------ */
@@ -373,44 +392,27 @@ paramllamada
     |expresion                        {  }
 ;
 /*--------------------------------------  5.22 Función Print  ----------------------------------*/
-
+print
+    :PRINT PARIZQ expresion PARDER    {  }/* Print  (  <EXPRESION>  );*/
+;
 /*--------------------------------------  5.23 Función Println  ----------------------------------*/
+printLN
+    :PRINTLN PARIZQ expresion PARDER    {  }/* Println  (  <EXPRESION>  );*/
+;
 
-/*--------------------------------------  5.24 Función toLower  ----------------------------------*/
-
-/*--------------------------------------  5.25 Función toUpper  ----------------------------------*/
-
-/*--------------------------------------  5.26 Round  ----------------------------------*/
-
-/*--------------------------------------  5.25. Funciones nativas  ----------------------------------*/
-
-/* Print  (  <EXPRESION>  );*/
-/**/
-/* Println  (  <EXPRESION>  );*/
-/**/
-/* toLower  (  <EXPRESION>  );*/
-/**/
-/* toUpper  (  <EXPRESION>  );*/
-/**/
-/* round  (  )  ;     */
-/**/
-/*5.25. Funciones nativas*/
-/**/
-/* length  ( <VALOR>  )  ;*/
-/**/
-/* typeof  ( <VALOR>  )  ;*/
-/**/
-/* toString  ( <VALOR>  )  ;*/
-/**/
-/* toCharArray  ( <VALOR>  )  ;*/
-/**/
-/**/
+/*--------------------------------------  RUN  ----------------------------------*/
 /*5.26. Run*/
-/**/
-/* run <ID>  ( )  ;*/
-/* run <ID>  ( <LISTAVALORES> )  ;*/
-/*LISTAVALORES->LISTAVALORES  , EXPRESION*/
-/*| EXPRESION
+run
+    : RUN VARIABLE PARA PARC 			  {  } /* run <ID>  ( )  ;*/
+	| RUN VARIABLE PARA listavalores PARC {  } /* run <ID>  ( <LISTAVALORES> )  ;*/
+;
+listavalores
+    : listavalores COMA expresion 		 {  } /*LISTAVALORES->LISTAVALORES  , EXPRESION*/
+	| expresion 					 	{  } /*| EXPRESION*/
+;
+
+
+
 
 
 
