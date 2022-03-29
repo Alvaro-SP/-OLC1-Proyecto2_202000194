@@ -184,7 +184,6 @@ relacionales. */
 %start ini 
 
 %% /* ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬Definición de la gramática▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬ */
-
 ini
 	: instrucciones EOF				{$$ = new Instruccion($1); return $$;}
 ;
@@ -194,8 +193,9 @@ instrucciones
 	| instruccion					{$$=[$1];}
 	| error { console.error('Este es un error sintáctico: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column); }
 ;
-/* ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬*/
-/* ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬*/
+/* ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬*/
+/* ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬		INSTRUCCIONES      ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬*/
+/* ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬*/
 instruccion
 	: declaracion					{ $$ = $1; } /* 5.12 Declaración y asignación de variables*/
 	| casteos						{ $$ = $1; } /* 5.13 Casteos*/
@@ -220,12 +220,12 @@ instruccion
 	/*| incredecre	{  }  5.14 Incremento y Decremento*/
 
 ;
-/* ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬*/
-/* ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬*/
+/* ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬*/
+/* ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬	FIN  INSTRUCCIONES      ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬*/
+/* ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬*/
 
 /* -------------------------- DECLARACION ASIGNACION VARIABLES ------------------------------ */
 declaracion
-
 	: tipo VARIABLE PTCOMA																				{  } /*<TIPO> identificador;*/
 	| tipo notacioncomas PTCOMA																			{  } /*<TIPO> id1, id2, id3, id4;*/
 	| tipo VARIABLE IGUAL expresion PTCOMA																{  } /*TIPO> identificador = <EXPRESION>;*/
