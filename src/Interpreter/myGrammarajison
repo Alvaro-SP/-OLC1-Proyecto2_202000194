@@ -308,7 +308,7 @@ tipo
 	|BOOLEANO       {  }
 	|CARACTER     	{  }
 	|STRING        	{  }
-	|VOID          {  }
+	|VOID           {  }
 ;
 
 /* ------------------------------------    IF    ------------------------------------ */
@@ -410,6 +410,10 @@ listavalores
     : listavalores COMA expresion 		 {  } /*LISTAVALORES->LISTAVALORES  , EXPRESION*/
 	| expresion 					 	{  } /*| EXPRESION*/
 ;
+
+
+
+
 
 
 
