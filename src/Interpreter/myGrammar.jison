@@ -222,9 +222,7 @@ instruccion
 ;
 /* ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬*/
 /* ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬*/
-returns	
-	: RETURN expresion       	{ $$ = $1; }
-    | RETURN                 	{ $$ = $1; }
+
 /* -------------------------- DECLARACION ASIGNACION VARIABLES ------------------------------ */
 declaracion
 
@@ -432,6 +430,11 @@ listavalores
 	| expresion 					 	{  } /*| EXPRESION*/
 ;
 
+/* -------------------------------------- RETURN --------------------------------------
+returns	
+	: RETURN expresion       	{ $$ = $1; }
+    | RETURN                 	{ $$ = $1; }
+;
 
 
 
