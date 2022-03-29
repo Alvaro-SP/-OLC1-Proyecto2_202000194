@@ -1,7 +1,10 @@
 /**
  * mi primer proyecto con Jison utilizando Nodejs en WINDOWS :)
  */
-
+{%
+var acumoftext="";
+const {Tree} = require('../Instructions/Instruccion');
+%}
 /*------------------------ Definición Léxica --------------------------*/
 %lex
 
