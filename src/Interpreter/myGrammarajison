@@ -6,7 +6,7 @@
 %lex
 
 %options case-insensitive
-
+%x CADENA
 %%
 
 /* Comentarios */
