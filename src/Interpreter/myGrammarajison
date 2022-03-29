@@ -8,6 +8,8 @@
 %options case-insensitive
 %x CADENA
 %%
+/*Consider the following example of a scanner that simply scans all double-quote 
+delimited strings in a text file but disallows newlines inside quotations:*/
 
 /* Comentarios */
 /* El lenguaje
@@ -84,7 +86,16 @@ relacionales. */
 /* (\'[^']?\')            	return 'CARACTER'
 (\'(([\\][\"]|[\\][\']|[\\][n])|([^\n\'\"]{1}))\')  return 'CARACTER' */
 (\'(([\\][\"]|[\\][\']|[\\][n]|[\\][t]|[\\][\\])|([^\n\'\"\\]{1}))\') return 'CARACTER'
-[\"].*[\"]				return 'CADENA'
+/*[\"].*[\"]				return 'CADENA'*/
+["]                 {acumoftext=""; this.begin("CADENA");}
+<CADENA>[^"\\]+     {acumoftext+=yytext;}
+<CADENA>"\\n"       {acumoftext+='\n';}
+<CADENA>"\\t"       {acumoftext+='\t';}
+<CADENA>"\\r"       {acumoftext+='\r';}
+<CADENA>"\\\""      {acumoftext+='\"';}
+<CADENA>"\\\'"      {acumoftext+='\'';}
+<CADENA>"\\\\"      {acumoftext+='\\';}
+<CADENA>["]         {yytext = acumoftext; this.popState(); return 'CADENA';}
 /* 5.13 Casteos (RESERVADAS)*/
 
 
