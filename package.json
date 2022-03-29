@@ -5,5 +5,23 @@
     "morgan": "^1.10.0",
     "nodemon": "^2.0.15",
     "react-router-dom": "^5.2.0"
-  }
+  },
+  "name": "-olc1-proyecto2_202000194",
+  "description": "<img alt=\"JavaScript\" src=\"https://img.shields.io/badge/-JavaScript-F7DF1E?style=flat-square&logo=JavaScript&logoColor=white\" />\r   <img alt=\"angular\" src=\"https://img.shields.io/badge/-Angular-DD0031?style=flat-square&logo=angular&logoColor=white\" />",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Alvaro-SP/-OLC1-Proyecto2_202000194.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Alvaro-SP/-OLC1-Proyecto2_202000194/issues"
+  },
+  "homepage": "https://github.com/Alvaro-SP/-OLC1-Proyecto2_202000194#readme"
 }
