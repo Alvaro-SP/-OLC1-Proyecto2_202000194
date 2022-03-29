@@ -197,23 +197,27 @@ instrucciones
 /* ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬*/
 /* ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬*/
 instruccion
-	: declaracion					{  } /* 5.12 Declaración y asignación de variables*/
-	| casteos						{  } /* 5.13 Casteos*/
-	| vectores						{  } /* 5.15.1. Vectores*/
-	| if							{  } /* 5.15.1. Vectores*/
-	| while							{  } /* 5.17 SenTencias cíclicas*/
-	| for							{  } /* 5.17 SenTencias cíclicas*/
-	| dowhile						{  } /* 5.17 SenTencias cíclicas*/
-	| funciones						{  } /* 5.19 Funciones*/
-	| metodos						{  } /* 5.20 Metodos*/
-	| llamadas PTCOMA				{  } /* 5.21 Llamadas*/
-	| print PTCOMA					{  } 
-	| println PTCOMA				{  } 
-    | BREAK PTCOMA                  {  }
-	| CONTINUE PTCOMA               {  }
-	| RETURN expresion PTCOMA      	{  }
-    | RETURN PTCOMA                	{  }
-    | run PTCOMA                	{  }
+	: declaracion					{ $$ = $1; } /* 5.12 Declaración y asignación de variables*/
+	| casteos						{ $$ = $1; } /* 5.13 Casteos*/
+	| vectores						{ $$ = $1; } /* 5.15.1. Vectores*/
+	| if							{ $$ = $1; } /* 5.15.1. Vectores*/
+	| while							{ $$ = $1; } /* 5.17 SenTencias cíclicas*/
+	| for							{ $$ = $1; } /* 5.17 SenTencias cíclicas*/
+	| dowhile						{ $$ = $1; } /* 5.17 SenTencias cíclicas*/
+	| funciones						{ $$ = $1; } /* 5.19 Funciones*/
+	| metodos						{ $$ = $1; } /* 5.20 Metodos*/
+	| llamadas PTCOMA				{ $$ = $1; } /* 5.21 Llamadas*/
+	| print PTCOMA					{ $$ = $1; } 
+	| println PTCOMA				{ $$ = $1; } 
+    | BREAK PTCOMA                  { $$ = $1; }
+	| CONTINUE PTCOMA               { $$ = $1; }
+	| RETURN expresion PTCOMA      	{ $$ = $1; }
+    | RETURN PTCOMA                	{ $$ = $1; }
+    | run PTCOMA                	{ $$ = $1; }
+	| VARIABLE MAS MAS PTCOMA 		{  } /* anio++/
+	| MAS MAS VARIABLE PTCOMA		{  } /* ++anio */
+	| VARIABLE MENOS MENOS PTCOMA 	{  } /* edad-- */
+	| MENOS MENOS VARIABLE PTCOMA 	{  } /* --edad */
 	/*| incredecre	{  }  5.14 Incremento y Decremento*/
 
 ;
