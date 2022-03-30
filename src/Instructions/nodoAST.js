@@ -3,10 +3,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.nodoAST = void 0;
 
 class nodoAST{
-    constructor(tipo, line, column) {
-        this.tipo = tipo;
-        this.line = line;
-        this.column = column;
+    constructor(data) {
+        this.childs = new Array();
+        this.data = data;
+    }
+    setchild(data){
+        this.childs=data;
     }
 }
 exports.nodoAST = nodoAST;
