@@ -1,11 +1,10 @@
 // const nodoAST = require("./nodoAST")
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.InstructionsAST = void 0;
+exports.InstructionAST = void 0;
 
 //*************************************************************************** */
 //!---------------------- ARBOLES DE AST CON LAS INSTRUCCIONES----------------------
-
-class InstructionsAST {
+class InstructionAST {
     constructor(ins){
         this.ins=ins;
         this.error=new Array();
@@ -19,10 +18,19 @@ class InstructionsAST {
     setConsole(console){
         this.console.push(console);
     }
-    setVar(variables){
+    setVariables(variables){
         this.variables.push(variables);
         // this.variables=variables;
     }
+    getConsole(){
+        return this.console;
+    }
+    getVariables(){
+        return this.variables;
+    }
+    getError(){
+        return this.error;
+    }
 }
 
-exports.InstructionsAST = InstructionsAST;
+exports.InstructionAST = InstructionAST;

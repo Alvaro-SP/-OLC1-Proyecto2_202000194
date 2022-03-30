@@ -6,6 +6,10 @@ const control = require("../Controllers/index.controller")
 //! el cual corresponde hacer peticiones.
 
 router.get("/", control.index)// es para obtener el protocolo HTTP que estamos usando
+router.post('/analizar', control.analizar);
+
+//************  PARA PROBAR EN POSTMAN  *************** */
+router.get('/test', control.postman);
 //! .post
 //! .put
 //! .delete

@@ -161,13 +161,14 @@ relacionales. */
 
 <<EOF>>                 return 'EOF';
 
-.                       { console.error('Este es un error léxico: ' + yytext + ', en la linea: ' + yylloc.first_line + ', en la columna: ' + yylloc.first_column); }
+.                       { console.error('Este es un error léxico: ' + yytext + ', en la linea: ' + yylloc.first_line + ', en la columna: ' + yylloc.first_column); 
+						instruccionesAPI.getAST.setError(instruccionesAPI.errorlexico(yytext,yylloc.first_line,yylloc.first_column)); }
 /lex
 
 %{
-	const instruccionesAPI	= require('./Interpreter').instruccionesAPI;
+	const instruccionesAPI	= require('./instrucciones').instruccionesAPI;
+    var sintacticerror = "";
 %}
-
 
 /* 5.10 Precedencia de Operaciones */
 /* Asociación de operadores y precedencia 
@@ -184,13 +185,15 @@ relacionales. */
 %start ini 
 %% /* ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬Definición de la gramática▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬ */
 ini
-	: instrucciones EOF				{$$ = new Instruccion($1); return $$;}
+	: instrucciones EOF	{$$ = new Instruccion($1); return $$;}
+	| error { 	sintacticerror="Detectado error Sintactico se esperaba otro valor y se recibio: "+yytext+" reparelo.";
+				console.error('Este es un error sintáctico: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column); 
+				instruccionesAPI.getAST.setError(instruccionesAPI.errorsintactico(sintacticerror,yylloc.first_line,yylloc.first_column));}
 ;
 
 instrucciones 
 	: instruccion instrucciones		{$$ = $1; $1.push($1);}
 	| instruccion					{$$=[$1];}
-	| error { console.error('Este es un error sintáctico: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column); }
 ;
 /* ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬*/
 /* ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬		INSTRUCCIONES      ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬*/

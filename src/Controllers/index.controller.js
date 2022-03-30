@@ -2,24 +2,49 @@ var fs = require('fs');
 //! Mi Gramatica 
 var parser = require('../Interpreter/myGrammar');
 var interprete = require('../Interpreter/interprete')
-var interprete = require('../Instructions/InstructionAST')
+var InstructionsAST = require('../Instructions/InstructionAST')
 
+
+    
+// ? ████████████████████████████████ INDEX GET ████████████████████████████████    
 exports.index = async(req, res) => {
-    
-    // let arbolIns = new InstructionAST();
-    // este seria mi gran contenedor de instrucciones
-    //************ EL AST*************** */
-    var arbolIns=parser.parse(data.toString());
-    //! PENDIENTE COMO VALIDAR EL RUN OSEA SI SE VA A EJECUTAR EL RUN POR cada metodo
-    //! O SOLAMENTE VA A DECIR DONDE INICIAR.
-    
-    res.send({Estado: interprete.instruccionesAPI.getActive(), Message: 'Server On Port todo fresh...'});
+    //! SI LA CONSOLA NO ES VACIA, ENTONCES DEVUELVO LA CONSOLA
+    if(interprete.instruccionesAPI.getAST().getConsole()!= null){
+        res.send({"Message": instruccionesAPI.getConsole().toString()});
+    }else{
+        res.send({"Message": "Server Active: aun no se ha ejecutado nada"});
+    }
+    // res.send({Estado: interprete.instruccionesAPI.getActive(), Message: 'Server On Port todo fresh...'});
     // fs.readFile('./Public/entrada.txt', (err, data) => {
     //     if (err) res.send({state: false, err: err});
 
     //     res.send({Estado: interprete.instruccionesAPI.getActive(), Message: 'Server On Port todo fresh...'});
     // });
 }
+// ? ████████████████████████████████ ANALIZAR POST ████████████████████████████████
+exports.analizar= async(req, res) => {
+    console.log("▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬REQUEST▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
+    console.log(req.body);
+    cadena = JSON.stringify(req.body);  //vere cual de los dos funcio
+    
+    const texto = req.body.text;
+    console.log("1. Cadena de Entrada (el codigo): " + texto);
+    console.log("2. Cadena de Entrada (el codigo): " + cadena);
+    const arbolIns =  interprete.instruccionesAPI.setInsAST(cadena);
+    //* necesito retornar 
+    res.send({  Salida: "COMPILADO", 
+                AST: arbolIns.variables , 
+                ListaErrores: arbolIns.error, 
+                Consola: arbolIns.console
+            });  
+    
+}
+// ? ████████████████████████████████ POSTMAN ████████████████████████████████
+exports.postman= async(req, res) => {
+    console.log("▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬ POSTMAN ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
+    res.send({Estado: ' el Server responde en True', Message: 'Todo en orden :)'});
+}
+
 // ! Se envia la respuesta asi:
 // app.get('/', (req, res) => {
 //     res.send({"Saludo": "Hola OLC1"});
