@@ -1,8 +1,18 @@
-// const nodoAST = require("./nodoAST")
+const nodo = require("./nodo")
+const InstructionsAST = require("./InstructionAST")
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.InstructionsAST = void 0;
+exports.print = void 0;
 
 //*************************************************************************** 
 //!------------------------------- INSTRUCCION PRINT----------------------------
-
-exports.InstructionsAST = InstructionsAST;
+class print extends nodo{
+    constructor(data, line, column){
+        this.data=data
+    }
+    run(){
+        const valor = this.expresion.execute(table, tree);
+        InstructionsAST
+        return null;
+    }
+}
+exports.print = print;
