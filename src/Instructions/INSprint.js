@@ -14,8 +14,7 @@ class print extends nodo{
         this.column=column;
     }
     run(){
-        const valor = this.expresion.execute(table, tree);
-        InstructionsAST.set
+        InstructionsAST.console.push(this.data);
         return null;
     }
 }
