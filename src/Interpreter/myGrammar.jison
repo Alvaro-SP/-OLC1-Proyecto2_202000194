@@ -206,18 +206,18 @@ instruccion
 	| funciones						{ $$ = $1; } /* 5.19 Funciones*/
 	| metodos						{ $$ = $1; } /* 5.20 Metodos*/
 	| llamadas PTCOMA				{ $$ = $1; } /* 5.21 Llamadas*/
-	| print PTCOMA					{ $$ = $1; } 
-	| println PTCOMA				{ $$ = $1; } 
-    | BREAK PTCOMA                  {  }	/* BREAK */
-	| CONTINUE PTCOMA               {   }   /* CONTINUE */
-	| returns PTCOMA      	{ $$ = $1; }
+	| print PTCOMA					{ $$ = $1; } /* Print*/
+	| println PTCOMA				{ $$ = $1; } /* Println*/
+    | BREAK PTCOMA                  { $$ = $1; } /* BREAK */
+	| CONTINUE PTCOMA               { $$ = $1; } /* CONTINUE */
+	| returns PTCOMA      			{ $$ = $1; }
     | run PTCOMA                	{ $$ = $1; }
-	| VARIABLE MAS MAS PTCOMA 		{  } /* anio++/
-	| MAS MAS VARIABLE PTCOMA		{  } /* ++anio */
-	| VARIABLE MENOS MENOS PTCOMA 	{  } /* edad-- */
-	| MENOS MENOS VARIABLE PTCOMA 	{  } /* --edad */
-	/*| incredecre	{  }  5.14 Incremento y Decremento*/
+	| VARIABLE MAS MAS PTCOMA 		{ $$ = $1; } /* anio++/
+	| MAS MAS VARIABLE PTCOMA		{ $$ = $1; } /* ++anio */
+	| VARIABLE MENOS MENOS PTCOMA 	{ $$ = $1; } /* edad-- */
+	| MENOS MENOS VARIABLE PTCOMA 	{ $$ = $1; } /* --edad */
 
+	/*| incredecre	{  }  5.14 Incremento y Decremento*/
 ;
 /* ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬*/
 /* ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬	FIN  INSTRUCCIONES      ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬*/

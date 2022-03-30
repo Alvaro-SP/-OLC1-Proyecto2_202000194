@@ -13,8 +13,8 @@ class nodoAST{
     }
 
     addChild(child) {
-        if (hijo instanceof nodoAST) {
-            this.hijos.append(hijo);
+        if (child instanceof nodoAST) {
+            this.hijos.append(child);
         } else {
             this.hijos.append(new nodoAST());
         }
