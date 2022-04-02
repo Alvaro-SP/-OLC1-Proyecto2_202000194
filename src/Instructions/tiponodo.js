@@ -5,7 +5,6 @@ var tipos;
 (function (tipos) {
     tipos[tipos["ENTERO"] = 0] = "ENTERO";
     tipos[tipos["DECIMAL"] = 1] = "DECIMAL";
-    tipos[tipos["NUMERO"] = 2] = "NUMERO";
     tipos[tipos["CARACTER"] = 3] = "CARACTER";
     tipos[tipos["STRING"] = 4] = "STRING";
     tipos[tipos["BOOLEANO"] = 5] = "BOOLEANO";
@@ -14,7 +13,13 @@ var tipos;
     tipos[tipos["METODO"] = 8] = "METODO";
     tipos[tipos["FUNCION"] = 9] = "FUNCION";
     tipos[tipos["VARIABLE"] = 10] = "VARIABLE";
+    tipos[tipos["EXPRESION"] = 11] = "EXPRESION";
+    tipos[tipos["LIST"] = 12] = "LIST";
+    tipos[tipos["VALOR"] = 10] = "VALOR";
+    tipos[tipos["VARIABLE"] = 10] = "VARIABLE";
+    tipos[tipos["VARIABLE"] = 10] = "VARIABLE";
 })(tipos = exports.tipos || (exports.tipos = {}));
+// por si es un entero o un decimal
 function isInt(numero) {
     if (numero % 1 == 0) {
         return tipos.ENTERO;
@@ -56,12 +61,16 @@ var Tipo = /** @class */ (function () {
         else if (this.tipo === tipos.VOID) {
             return 'Void';
         }
-        else if (this.tipo === tipos.ARRAY) {
+        else if (this.tipo === tipos.VECTOR) {
             return 'Vector';
         }
-        else if (this.tipo === tipos.LISTA) {
-            return 'Lista';
+        else if (this.tipo === tipos.LIST) {
+            return 'List';
         }
+        else if (this.tipo === tipos.VALOR) {
+            return 'Valor';
+        }
+        
     };
     return Tipo;
 }());

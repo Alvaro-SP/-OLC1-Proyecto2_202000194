@@ -170,7 +170,7 @@ relacionales. */
     var sintacticerror = "";
 %}
 
-/* 5.10 Precedencia de Operaciones */
+/*----------------------------- 5.10 Precedencia de Operaciones --------------------------*/
 /* Asociación de operadores y precedencia 
     La precedencia de operadores nos indica la importancia en que una operación debe
     realizarse por encima del resto. A continuación, se define la misma.*/
@@ -315,67 +315,66 @@ expresion
  /*- lista
  -vector
  -cadena*/
-
 valor
-	:listavalores       	{  }
+	:listavalores       		{  }
 	|CADENA       			{  }
-	|VARIABLE       		{  } 
+	|VARIABLE       	   {  } 
 ;
 
 /* ------------------------------------    TIPOS    ------------------------------------ */
 tipo
-	:ENTERO       	{  }
-	|DOUBLE       	{  }
-	|BOOLEANO       {  }
-	|CARACTER     	{  }
-	|STRING        	{  } 
-	|VOID           {  }
+	:ENTERO       		{  }
+	|DOUBLE       		{  }
+	|BOOLEANO     	{  }
+	|CARACTER    	 {  }
+	|STRING        		  {  } 
+	|VOID           		{  }
 ;
 
 /* ------------------------------------    IF    ------------------------------------ */
 if
-    :IF PARIZQ expresion PARDER LLAIZQ instrucciones LLADER 	{}/*if   (  <EXPRESION>  )   { 	<INSTRUCCIONES>	} */
+    :IF PARIZQ expresion PARDER LLAIZQ instrucciones LLADER 																	{}/*if   (  <EXPRESION>  )   { 	<INSTRUCCIONES>	} */
     |IF PARIZQ expresion PARDER LLAIZQ instrucciones LLADER ELSE LLAIZQ instrucciones LLADER	{}	/*if   (  <EXPRESION>  )   { 	<INSTRUCCIONES>	}   else   { 	<INSTRUCCIONES>	} */
-    |IF PARIZQ expresion PARDER LLAIZQ instrucciones LLADER ELSE if 					{}	/* if   (  <EXPRESION>  )   { 	<INSTRUCCIONES>	} else <IF>*/
-	|IF PARIZQ expresion PARDER LLAIZQ LLADER 					{}
+    |IF PARIZQ expresion PARDER LLAIZQ instrucciones LLADER ELSE if 													   {}	/* if   (  <EXPRESION>  )   { 	<INSTRUCCIONES>	} else <IF>*/
+	|IF PARIZQ expresion PARDER LLAIZQ LLADER 																							{}
 ;
 
 /* ------------------------------------  SWITCH  ------------------------------------ */
 switch
     :SWITCH PARIZQ expresion PARDER LLAIZQ caselist default LLADER  {}/* switch   (   <EXPRESION>   )  { <CASES_LIST>   <DEFAULT> } */
     |SWITCH PARIZQ expresion PARDER LLAIZQ caselist LLADER              {}/* switch   ( <EXPRESION>  )  {<CASES_LIST> } */
-    |SWITCH PARIZQ expresion PARDER LLAIZQ default LLADER           {}/* switch   ( <EXPRESION>  )   { <DEFAULT> } */
+    |SWITCH PARIZQ expresion PARDER LLAIZQ default LLADER           	{}/* switch   ( <EXPRESION>  )   { <DEFAULT> } */
 
 ;
 /* ------------------------------------  caselist  ------------------------------------ */
 caselist
     :caseList CASE expresion DOSPUNTOS instrucciones    {} 
-    |CASE expresion DOSPUNTOS instrucciones             {}/* case   <EXPRESION>   :  <INSTRUCCIONES> */
+    |CASE expresion DOSPUNTOS instrucciones             	 {}/* case   <EXPRESION>   :  <INSTRUCCIONES> */
 ;
 /* ------------------------------------  DEFAULT  ------------------------------------ */
 default
-    :DEFAULT DOSPUNTOS instrucciones {}
+    :DEFAULT DOSPUNTOS instrucciones	 {}
 ;
 
 /*--------------------------------------5.17 SenTencias cíclicas----------------------------------*/
  
  /*5.17.1. While  while   (  <EXPRESION>   )   {  <INSTRUCCIONES>  } */
 while
-    :WHILE PARIZQ expresion PARDER LLAIZQ instrucciones LLADER {$$ = new While($3, $6, @1.first_line, @1.first_column);}
+    :WHILE PARIZQ expresion PARDER LLAIZQ instrucciones LLADER 		{$$ = new While($3, $6, @1.first_line, @1.first_column);}
 ;
 /*5.17.2. For*/
 for
-	/* for  ((<DECLARACION>|<ASIGNACION>);<CONDICION>;< ACTUALIZACION>){<INSTRUCCIONES>} */
-    :FOR PARIZQ fordeclarar PTCOMA expresion PTCOMA actualizacion PARDER LLAIZQ instrucciones LLADER {}
+	
+    :FOR PARIZQ fordeclarar PTCOMA expresion PTCOMA actualizacion PARDER LLAIZQ instrucciones LLADER  {}/* for  ((<DECLARACION>|<ASIGNACION>);<CONDICION>;< ACTUALIZACION>){<INSTRUCCIONES>} */
 ;
 fordeclarar
     : tipo VARIABLE IGUAL expresion 			{  } /*TIPO> identificador = <EXPRESION>;*/
-	| VARIABLE IGUAL expresion 					{  } /*identificador = <EXPRESION>;*/
+	| VARIABLE IGUAL expresion 					  {  } /*identificador = <EXPRESION>;*/
 ;
 actualizacion
-    : VARIABLE MAS MAS 				{  } /* anio++ */
-	| VARIABLE MENOS MENOS 			{  } /* edad-- */
-	| VARIABLE IGUAL expresion 					{  } /*identificador = <EXPRESION>;*/
+    : VARIABLE MAS MAS 						{  } /* anio++ */
+	| VARIABLE MENOS MENOS 				{  } /* edad-- */
+	| VARIABLE IGUAL expresion 				{  } /*identificador = <EXPRESION>;*/
 ;
 /*5.17.3. Do-While*/
 dowhile
@@ -385,36 +384,36 @@ dowhile
 /*--------------------------------------  5.19 Funciones  ----------------------------------*/
 funciones
     : VARIABLE PARIZQ parametros PARDER DOSPUNTOS tipo LLAIZQ instrucciones LLADER {  } /* <ID>(<PARAMETROS>):<TIPO>{ <INSTRUCCIONES>} */
-    | VARIABLE PARIZQ PARDER DOSPUNTOS tipo LLAIZQ instrucciones LLADER            		 {  }
+    | VARIABLE PARIZQ PARDER DOSPUNTOS tipo LLAIZQ instrucciones LLADER            		   {  }
 ;
 parametros
-    :parametros COMA tipo VARIABLE   {  }
-    |tipo VARIABLE                   {  }         
+    :parametros COMA tipo VARIABLE  	{  }
+    |tipo VARIABLE                   					{  }         
 ;
 
 /*--------------------------------------  5.20 Métodos  ----------------------------------*/
 metodos
-    : VARIABLE PARIZQ parametros PARDER DOSPUNTOS VOID LLAIZQ instrucciones LLADER {  } /* <ID>(<PARAMETROS>):<TIPO>{ <INSTRUCCIONES>} */
-    | VARIABLE PARIZQ parametros PARDER LLAIZQ instrucciones LLADER {  } /* <ID>(<PARAMETROS>){ <INSTRUCCIONES>} */
-    | VARIABLE PARIZQ PARDER DOSPUNTOS VOID LLAIZQ instrucciones LLADER {  } /* <ID>():<TIPO>{ <INSTRUCCIONES>} */
-    | VARIABLE PARIZQ PARDER LLAIZQ instrucciones LLADER {  } /* <ID>(){ <INSTRUCCIONES>} */
+    : VARIABLE PARIZQ parametros PARDER DOSPUNTOS VOID LLAIZQ instrucciones LLADER 		{  } /* <ID>(<PARAMETROS>):<TIPO>{ <INSTRUCCIONES>} */
+    | VARIABLE PARIZQ parametros PARDER LLAIZQ instrucciones LLADER											 {  } /* <ID>(<PARAMETROS>){ <INSTRUCCIONES>} */
+    | VARIABLE PARIZQ PARDER DOSPUNTOS VOID LLAIZQ instrucciones LLADER 						{  } /* <ID>():<TIPO>{ <INSTRUCCIONES>} */
+    | VARIABLE PARIZQ PARDER LLAIZQ instrucciones LLADER 															 {  } /* <ID>(){ <INSTRUCCIONES>} */
 ;
 /*--------------------------------------  5.21 Llamadas  ----------------------------------*/
 
 llamadas
     :VARIABLE PARIZQ paramllamada PARDER    {   }
-    |VARIABLE PARIZQ PARDER                 {   }
+    |VARIABLE PARIZQ PARDER                 			{   }
 ;
 /*LLAMADA -> [<ID>] ( [<PARAMETROS_LLAMADA>] )
 | [<ID>] ( )*/
 
 paramllamada
     :paramllamada COMA expresion      {  }
-    |expresion                        {  }
+    |expresion                        					{  }
 ;
 /*--------------------------------------  5.22 Función Print  ----------------------------------*/
 print
-    :PRINT PARIZQ expresion PARDER    {  }/* Print  (  <EXPRESION>  );*/
+    :PRINT PARIZQ expresion PARDER   	{   }/* Print  (  <EXPRESION>  );*/
 ;
 /*--------------------------------------  5.23 Función Println  ----------------------------------*/
 println
@@ -424,18 +423,18 @@ println
 /*--------------------------------------  RUN  ----------------------------------*/
 /*5.26. Run*/
 run
-    : RUN VARIABLE PARA PARC 			  {  } /* run <ID>  ( )  ;*/
-	| RUN VARIABLE PARA listavalores PARC {  } /* run <ID>  ( <LISTAVALORES> )  ;*/
+    : RUN VARIABLE PARA PARC 			  			{  } /* run <ID>  ( )  ;*/
+	| RUN VARIABLE PARA listavalores PARC 	{  } /* run <ID>  ( <LISTAVALORES> )  ;*/
 ;
 listavalores
     : listavalores COMA expresion 		 {  } /*LISTAVALORES->LISTAVALORES  , EXPRESION*/
-	| expresion 					 	{  } /*| EXPRESION*/
+	| expresion 					 					{  } /*| EXPRESION*/
 ;
 
 /* -------------------------------------- RETURN --------------------------------------
 returns	
-	: RETURN expresion       	{ $$ = $1; }
-    | RETURN                 	{ $$ = $1; }
+	: RETURN expresion       	 { $$ = $1; }
+    | RETURN                 			{ $$ = $1; }
 ;
 
 

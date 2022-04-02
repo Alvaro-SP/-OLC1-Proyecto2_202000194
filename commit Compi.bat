@@ -1,5 +1,9 @@
-cd "C:\Users\dell\OneDrive - Facultad de Ingeniería de la Universidad de San Carlos de Guatemala\5 Q U I N T O S E MESTRE\LAB. Compi 1\PROYECTO 2\GITHUB\-OLC1-Proyecto2_202000194"
+@REM PC LAPTOP
+@REM cd "C:\Users\dell\OneDrive - Facultad de Ingeniería de la Universidad de San Carlos de Guatemala\5 Q U I N T O S E MESTRE\LAB. Compi 1\PROYECTO 2\GITHUB\-OLC1-Proyecto2_202000194"
+
+@REM PC DESKTOP
+cd "C:\Users\SPUser\OneDrive - Facultad de Ingeniería de la Universidad de San Carlos de Guatemala\Documentos\-OLC1-Proyecto2_202000194"
 git add .
-git commit -m "add new commit Comenzando el analizador Sintactico de JISON"
+git commit -m "add new commit cambiando a TS"
 git push
 pause
