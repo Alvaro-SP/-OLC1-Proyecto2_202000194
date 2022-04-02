@@ -4,6 +4,6 @@
 @REM PC DESKTOP
 cd "C:\Users\SPUser\OneDrive - Facultad de Ingeniería de la Universidad de San Carlos de Guatemala\Documentos\-OLC1-Proyecto2_202000194"
 git add .
-git commit -m "add new commit cambiando a TS"
+git commit -m "add new commit "
 git push
 pause
