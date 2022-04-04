@@ -203,7 +203,7 @@ export const Home = (props) => {
       </section>
       <div class="centrandoeldiv">
         <button
-          onClick={props.compilar}
+          onClick={compilar}
           id="enviarCargado"
           type="button"
           class="buttonS button1S"
