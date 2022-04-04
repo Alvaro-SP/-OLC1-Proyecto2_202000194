@@ -28,7 +28,10 @@ export const ErrorT = (props)=>{
                 </tr>
                 </thead>
                 <tbody>
-
+                {
+                   
+                    
+                }
                 </tbody>
             </table>
             </body>

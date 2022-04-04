@@ -11,9 +11,10 @@ import { Arbol } from "./components/appfront/ArbolDeriva";
 import { Yoo } from "./components/appfront/me";
 import { NotFound } from "./components/appfront/NotFound";
 
-
 function App() {
+  
   return (
+    
     <Router>
         <Routes>
           <Route exact path="/" element={<Home />} />
@@ -24,6 +25,7 @@ function App() {
           <Route path="*" element = {<NotFound/>} />
         </Routes>
     </Router>
+
   );
 }
 

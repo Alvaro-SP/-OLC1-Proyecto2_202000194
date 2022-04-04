@@ -1,11 +1,11 @@
 var aInstructionAST = require('../Instructions/InstructionAST')
+var Errores = require('../Instructions/Errores/Errorlist')
 let operations = []
-let arbolIns = new aInstructionAST.InstructionAST();
-
+var arbolIns = new aInstructionAST.InstructionAST();
+var ErroresTable = new Errores.Errorlist();
 //************ EL AST*************** */
 const instruccionesAPI = {
     setInsAST: function (data){
-        
         try {
             arbolIns=parser.parse(data.toString());
             return arbolIns;
@@ -37,6 +37,9 @@ const instruccionesAPI = {
 	getAST: function(){
 		return arbolIns;
 	},
+	getErrores: function(){
+		return ErroresTable;
+	}
 }
 // const instruccionesAPI = {	
 // 	addOperation: function(valor) {

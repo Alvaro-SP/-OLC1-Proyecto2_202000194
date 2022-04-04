@@ -33,15 +33,15 @@ deberá soportar dos tipos de comentarios que son los siguientes:
 
 /*▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬ LEXICO ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬ */
 /* 5.3 Tipos de Datos RESERVADAS */
-"Int"                   return 'ENTERO';
-"Double"                return 'DOUBLE';
-"Boolean"               return 'BOOLEANO';
-"Char"                  return 'CARACTER';
-"String"                return 'STRING';
-[0-9]+\b 	            return 'VENTERO';
-[0-9]+("."[0-9]+)?\b  	return 'VDOUBLE';
-"true"          		return 'TRUE'
-"false"         		return 'FALSE'
+"Int"                  		  return 'ENTERO';
+"Double"                  return 'DOUBLE';
+"Boolean"              	 return 'BOOLEANO';
+"Char"                  	return 'CARACTER';
+"String"                	return 'STRING';
+[0-9]+\b 	            	return 'VENTERO';
+[0-9]+("."[0-9]+)\b  	 return 'VDOUBLE';
+"true"\b        				return 'TRUE'
+"false" \b        				return 'FALSE'
 /* 5.4 Secuencias de Escape  */
 
 /* 5.5 Operadores Aritméticos */
@@ -162,7 +162,8 @@ relacionales. */
 <<EOF>>                 return 'EOF';
 
 .                       { console.error('Este es un error léxico: ' + yytext + ', en la linea: ' + yylloc.first_line + ', en la columna: ' + yylloc.first_column); 
-						instruccionesAPI.getAST.setError(instruccionesAPI.errorlexico(yytext,yylloc.first_line,yylloc.first_column)); }
+						instruccionesAPI.getAST.setError(instruccionesAPI.errorlexico(yytext,yylloc.first_line,yylloc.first_column));
+						instruccionesAPI.getErrores.getInstance().insertar(new ErrorList("Lexico","Caracter: \" "+yytext+"\" no es valido" ,yylloc.first_line,yylloc.first_column)); }
 /lex
 
 %{
@@ -185,10 +186,11 @@ relacionales. */
 %start ini 
 %% /* ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬Definición de la gramática▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬ */
 ini
-	: instrucciones EOF	{$$ = new Instruccion($1); return $$;}
-	| error { 	sintacticerror="Detectado error Sintactico se esperaba otro valor y se recibio: "+yytext+" reparelo.";
-				console.error('Este es un error sintáctico: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column); 
-				instruccionesAPI.getAST.setError(instruccionesAPI.errorsintactico(sintacticerror,yylloc.first_line,yylloc.first_column));}
+	: instrucciones EOF		{$$ = new Instruccion($1); return $$;}
+	| error PTCOMA 			{ 	sintacticerror="Detectado error Sintactico se esperaba otro valor y se recibio: "+yytext+" reparelo.";
+												console.error('Este es un error sintáctico: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column); 
+												instruccionesAPI.getAST.setError(instruccionesAPI.errorsintactico(sintacticerror,yylloc.first_line,yylloc.first_column));}
+	/*OJITO: se coloca el ptocoma por si hay un error semantico, entonces se va a recuperar*/
 ;
 
 instrucciones 
@@ -267,8 +269,8 @@ expresion
 	| expresion MENOS expresion     { $$ = $1 - $3; }
 	| expresion POR expresion       { $$ = $1 * $3; }
 	| expresion DIVIDIDO expresion  { $$ = $1 / $3; }
-	| expresion MOD expresion			                    {  }	
-    | expresion POT expresion			                    {  }	
+	| expresion MOD expresion			                    { $$ = $1 % $3; }	
+    | expresion POT expresion			                    { $$ = $1 ^ $3; }	
     | expresion MENORIGUALQ expresion	                    {  }	
 	| expresion MENORQUE IGUAL expresion	 		        {  }			   
 	| expresion MENORQUE expresion	 		                {  }	
@@ -276,12 +278,12 @@ expresion
     | expresion MAYORQUE IGUAL expresion                    {  }				  
     | expresion MAYORQUE expresion                          {  }		
     | expresion IGUALQUE expresion	  		                {  }			
-    | expresion IGUAL IGUAL expresion	  		                {  }			
+    | expresion IGUAL IGUAL expresion	  		         	{  }			
     | expresion IGUALA expresion	  		                {  }			
-    | expresion DIFERENTE expresion	   	                {  }
-    | expresion NOT IGUAL expresion	   	                {  }
+    | expresion DIFERENTE expresion	   	                	{  }
+    | expresion NOT IGUAL expresion	   	                	{  }
     | expresion OR OR expresion	  			                {  }
-    | expresion AND AND expresion			                    {  }
+    | expresion AND AND expresion			                {  }
 	| PARA tipo PARC expresion		{  } /* (int) 18.6*//*(<TIPO>) <EXPRESION>*/
 	| VENTERO                        { $$ = Number($1); }
 	| VDOUBLE                       	{ $$ = Number($1); }
