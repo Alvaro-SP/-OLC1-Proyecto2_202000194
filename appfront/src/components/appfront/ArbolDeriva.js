@@ -4,14 +4,14 @@ const API = "http://localhost:4000";
 
 export const Arbol = (props) => {
   // ESTO HACE LA MAGIA PARA QUE PODAMOS GENERAR LA GRAFICA
-  var svg_div = jQuery("#graphviz_svg_div");
-  function UpdateGraphviz(dot) {
-    svg_div.html("");
-    var data = dot;
-    // Generate the Visualization of the Graph into "svg".
-    var svg = Viz(data, "svg");
-    svg_div.html("<hr>" + svg);
-  }
+  // var svg_div = jQuery("#graphviz_svg_div");
+  // function UpdateGraphviz(dot) {
+  //   svg_div.html("");
+  //   var data = dot;
+  //   // Generate the Visualization of the Graph into "svg".
+  //   var svg = Viz(data, "svg");
+  //   svg_div.html("<hr>" + svg);
+  // }
   
   return (
     <Fragment>
