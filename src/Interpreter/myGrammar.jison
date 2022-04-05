@@ -263,7 +263,7 @@ listavalores2
 
 /* ------------------------------------ EXPRESIONES ------------------------------------ */
 expresion
-	: MENOS expresion %prec UMENOS  { $$ = $2 *-1; }
+	: MENOS expresion %prec UMENOS  { $$ = $2 * -1; }
 	| expresion MAS expresion       { $$ = $1 + $3; }
 	| expresion MENOS expresion     { $$ = $1 - $3; }
 	| expresion POR expresion       { $$ = $1 * $3; }
@@ -284,8 +284,8 @@ expresion
     | expresion OR OR expresion	  			                {  }
     | expresion AND AND expresion			                {  }
 	| PARA tipo PARC expresion		{  } /* (int) 18.6*//*(<TIPO>) <EXPRESION>*/
-	| VENTERO                        { $$ = Number($1); }
-	| VDOUBLE                       	{ $$ = Number($1); }
+	| VENTERO                       {  }
+	| VDOUBLE                       { }
 	| CADENA						{  }
 	| TRUE                       	{  }
 	| FALSE                       	{  }
@@ -399,14 +399,14 @@ metodos
 
 llamadas
     :VARIABLE PARIZQ paramllamada PARDER    {   }
-    |VARIABLE PARIZQ PARDER                 			{   }
+    |VARIABLE PARIZQ PARDER                 {   }
 ;
 /*LLAMADA -> [<ID>] ( [<PARAMETROS_LLAMADA>] )
 | [<ID>] ( )*/
 
 paramllamada
-    :paramllamada COMA expresion      {  }
-    |expresion                        					{  }
+    :paramllamada COMA expresion      	{  }
+    |expresion                        	{  }
 ;
 /*--------------------------------------  5.22 Función Print  ----------------------------------*/
 instruccionprint
@@ -420,18 +420,18 @@ instruccionprintln
 /*--------------------------------------  RUN  ----------------------------------*/
 /*5.26. Run*/
 instruccionrun
-    : RUN VARIABLE PARA PARC 			  			{  } /* run <ID>  ( )  ;*/
-	| RUN VARIABLE PARA listavalores PARC 	{  } /* run <ID>  ( <LISTAVALORES> )  ;*/
+    : RUN VARIABLE PARA PARC 			  		{  } /* run <ID>  ( )  ;*/
+	| RUN VARIABLE PARA listavalores PARC 		{  } /* run <ID>  ( <LISTAVALORES> )  ;*/
 ;
 listavalores
-    : listavalores COMA expresion 		 {  } /*LISTAVALORES->LISTAVALORES  , EXPRESION*/
-	| expresion 					 					{  } /*| EXPRESION*/
+    : listavalores COMA expresion 		 		{  } /*LISTAVALORES->LISTAVALORES  , EXPRESION*/
+	| expresion 					 			{  } /*| EXPRESION*/
 ;
 
 /* -------------------------------------- RETURN --------------------------------------*/
 returns	
-	: RETURN expresion       	 { $$ = $1; }
-    | RETURN                 			{ $$ = $1; }
+	: RETURN expresion       	{ $$ = $1; }
+    | RETURN                 	{ $$ = $1; }
 ;
 
 
