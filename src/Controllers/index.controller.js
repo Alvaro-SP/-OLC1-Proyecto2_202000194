@@ -4,7 +4,6 @@ var parser = require('../Interpreter/myGrammar');
 var interprete = require('../Interpreter/interprete')
 var InstructionsAST = require('../Instructions/InstructionAST')
 
-
     
 // ? ████████████████████████████████ INDEX GET ████████████████████████████████    
 exports.index = async(req, res) => {
@@ -36,8 +35,7 @@ exports.analizar= async(req, res) => {
                 AST: arbolIns.variables , 
                 ListaErrores: arbolIns.error, 
                 Consola: arbolIns.console
-            });  
-    
+            });
 }
 // ? ████████████████████████████████ POSTMAN ████████████████████████████████
 exports.postman= async(req, res) => {

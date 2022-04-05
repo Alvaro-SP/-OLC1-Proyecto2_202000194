@@ -35,10 +35,11 @@ deber soportar dos tipos de comentarios que son los siguientes:
 "Boolean"              	 return 'BOOLEANO';
 "Char"                  	return 'CARACTER';
 "String"                	return 'STRING';
+[0-9]("."[0-9]+)\b  	 return 'VDOUBLE';
 [0-9]+\b 	            	return 'VENTERO';
-[0-9]+("."[0-9]+)\b  	 return 'VDOUBLE';
-"true"\b        				return 'TRUE'
-"false" \b        				return 'FALSE'
+
+"true"        					return 'TRUE'
+"false"         				return 'FALSE'
 /* 5.4 Secuencias de Escape  */
 
 /* 5.5 Operadores Aritméticos */
@@ -75,7 +76,7 @@ relacionales. */
 
 
 /* 5.11 Caracteres de finalización y encapsulamiento de sentencias (RESERVADAS)*/
-";"             return 'PTOCOMA'
+";"             return 'PTCOMA'
 "["             return 'CORIZQ'
 "]"             return 'CORDER'
 
@@ -203,8 +204,6 @@ instrucciones
 /* ================================================================*/
 instruccion
 	: declaracion					{ $$ = $1; } /* 5.12 Declaración y asignación de variables*/
-	| casteos						{ $$ = $1; } /* 5.13 Casteos*/
-	| vectores						{ $$ = $1; } /* 5.15.1. Vectores*/
 	| instruccionif							{ $$ = $1; } /* 5.15.1. Vectores*/
 	| instruccionwhile							{ $$ = $1; } /* 5.17 SenTencias cíclicas*/
 	| instruccionfor							{ $$ = $1; } /* 5.17 SenTencias cíclicas*/
@@ -263,13 +262,13 @@ listavalores2
 
 /* ------------------------------------ EXPRESIONES ------------------------------------ */
 expresion
-	: MENOS expresion %prec UMENOS  { $$ = $2 * -1; }
-	| expresion MAS expresion       { $$ = $1 + $3; }
-	| expresion MENOS expresion     { $$ = $1 - $3; }
-	| expresion POR expresion       { $$ = $1 * $3; }
-	| expresion DIVIDIDO expresion  { $$ = $1 / $3; }
-	| expresion MOD expresion			                    { $$ = $1 % $3; }	
-    | expresion POT expresion			                    { $$ = $1 ^ $3; }	
+	: MENOS expresion %prec UMENOS  		{ $$ = $2 * -1; }
+	| expresion MAS expresion      						 { $$ = $1 + $3; }
+	| expresion RESTA expresion     					{ $$ = $1 - $3; }
+	| expresion MULTIPLICACION expresion       						{ $$ = $1 * $3; }
+	| expresion DIVISION expresion 						{ $$ = $1 / $3; }
+	| expresion MODULO expresion			                   { $$ = $1 % $3; }	
+    | expresion POTENCIA expresion			                    { $$ = $1 ^ $3; }	
     | expresion MENORIGUALQ expresion	                    {  }	
 	| expresion MENORQUE IGUAL expresion	 		        {  }			   
 	| expresion MENORQUE expresion	 		                {  }	
@@ -283,12 +282,12 @@ expresion
     | expresion NOT IGUAL expresion	   	                	{  }
     | expresion OR OR expresion	  			                {  }
     | expresion AND AND expresion			                {  }
-	| PARA tipo PARC expresion		{  } /* (int) 18.6*//*(<TIPO>) <EXPRESION>*/
-	| VENTERO                       {  }
-	| VDOUBLE                       { }
-	| CADENA						{  }
-	| TRUE                       	{  }
-	| FALSE                       	{  }
+	| PARA tipo PARC expresion								{  } /* (int) 18.6*//*(<TIPO>) <EXPRESION>*/
+	| VENTERO                      									 {  }
+	| VDOUBLE                       								{ }
+	| CADENA															{  }
+	| TRUE                       											{  }
+	| FALSE                       											{  }
 	| PARIZQ expresion PARDER       { $$ = $2; }
 	| VARIABLE MAS MAS 				{  } /* anio-- */
 	| MAS MAS VARIABLE 				{  } /* --anio */
