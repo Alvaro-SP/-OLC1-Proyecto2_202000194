@@ -3,7 +3,7 @@ var Errores = require('../Instructions/Errores/Errorlist')
 var parser = require('../Interpreter/myGrammar');
 let operations = []
 var arbolIns = new aInstructionAST.InstructionAST();
-var ErroresTable = new Errores.Errorlist();
+var ErroresTable = new Errores.ListaErrores();
 //************ EL AST*************** */
 const instruccionesAPI = {
     setInsAST: function (data){

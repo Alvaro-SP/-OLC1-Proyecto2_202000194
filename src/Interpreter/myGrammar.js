@@ -386,7 +386,7 @@ _handle_error:
     return true;
 }};
 
-	const instruccionesAPI	= require('./instrucciones').instruccionesAPI;
+	const instruccionesAPI	= require('./interprete').instruccionesAPI;
     var sintacticerror = "";
 	var acumoftext="";
 	const {Tree} = require('../Instructions/InstructionAST');
