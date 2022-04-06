@@ -1,10 +1,11 @@
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.nodoAST = void 0;
+const Tipo= require("./ASTGlobal/tiponodo")
 
 class nodoAST{
-    constructor(data) {
-        this.childs = new Array();
+    constructor(data, childs) {
+        this.childs = childs;
         this.data = data;
     }
 

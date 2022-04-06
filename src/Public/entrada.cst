@@ -1,5 +1,13 @@
-Evaluar[1+1];
-Evaluar[1+1*2];
-Evaluar[-(1+1*6/3-5+7)];
-Evaluar[-(1+1*6/3-5+1*-2)];
-Evaluar[-(1.6+1.45)];
+// ********************PRUEBAS COMPI 1 *****************
+/*
+        Alvaro Socop - 202000194
+*/
+// -------------Declaracion de variables-----------
+int a=0;
+double b = 5.5;
+boolean  c = true;
+char d = 'c';
+// -------------Probando Secuencias de Escape-----------
+print("Compiladores 1 Iniciando :)\nPrimer Semestre 2022\nSiuuu");
+
+string e = "Hola como estas\\ \n \"yo bien\" \' a bueno pa saber\' ";

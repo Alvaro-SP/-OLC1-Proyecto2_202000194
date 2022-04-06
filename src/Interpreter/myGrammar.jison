@@ -1,7 +1,9 @@
 /**
  * mi primer proyecto con Jison utilizando Nodejs en WINDOWS :)
  */
-
+{%
+	const {MiArbolAST} =  require('../ASTGlobal/InstructionAST');
+%}
 /*------------------------ Definición éLexca --------------------------*/
 %lex
 
@@ -165,10 +167,10 @@ relacionales. */
 /lex
 
 %{
-	const instruccionesAPI	= require('./instrucciones').instruccionesAPI;
+	const instruccionesAPI	= require('../Interpreter/interprete').instruccionesAPI; //las instrucciones de la API
     var sintacticerror = "";
 	var acumoftext="";
-	const {Tree} = require('../Instructions/InstructionAST');
+	const {Tree} = require('../Instructions/InstructionAST'); // el arbol AST
 
 %}
 
@@ -189,36 +191,37 @@ relacionales. */
 %%
  /* ======================Definición de la gramatica==================== */
 ini
-	: instrucciones EOF		{  }
-	| error PTCOMA 			{ 	sintacticerror="Detectado error Sintactico se esperaba otro valor y se recibio: "+yytext+" reparelo.";
+	: instrucciones EOF		{  $$ = new MiArbolAST($1);
+											return $$;  }//here i gonna to save my AST 
+	| error  			{ 	sintacticerror="Detectado error Sintactico se esperaba otro valor y se recibio: "+yytext+" reparelo.";
 												console.error('Este es un error sintactico: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column);
 												instruccionesAPI.getAST.setError(instruccionesAPI.errorsintactico(sintacticerror,yylloc.first_line,yylloc.first_column));
-										}  /*OJITO: se coloca el ptocoma por si hay un error semantico, entonces se va a recuperar*/
+											}  /*OJITO: se coloca el ptocoma por si hay un error semantico, entonces se va a recuperar*/
 ;
 
-instrucciones 
-	: instruccion instrucciones		{  }
+instrucciones
+	: instruccion instrucciones		{ instruccionesAPI.ins.push()  }
 	| instruccion					{$$=[$1];}
 ;
 /* ================================================================*/
 /* ===================		INSTRUCCIONES      ===================*/
 /* ================================================================*/
 instruccion
-	: declaracion					{ $$ = $1; } /* 5.12 Declaración y asignación de variables*/
-	| instruccionif							{ $$ = $1; } /* 5.15.1. Vectores*/
-	| instruccionwhile							{ $$ = $1; } /* 5.17 SenTencias cíclicas*/
-	| instruccionfor							{ $$ = $1; } /* 5.17 SenTencias cíclicas*/
-	| instrucciondowhile						{ $$ = $1; } /* 5.17 SenTencias cíclicas*/
-	| funciones						{ $$ = $1; } /* 5.19 Funciones*/
-	| metodos						{ $$ = $1; } /* 5.20 Metodos*/
-	| llamadas PTCOMA				{ $$ = $1; } /* 5.21 Llamadas*/
-	| instruccionprint PTCOMA					{ $$ = $1; } /* Print*/
-	| instruccionprintln PTCOMA				{ $$ = $1; } /* Println*/
-    | BREAK PTCOMA                  { $$ = $1; } /* BREAK */
-	| CONTINUE PTCOMA               { $$ = $1; } /* CONTINUE */
-	| returns PTCOMA      			{ $$ = $1; }
-    | instruccionrun PTCOMA                	{ $$ = $1; }
-	| VARIABLE MAS MAS PTCOMA 		{ $$ = $1; } /* anio++*/
+	: declaracion											{ $$ = $1; } /* 5.12 Declaración y asignación de variables*/
+	| instruccionif											{ $$ = $1; } /* 5.15.1. Vectores*/
+	| instruccionwhile									{ $$ = $1; } /* 5.17 SenTencias cíclicas*/
+	| instruccionfor										{ $$ = $1; } /* 5.17 SenTencias cíclicas*/
+	| instrucciondowhile								{ $$ = $1; } /* 5.17 SenTencias cíclicas*/
+	| funciones													{ $$ = $1; } /* 5.19 Funciones*/
+	| metodos													{ $$ = $1; } /* 5.20 Metodos*/
+	| llamadas PTCOMA									{ $$ = $1; } /* 5.21 Llamadas*/
+	| instruccionprint PTCOMA						{ $$ = $1; } /* Print*/
+	| instruccionprintln PTCOMA						{ $$ = $1; } /* Println*/
+    | BREAK PTCOMA                  				{ $$ = $1; } /* BREAK */
+	| CONTINUE PTCOMA               			{ $$ = $1; } /* CONTINUE */
+	| returns PTCOMA      								{ $$ = $1; }
+    | instruccionrun PTCOMA                			{ $$ = $1; }
+	| VARIABLE MAS MAS PTCOMA 			{ $$ = $1; } /* anio++*/
 	| VARIABLE MENOS MENOS PTCOMA 	{ $$ = $1; } /* edad-- */
 	| MENOS MENOS VARIABLE PTCOMA 	{ $$ = $1; } /* --edad */
 
@@ -278,7 +281,7 @@ expresion
     | expresion MAYORQUE expresion                          {  }		
     | expresion IGUALQUE expresion	  		                {  }			
     | expresion IGUAL IGUAL expresion	  		         	{  }			
-    | expresion IGUALA expresion	  		                {  }			
+    | expresion IGUALA expresion	  		                	{  }			
     | expresion DIFERENTE expresion	   	                	{  }
     | expresion NOT IGUAL expresion	   	                	{  }
     | expresion OR OR expresion	  			                {  }

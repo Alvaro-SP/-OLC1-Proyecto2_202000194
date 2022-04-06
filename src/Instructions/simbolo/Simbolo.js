@@ -1,5 +1,5 @@
 const Value = require('../val')
-const Tipo = require('../tiponodo')
+const Tipo = require('../ASTGlobal/tiponodo')
 class Simbolo{
     constructor (id, data, tipo,  fila, column){
         this.id = id

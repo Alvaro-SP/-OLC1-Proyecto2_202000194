@@ -1,7 +1,4 @@
-var Errorlist = (function(){
-    var instancia;
-
-    class ListaErrores{
+ class Errorlist{
         constructor(){
             this.principio=null;
             this.fin=null;
@@ -42,18 +39,7 @@ var Errorlist = (function(){
 
     }
 
-    function crearInstancia(){
-        return new ListaErrores()
-    }
 
-    return {
-        getInstance:function(){
-            if(!instancia){
-                instancia=crearInstancia()
-            }
-            return instancia;
-        }
-    }
 
-}());
+
 module.exports.Errorlist = Errorlist;

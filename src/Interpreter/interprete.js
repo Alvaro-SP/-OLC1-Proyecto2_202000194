@@ -1,9 +1,9 @@
-var aInstructionAST = require('../Instructions/InstructionAST')
-var Errores = require('../Instructions/Errores/Errorlist')
+var aInstructionAST = require('../Instructions/ASTGlobal/InstructionAST')
+var aErrores = require('../Instructions/Errores/Errorlist')
 var parser = require('../Interpreter/myGrammar');
 let operations = []
 var arbolIns = new aInstructionAST.InstructionAST();
-var ErroresTable = new Errores.ListaErrores();
+var ErroresTable = new aErrores.Errorlist();
 //************ EL AST*************** */
 const instruccionesAPI = {
     setInsAST: function (data){
