@@ -8,6 +8,7 @@ var ErroresTable = new aErrores.Errorlist();
 const instruccionesAPI = {
     setInsAST: function (data){
         try {
+			console.log(data.toString());
             arbolIns=parser.parse(data.toString());
             return arbolIns;
         } catch (error) {

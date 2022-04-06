@@ -23,8 +23,8 @@ exports.index = async(req, res) => {
 // ? ████████████████████████████████ ANALIZAR POST ████████████████████████████████
 exports.analizar= async(req, res) => {
     console.log("▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬REQUEST▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
-    console.log(req.body);
-    cadena = JSON.stringify(req.body);  //vere cual de los dos funcio
+    console.log(req.body.codigo);
+    cadena = JSON.stringify(req.body.codigo);  //vere cual de los dos funcio
     const texto = req.body.text;
     console.log("1. Cadena de Entrada (el codigo): " + texto);
     console.log("2. Cadena de Entrada (el codigo): " + cadena);
@@ -38,27 +38,38 @@ exports.analizar= async(req, res) => {
 }
 // ? ████████████████████████████████ POSTMAN ████████████████████████████████
 exports.postman= async(req, res) => {
-    console.log("▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬ POSTMAN ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
+    console.log("▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬ POSTMANNNN ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
 
     // res.send({Estado: ' el Server responde en True', Message: 'Todo en orden :)'});
-    var texto;
-    fs.readFile('././Public/entrada.cst', (err, data) => {
-        if (err) res.send({state: false, err: err});
-        console.log(data.toString());
+    var texto='';
+    // console.log('el dato:***********************************************');
+    fs.readFile('./src/Public/entrada.txt', (err, data) => {
+        // console.log('el dato:***********************************************');
+        if (err) res.send({state: false, err: data});
+        
+        
+        console.log('el dato:' +data.toString());
         texto=data.toString();
-        parser.parse(data.toString());
-        // res.send({valores: interprete.instruccionesAPI.getOperations()})
+        // parser.parse(data.toString());
+        res.send({valores:data})
     });
 
-
     console.log(texto);
-    const arbolIns =  interprete.instruccionesAPI.setInsAST(texto);
-    //* necesito retornar 
-    res.send({  Salida: "COMPILADO",
-                AST: arbolIns.variables ,
-                ListaErrores: arbolIns.error,
-                Consola: arbolIns.console
-            });
+    // if(texto==''){
+    //     res.send({state: false, err: 'No se ha cargado ningun archivo'});
+    // }
+    // try{
+    //     var arbolIns =  interprete.instruccionesAPI.setInsAST(texto); 
+    //     //* necesito retornar
+    //     res.send({  Salida: "COMPILADO",
+    //                 AST: arbolIns.variables ,
+    //                 ListaErrores: arbolIns.error,
+    //                 Consola: arbolIns.console
+    //             });
+    // }catch(err){ 
+    //     console.log(err);
+    //     res.send({state: false, err: err});
+    // }
 }
 
 // ! Se envia la respuesta asi:

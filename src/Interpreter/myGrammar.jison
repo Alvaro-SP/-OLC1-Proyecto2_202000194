@@ -1,9 +1,7 @@
 /**
  * mi primer proyecto con Jison utilizando Nodejs en WINDOWS :)
  */
-{%
-	const {MiArbolAST} =  require('../ASTGlobal/InstructionAST');
-%}
+
 /*------------------------ Definición éLexca --------------------------*/
 %lex
 
@@ -167,10 +165,11 @@ relacionales. */
 /lex
 
 %{
+	 const {MiArbolAST} = require('../ASTGlobal/InstructionAST');
 	const instruccionesAPI	= require('../Interpreter/interprete').instruccionesAPI; //las instrucciones de la API
     var sintacticerror = "";
 	var acumoftext="";
-	const {Tree} = require('../Instructions/InstructionAST'); // el arbol AST
+	// var MiArbolAST = new Tree();
 
 %}
 
