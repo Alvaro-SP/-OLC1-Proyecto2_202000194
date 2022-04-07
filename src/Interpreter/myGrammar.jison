@@ -410,7 +410,7 @@ paramllamada
 ;
 /*--------------------------------------  5.22 Función Print  ----------------------------------*/
 instruccionprint
-    :PRINT PARIZQ expresion PARDER   	{   }/* Print  (  <EXPRESION>  );*/
+    :PRINT PARIZQ expresion PARDER   	{  $$ = new INSPrint($3, @1.first_line, @1.first_column);   }/* Print  (  <EXPRESION>  );*/
 ;
 /*--------------------------------------  5.23 Función Println  ----------------------------------*/
 instruccionprintln
