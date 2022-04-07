@@ -1,7 +1,13 @@
 /**
  * mi primer proyecto con Jison utilizando Nodejs en WINDOWS :)
  */
-
+%{
+	 const {MiArbolAST} = require('../ASTGlobal/InstructionAST');
+	const instruccionesAPI	= require('../Interpreter/interprete').instruccionesAPI; //las instrucciones de la API
+    var sintacticerror = "";
+	var acumoftext="";
+	// var MiArbolAST = new Tree();
+%}
 /*------------------------ Definición éLexca --------------------------*/
 %lex
 
@@ -164,14 +170,7 @@ relacionales. */
 						}
 /lex
 
-%{
-	 const {MiArbolAST} = require('../ASTGlobal/InstructionAST');
-	const instruccionesAPI	= require('../Interpreter/interprete').instruccionesAPI; //las instrucciones de la API
-    var sintacticerror = "";
-	var acumoftext="";
-	// var MiArbolAST = new Tree();
 
-%}
 
 /*----------------------------- 5.10 Precedencia de Operaciones --------------------------*/
 /* Asociación de operadores y precedencia 
@@ -185,21 +184,20 @@ relacionales. */
 %left 'MULTIPLICACION' 'DIVISION'
 %left UMENOS
 
-%start ini 
+%start ini
 
 %%
  /* ======================Definición de la gramatica==================== */
 ini
-	: instrucciones EOF		{  $$ = new MiArbolAST($1);
-											return $$;  }//here i gonna to save my AST 
+	: instrucciones EOF		{  $$ = new MiArbolAST($1); return $$;  }//here i gonna to save my AST 
 	| error  			{ 	sintacticerror="Detectado error Sintactico se esperaba otro valor y se recibio: "+yytext+" reparelo.";
-												console.error('Este es un error sintactico: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column);
-												instruccionesAPI.getAST.setError(instruccionesAPI.errorsintactico(sintacticerror,yylloc.first_line,yylloc.first_column));
-											}  /*OJITO: se coloca el ptocoma por si hay un error semantico, entonces se va a recuperar*/
+								console.error('Este es un error sintactico: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column);
+								instruccionesAPI.getAST.setError(instruccionesAPI.errorsintactico(sintacticerror,yylloc.first_line,yylloc.first_column));
+							}  /*OJITO: se coloca el ptocoma por si hay un error semantico, entonces se va a recuperar*/
 ;
 
 instrucciones
-	: instruccion instrucciones		{ instruccionesAPI.ins.push()  }
+	: instruccion instrucciones		{ $$ = $1; instruccionesAPI.ins.push($2);  }
 	| instruccion					{$$=[$1];}
 ;
 /* ================================================================*/

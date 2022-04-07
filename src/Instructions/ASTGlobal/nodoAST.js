@@ -1,11 +1,11 @@
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.nodoAST = void 0;
-const Tipo= require("./ASTGlobal/tiponodo")
+const Tipo= require("./tiponodo")
 
 class nodoAST{
-    constructor(data, childs) {
-        this.childs = childs;
+    constructor(data) {
+        this.childs = [];
         this.data = data;
     }
 
@@ -15,14 +15,14 @@ class nodoAST{
 
     addChild(child) {
         if (child instanceof nodoAST) {
-            this.hijos.append(child);
+            this.hijos.push(child);
         } else {
-            this.hijos.append(new nodoAST());
+            this.hijos.push(new nodoAST());
         }
     }
 
     addChilds(childs) {
-        childs.forEach(childs => this.hijos.append(childs));
+        childs.forEach(childs => this.hijos.push(childs));
     }
 
     addFirstChild(firstchild) {

@@ -55,21 +55,21 @@ exports.postman= async(req, res) => {
     });
 
     console.log(texto);
-    // if(texto==''){
-    //     res.send({state: false, err: 'No se ha cargado ningun archivo'});
-    // }
-    // try{
-    //     var arbolIns =  interprete.instruccionesAPI.setInsAST(texto); 
-    //     //* necesito retornar
-    //     res.send({  Salida: "COMPILADO",
-    //                 AST: arbolIns.variables ,
-    //                 ListaErrores: arbolIns.error,
-    //                 Consola: arbolIns.console
-    //             });
-    // }catch(err){ 
-    //     console.log(err);
-    //     res.send({state: false, err: err});
-    // }
+    if(texto==''){
+        res.send({state: false, err: 'No se ha cargado ningun archivo'});
+    }
+    try{
+        var arbolIns =  interprete.instruccionesAPI.setInsAST(texto); 
+        //* necesito retornar
+        res.send({  Salida: "COMPILADO",
+                    AST: arbolIns.variables ,
+                    ListaErrores: arbolIns.error,
+                    Consola: arbolIns.console
+                });
+    }catch(err){ 
+        console.log(err);
+        res.send({state: false, err: err});
+    }
 }
 
 // ! Se envia la respuesta asi:
