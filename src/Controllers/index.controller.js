@@ -9,9 +9,9 @@ exports.index = async(req, res) => {
     //! SI LA CONSOLA NO ES VACIA, ENTONCES DEVUELVO LA CONSOLA
 
     if(interprete.instruccionesAPI.getAST().getConsole()== []){
-        res.send({"Message":interprete.instruccionesAPI.getConsole().toString(), "interprete": interprete.instruccionesAPI.getAST().getConsole()});
+        res.send({"Salida2":interprete.instruccionesAPI.getConsole().toString(), "interprete": interprete.instruccionesAPI.getAST().getConsole()});
     }else{
-        res.send({"Message": "Server Active: aun no se ha ejecutado nada"});
+        res.send({"Salida2": "Server Active: aun no se ha ejecutado nada"});
     }
     // res.send({Estado: interprete.instruccionesAPI.getActive(), Message: 'Server On Port todo fresh...'});
     // fs.readFile('./Public/entrada.txt', (err, data) => {
