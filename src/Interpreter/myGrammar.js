@@ -2,7 +2,7 @@
 /*
   Returns a Parser object of the following structure:
 
-  Parser: {
+  Parser: { 
     yy: {}
   }
 
