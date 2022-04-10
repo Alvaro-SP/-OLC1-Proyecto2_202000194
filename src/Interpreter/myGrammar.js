@@ -2,7 +2,7 @@
 /*
   Returns a Parser object of the following structure:
 
-  Parser: { 
+  Parser: {
     yy: {}
   }
 
@@ -88,12 +88,12 @@ case 1:
 break;
 case 2:
  	sintacticerror="Detectado error Sintactico se esperaba otro valor y se recibio: "+yytext+" reparelo.";
-												console.error('Este es un error sintactico: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column);
-												instruccionesAPI.getAST.setError(instruccionesAPI.errorsintactico(sintacticerror,yylloc.first_line,yylloc.first_column));
-											
+								console.error('Este es un error sintactico: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column);
+								instruccionesAPI.getAST.setError(instruccionesAPI.errorsintactico(sintacticerror,yylloc.first_line,yylloc.first_column));
+							
 break;
 case 3:
- instruccionesAPI.ins.push()  
+ this.$ = $$[$0-1]; instruccionesAPI.ins.push($$[$0]);  
 break;
 case 4:
 this.$=[$$[$0]];
@@ -137,8 +137,11 @@ break;
 case 104:
 this.$ = new While($$[$0-4], $$[$0-1], _$[$0-6].first_line, _$[$0-6].first_column);
 break;
-case 120: case 121: case 124:
+case 120: case 121:
    
+break;
+case 124:
+  this.$ = new INSPrint($$[$0-1], _$[$0-3].first_line, _$[$0-3].first_column);   
 break;
 }
 },
@@ -392,7 +395,7 @@ _handle_error:
     return true;
 }};
 
-	 const {MiArbolAST} = require('../ASTGlobal/InstructionAST');
+	 const {MiArbolAST} = require('../Instructions/ASTGlobal/InstructionAST');
 	const instruccionesAPI	= require('../Interpreter/interprete').instruccionesAPI; //las instrucciones de la API
     var sintacticerror = "";
 	var acumoftext="";
