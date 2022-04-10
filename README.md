@@ -1,6 +1,6 @@
 # -OLC1-Proyecto2_202000194
   <img alt="JavaScript" src="https://img.shields.io/badge/-JavaScript-F7DF1E?style=flat-square&logo=JavaScript&logoColor=white" />
-  <img alt="angular" src="https://img.shields.io/badge/-Angular-DD0031?style=flat-square&logo=angular&logoColor=white" /> 
+  <img alt="angular" src="https://img.shields.io/badge/-Angular-DD0031?style=flat-square&logo=react&logoColor=white" /> 
   
 ## 🥇🥇🥇🤗🤗🤗  Bienvenid@ a mi Proyecto #2  🤗🤗🤗🥇🥇🥇
 
@@ -57,3 +57,6 @@ En Github
 ## Autores ✒️
 
 * **Alvaro Emmanuel Socop Pérez** - *Estudiante de Ing. Sistemas* - [USAC](https://github.com/Alvaro-SP)
+<p align="center"> 
+  <a href="#"><img src="https://c.tenor.com/sTFc7j1xRJ0AAAAC/doge-dancing-doge.gif" width="300px"/></a>
+</p>
