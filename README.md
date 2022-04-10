@@ -1,6 +1,6 @@
 # -OLC1-Proyecto2_202000194
   <img alt="JavaScript" src="https://img.shields.io/badge/-JavaScript-F7DF1E?style=flat-square&logo=JavaScript&logoColor=white" />
-  <img alt="angular" src="https://img.shields.io/badge/-Angular-DD0031?style=flat-square&logo=react&logoColor=white" /> 
+  <img alt="angular" src="https://img.shields.io/badge/-React-DD0031?style=flat-square&logo=react&logoColor=white" /> 
   
 ## 🥇🥇🥇🤗🤗🤗  Bienvenid@ a mi Proyecto #2  🤗🤗🤗🥇🥇🥇
 
