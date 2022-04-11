@@ -28,7 +28,7 @@ const instruccionesAPI = {
 					console.log(error);
 					var sintacticerror="Detectado error Sintactico para la instruccion actual NO se puede recuperar. Salto a la siguiente.";
 					console.error('Este es un error sintactico: ' + 'Irrecuperable' + ', en la linea: ' + 'a' + ', en la columna: ' + 'a');
-					arbolIns.setError(errorsintactico(sintacticerror,0,0));
+					arbolIns.setError(this.errorsintactico(sintacticerror,0,0));
 					arbolIns.console.push(error+'\n'+sintacticerror+' ')
 				}
 			});
@@ -50,6 +50,15 @@ const instruccionesAPI = {
 		console.log("ERROR SINTACTICO");
 		return{
 			tipo: "SINTACTICO",
+			error: error,
+			line: line,
+			column: column
+		};
+	},
+	errorSemantico: function(error,line,column){
+		console.log("ERROR SEMANTICO");
+		return{
+			tipo: "SEMANTICO",
 			error: error,
 			line: line,
 			column: column

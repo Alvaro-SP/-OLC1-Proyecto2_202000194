@@ -29,10 +29,10 @@ exports.analizar= async(req, res) => {
     console.log("1. Cadena de Entrada (el codigo): " + texto);
     console.log("2. Cadena de Entrada (el codigo): " + cadena);
     const arbolIns =  interprete.instruccionesAPI.setInsAST(cadena);
-    //* necesito retornar 
-    res.send({  Salida: "COMPILADO", 
-                AST: arbolIns.variables , 
-                ListaErrores: arbolIns.error, 
+    //* necesito retornar
+    res.send({  Salida: "COMPILADO",
+                AST: arbolIns.variables ,
+                ListaErrores: arbolIns.error,
                 Consola: arbolIns.console
             });
 }
@@ -46,8 +46,6 @@ exports.postman= async(req, res) => {
     fs.readFile('./src/Public/entrada.txt', (err, data) => {
         // console.log('el dato:***********************************************');
         if (err) res.send({state: false, err: data});
-        
-        
         console.log('el dato:' +data.toString());
         texto=data.toString();
         // parser.parse(data.toString());
