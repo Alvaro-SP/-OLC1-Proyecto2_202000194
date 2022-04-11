@@ -9,7 +9,15 @@ const instruccionesAPI = {
     setInsAST: function (data){
         try {
 			console.log(data.toString());
+			//! en este caso genero mi arbol AST el cual contiene todos los datos de 
+			//! las acciones que voy a ejecutar y asi poder generar mis reportes
             arbolIns=parser.parse(data.toString());
+			//! Creo mi tabla de simbolos la cual me servira para mi patron interprete
+			table = new Tabla.Table(null)
+			//Ahora necesito correr cada una de mis lineas y mandarlas a ejecutar 
+			//esto se me ocurre colocar a cada clase (AMBITO E INSTRUCCION) una funcion ejecucion
+			// el cual empezara con la ejecucion del mismo y se tenga un orden por cada ambito y lugar el cual corresponda realizarlo
+			// Map...
             return arbolIns;
         } catch (error) {
             console.error(error);

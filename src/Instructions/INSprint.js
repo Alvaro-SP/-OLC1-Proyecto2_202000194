@@ -11,22 +11,23 @@ const nodoAST = require("./ASTGlobal/nodoAST")
 //*************************************************************************** 
 //!------------------------------- INSTRUCCION PRINT----------------------------
 class print extends nodo.nodo {
-    constructor(data, line, column){
+    constructor(data, line, column, isln){
         this.data=data;
         this.line=line;
         this.column=column;
-        if(this.data !=null){
+        this.isln = isln;
+        if(this.data != null){
 
         }
         else{
-            this.data= new val( line, column,Tipo(tipo.VOID),' ' )
+            this.data = new val( line, column, Tipo(tipo.VOID),' ')
         }
     }
-    ejecutar(InstructionsAST, tabla){
+    ejecutar(arbolIns, table){
         // Using recursivity i gonna to execute my methods for to show in console
-        let valortemp = this.data.ejecutar(InstructionsAST, tabla);
+        let valortemp = this.data.ejecutar(arbolIns, table);
         var value = valortemp;
-        InstructionsAST.console.push(value); // add value to console
+        arbolIns.console.push(value); // add value to console
         return null;
     }
 }

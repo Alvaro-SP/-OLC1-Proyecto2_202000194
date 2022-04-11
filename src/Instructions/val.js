@@ -9,7 +9,10 @@ class val {
     this.tipo = tipo;
     this.valor = valor;
   }
+  ejecutar(arbolIns, table){
 
+    return this.valor
+  }
 }
 
 exports.val = val;

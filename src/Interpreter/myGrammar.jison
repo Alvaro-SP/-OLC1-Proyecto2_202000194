@@ -2,9 +2,10 @@
  * mi primer proyecto con Jison utilizando Nodejs en WINDOWS :)
  */
 %{
-	 const {MiArbolAST} = require('../ASTGlobal/InstructionAST');
+	const {MiArbolAST} = require('../ASTGlobal/InstructionAST');
 	const instruccionesAPI	= require('../Interpreter/interprete').instruccionesAPI; //las instrucciones de la API
-    var sintacticerror = "";
+    const {INSPrint} = require('../INSprint');
+	var sintacticerror = "";
 	var acumoftext="";
 	// var MiArbolAST = new Tree();
 %}
@@ -91,7 +92,7 @@ relacionales. */
 ","             return 'COMA'
 "="             return 'IGUAL'
 				
-(\'(([\\][\"]|[\\][\']|[\\][n]|[\\][t]|[\\][\\])|([^\n\'\"\\]{1}))\') return 'CARACTER'
+(\'(([\\][\"]|[\\][\']|[\\][n]|[\\][t]|[\\][\\])|([^\n\'\"\\]{1}))\') return 'VCARACTER'
 /*[\"].*[\"]				return 'CADENA'*/
 ["]                 {acumoftext=""; this.begin("CADENA");}
 <CADENA>[^"\\]+     {acumoftext+=yytext;}
@@ -191,9 +192,9 @@ relacionales. */
 ini
 	: instrucciones EOF		{  $$ = new MiArbolAST($1); return $$;  }//here i gonna to save my AST 
 	| error  			{ 	sintacticerror="Detectado error Sintactico se esperaba otro valor y se recibio: "+yytext+" reparelo.";
-								console.error('Este es un error sintactico: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column);
-								instruccionesAPI.getAST.setError(instruccionesAPI.errorsintactico(sintacticerror,yylloc.first_line,yylloc.first_column));
-							}  /*OJITO: se coloca el ptocoma por si hay un error semantico, entonces se va a recuperar*/
+							console.error('Este es un error sintactico: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column);
+							instruccionesAPI.getAST.setError(instruccionesAPI.errorsintactico(sintacticerror,yylloc.first_line,yylloc.first_column));
+						}  /*OJITO: se coloca el ptocoma por si hay un error semantico, entonces se va a recuperar*/
 ;
 
 instrucciones
@@ -204,23 +205,22 @@ instrucciones
 /* ===================		INSTRUCCIONES      ===================*/
 /* ================================================================*/
 instruccion
-	: declaracion											{ $$ = $1; } /* 5.12 Declaración y asignación de variables*/
-	| instruccionif											{ $$ = $1; } /* 5.15.1. Vectores*/
-	| instruccionwhile									{ $$ = $1; } /* 5.17 SenTencias cíclicas*/
-	| instruccionfor										{ $$ = $1; } /* 5.17 SenTencias cíclicas*/
-	| instrucciondowhile								{ $$ = $1; } /* 5.17 SenTencias cíclicas*/
-	| funciones													{ $$ = $1; } /* 5.19 Funciones*/
-	| metodos													{ $$ = $1; } /* 5.20 Metodos*/
-	| llamadas PTCOMA									{ $$ = $1; } /* 5.21 Llamadas*/
-	| instruccionprint PTCOMA						{ $$ = $1; } /* Print*/
-	| instruccionprintln PTCOMA						{ $$ = $1; } /* Println*/
-    | BREAK PTCOMA                  				{ $$ = $1; } /* BREAK */
-	| CONTINUE PTCOMA               			{ $$ = $1; } /* CONTINUE */
-	| returns PTCOMA      								{ $$ = $1; }
-    | instruccionrun PTCOMA                			{ $$ = $1; }
-	| VARIABLE MAS MAS PTCOMA 			{ $$ = $1; } /* anio++*/
+	: declaracion					{ $$ = $1; } /* 5.12 Declaración y asignación de variables*/
+	| instruccionif					{ $$ = $1; } /* 5.15.1. Vectores*/
+	| instruccionwhile				{ $$ = $1; } /* 5.17 SenTencias cíclicas*/
+	| instruccionfor				{ $$ = $1; } /* 5.17 SenTencias cíclicas*/
+	| instrucciondowhile			{ $$ = $1; } /* 5.17 SenTencias cíclicas*/
+	| funciones						{ $$ = $1; } /* 5.19 Funciones*/
+	| metodos						{ $$ = $1; } /* 5.20 Metodos*/
+	| llamadas PTCOMA				{ $$ = $1; } /* 5.21 Llamadas*/
+	| instruccionprint PTCOMA		{ $$ = $1; } /* Print*/
+	| instruccionprintln PTCOMA		{ $$ = $1; } /* Println*/
+    | BREAK PTCOMA                 	{ $$ = $1; } /* BREAK */
+	| CONTINUE PTCOMA              	{ $$ = $1; } /* CONTINUE */
+	| returns PTCOMA      			{ $$ = $1; }
+    | instruccionrun PTCOMA         { $$ = $1; }
+	| VARIABLE MAS MAS PTCOMA 		{ $$ = $1; } /* anio++*/
 	| VARIABLE MENOS MENOS PTCOMA 	{ $$ = $1; } /* edad-- */
-	| MENOS MENOS VARIABLE PTCOMA 	{ $$ = $1; } /* --edad */
 
 	/*| incredecre	{  }  5.14 Incremento y Decremento*/
 ;
@@ -287,6 +287,7 @@ expresion
 	| VENTERO                      									 {  }
 	| VDOUBLE                       								{ }
 	| CADENA															{  }
+	| VCARACTER		 												{  }
 	| TRUE                       											{  }
 	| FALSE                       											{  }
 	| PARIZQ expresion PARDER       { $$ = $2; }
@@ -409,12 +410,13 @@ paramllamada
     |expresion                        	{  }
 ;
 /*--------------------------------------  5.22 Función Print  ----------------------------------*/
-instruccionprint
-    :PRINT PARIZQ expresion PARDER   	{  $$ = new INSPrint($3, @1.first_line, @1.first_column);   }/* Print  (  <EXPRESION>  );*/
+instruccionprint /* valores únicamente de tipo entero,
+doble, booleano, cadena y carácter. */
+    :PRINT PARIZQ expresion PARDER   	{  $$ = new INSPrint($3, @1.first_line, @1.first_column, false);   }/* Print  (  <EXPRESION>  );*/
 ;
 /*--------------------------------------  5.23 Función Println  ----------------------------------*/
-instruccionprintln
-    :PRINTLN PARIZQ expresion PARDER    {  }/* Println  (  <EXPRESION>  );*/
+instruccionprintln/*entero,doble, booleano, cadena y carácter.*/
+    :PRINTLN PARIZQ expresion PARDER    { $$ = new INSPrint($3, @1.first_line, @1.first_column, true); }/* Println  (  <EXPRESION>  );*/
 ;
 
 /*--------------------------------------  RUN  ----------------------------------*/
