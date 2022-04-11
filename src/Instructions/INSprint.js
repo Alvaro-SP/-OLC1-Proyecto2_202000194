@@ -27,12 +27,11 @@ class print extends nodo.nodo {
         // Using recursivity i gonna to execute my methods for to show in console
         let valortemp = this.data.ejecutar(arbolIns, table);
         var value = valortemp;
-        if (this.isln === true) {
+        if (this.isln) {
           arbolIns.console.push(value+'\n'); // add value to console
         } else {
           arbolIns.console.push(value); // add value to console
         }
-        
         return null;
     }
 }

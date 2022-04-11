@@ -1,6 +1,7 @@
 var aInstructionAST = require('../Instructions/ASTGlobal/InstructionAST')
 var aErrores = require('../Instructions/Errores/Errorlist')
 var parser = require('../Interpreter/myGrammar');
+// const instruccionesAPI	= require('../Interpreter/interprete').instruccionesAPI; //las instrucciones de la API
 let operations = []
 var arbolIns = new aInstructionAST.InstructionAST();
 var ErroresTable = new aErrores.Errorlist();
@@ -18,6 +19,19 @@ const instruccionesAPI = {
 			//esto se me ocurre colocar a cada clase (AMBITO E INSTRUCCION) una funcion ejecucion
 			// el cual empezara con la ejecucion del mismo y se tenga un orden por cada ambito y lugar el cual corresponda realizarlo
 			// Map...
+			arbolIns.ins.map((instruccion)=>{
+				try {
+					var retornado = instruccion.ejecutar(arbolIns, table);
+				} catch (error) {
+					//* si no se pudo ejecutar una instruccion simplemente se agregara al error sintactico 
+					//* y luego seguira recorriendo las demas instrucciones para que no se quede trabado :v
+					console.log(error);
+					var sintacticerror="Detectado error Sintactico para la instruccion actual NO se puede recuperar. Salto a la siguiente.";
+					console.error('Este es un error sintactico: ' + 'Irrecuperable' + ', en la linea: ' + 'a' + ', en la columna: ' + 'a');
+					arbolIns.setError(errorsintactico(sintacticerror,0,0));
+					arbolIns.console.push(error+'\n'+sintacticerror+' ')
+				}
+			});
             return arbolIns;
         } catch (error) {
             console.error(error);

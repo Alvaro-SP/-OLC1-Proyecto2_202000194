@@ -15,6 +15,7 @@ class InstructionAST {
     setError(error){
         // this.error=error;
         this.error.push(error);
+        
     }
     setConsole(console){
         this.console.push(console);
