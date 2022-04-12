@@ -264,7 +264,7 @@ listavalores2
 /* ------------------------------------ EXPRESIONES ------------------------------------ */
 expresion
 	: MENOS expresion %prec UMENOS  		{ $$ = $2 * -1; }
-	| expresion MAS expresion      						 { $$ = $1 + $3; }
+	| expresion MAS expresion      						 { $$ = new INSAritmetico($1, $3, 'SUMA',  @1.first_line, @1.first_column) }/*constructor(expDer, expIzq, tipo, fila, column){*/
 	| expresion RESTA expresion     					{ $$ = $1 - $3; }
 	| expresion MULTIPLICACION expresion       						{ $$ = $1 * $3; }
 	| expresion DIVISION expresion 						{ $$ = $1 / $3; }
