@@ -299,9 +299,7 @@ expresion																				/*aqui es UNARIA XD*/
 	| FALSE                       							{  }
 	| PARIZQ expresion PARDER       						{ $$ = $2; }
 	| VARIABLE MAS MAS 										{  } /* anio-- */
-	| MAS MAS VARIABLE 										{  } /* --anio */
 	| VARIABLE MENOS MENOS 									{  } /* edad-- */
-	| MENOS MENOS VARIABLE  								{  } /* --edad */
 	| VARIABLE CORIZQ expresion CORDER						{  } /* vector2[0];*/
 	| VARIABLE CORIZQ expresion CORDER CORIZQ expresion CORDER	{ } /* vectorDosd[0][0];*/
 	| VARIABLE MAS MAS 										{  } /* vectorDosd[0][0]*/

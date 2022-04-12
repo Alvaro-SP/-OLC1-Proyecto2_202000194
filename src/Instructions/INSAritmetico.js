@@ -7,6 +7,8 @@ const tipo = require("./ASTGlobal/tiponodo");
 const val = require("./val");
 const instruccionesAPI = require("../Interpreter/interprete").instruccionesAPI; //las instrucciones de la API
 const nodoAST = require("./ASTGlobal/nodoAST");
+//! 5.5 Operadores Aritméticos
+// *SUMA RESTA MULTIPLICACION DIVISION POTENCIA MODULO ENTRE OTROS...
 class aritmetico{
     constructor(expDer, expIzq, tipo, fila, column){
         this.expDer = expDer;

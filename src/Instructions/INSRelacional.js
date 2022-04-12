@@ -7,6 +7,9 @@ const tipo = require("./ASTGlobal/tiponodo");
 const val = require("./val");
 const instruccionesAPI = require("../Interpreter/interprete").instruccionesAPI; //las instrucciones de la API
 const nodoAST = require("./ASTGlobal/nodoAST");
+//! 5.6 Operadores Relacionales
+// *Son los símbolos que tienen como finalidad comparar expresiones, dando como resultado
+// *valores booleanos.
 class relacional {
   constructor(expDer, expIzq, tipo, fila, column) {
     this.expDer = expDer;
