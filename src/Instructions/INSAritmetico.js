@@ -184,7 +184,7 @@ class aritmetico{
                 }
             }
             //! **********************     SI ES UNA RESTA:  ***********************************
-            if(this.tipo == 'RESTA'){
+            else if(this.tipo == 'RESTA'){
                 if(value.tipo == Tipo(tipo.INT)){ //! ENTERO!!!!!!!!!!!!!!!!!!!!!!!!!
                     if(value2.tipo == Tipo(tipo.INT)){ //? ENTERO -----> ENTERO
                         return new val(this.fila, this.column, Tipo(tipo.INT), value.valor - value2.valor);
@@ -246,14 +246,14 @@ class aritmetico{
                 else if(value.tipo == Tipo(tipo.BOOLEAN)){ //! BOOLEAN!!!!!!!!!!!!!!!!!!!!!!!!!
                     if(value2.tipo == Tipo(tipo.INT)){ //? ENTERO -----> ENTERO
                         if(value.valor == true){
-                            return new val(this.fila, this.column, Tipo(tipo.INT), value2.valor + 1);
+                            return new val(this.fila, this.column, Tipo(tipo.INT), value2.valor - 1);
                         }else{
                             return new val(this.fila, this.column, Tipo(tipo.INT), value2.valor);
                         }
                     }
                     else if(value2.tipo == Tipo(tipo.DOUBLE)){//? DOUBLE -----> DOUBLE
                         if(value.valor == true){
-                            return new val(this.fila, this.column, Tipo(tipo.DOUBLE), value2.valor + 1);
+                            return new val(this.fila, this.column, Tipo(tipo.DOUBLE), value2.valor - 1);
                         }else{
                             return new val(this.fila, this.column, Tipo(tipo.DOUBLE), value2.valor);
                         }
@@ -274,13 +274,14 @@ class aritmetico{
                     //     }
                     // }
                     
-                    else if(value2.tipo == Tipo(tipo.STRING)){//? CADENA -----> CADENA
-                        if(value.valor == true){
-                            return new val(this.fila, this.column, Tipo(tipo.STRING), 'true'+value2.valor);
-                        }else{
-                            return new val(this.fila, this.column, Tipo(tipo.STRING), 'false'+value2.valor);
-                        }
-                    }else{
+                    // else if(value2.tipo == Tipo(tipo.STRING)){//? CADENA -----> CADENA
+                    //     if(value.valor == true){
+                    //         return new val(this.fila, this.column, Tipo(tipo.STRING), 'true'+value2.valor);
+                    //     }else{
+                    //         return new val(this.fila, this.column, Tipo(tipo.STRING), 'false'+value2.valor);
+                    //     }
+                    // }
+                    else{
                         arbolIns.setError(instruccionesAPI.errorSemantico("No se puede sumar los tipos "+value.tipo+" y "+value2.tipo,this.fila,this.column));
                         return new val(this.fila, this.column, Tipo(tipo.ERROR), "(ERROR SEMANTICO) No se puede sumar los tipos "+value.tipo+" y "+value2.tipo);
                     }
@@ -288,13 +289,13 @@ class aritmetico{
                 else if(value.tipo == Tipo(tipo.CARACTER)){ //! CARACTER!!!!!!!!!!!!!!!!!!!!!!!!!
                     if(value2.tipo == Tipo(tipo.INT)){ //? ENTERO -----> ENTERO
                         try {
-                            return new val(this.fila, this.column, Tipo(tipo.INT), value.valor.charCodeAt(0)+value2.valor);
+                            return new val(this.fila, this.column, Tipo(tipo.INT), value.valor.charCodeAt(0)-value2.valor);
                         } catch (error) {
                             return new val(this.fila, this.column, Tipo(tipo.INT), value2.valor);
                         }
                     }
                     else if(value2.tipo == Tipo(tipo.DOUBLE)){//? DOUBLE -----> DOUBLE
-                        return new val(this.fila, this.column, Tipo(tipo.DOUBLE), value2.valor + value.valor.charCodeAt(0));
+                        return new val(this.fila, this.column, Tipo(tipo.DOUBLE), value2.valor - value.valor.charCodeAt(0));
                     }
                     // else if(value2.tipo == Tipo(tipo.BOOLEAN)){//? BOOLEAN -----> ENTERO
                     //     if(value2.valor == true){
@@ -303,16 +304,17 @@ class aritmetico{
                     //         return new val(this.fila, this.column, Tipo(tipo.INT), value.valor);
                     //     }
                     // }
-                    else if(value2.tipo == Tipo(tipo.CARACTER)){//? CARACTER -----> CADENA
-                        try {
-                            return new val(this.fila, this.column, Tipo(tipo.STRING), value.valor+value2.valor);
-                        } catch (error) {
-                            return new val(this.fila, this.column, Tipo(tipo.STRING), value.valor);
-                        }
-                    }
-                    else if(value2.tipo == Tipo(tipo.STRING)){//? CADENA -----> CADENA
-                        return new val(this.fila, this.column, Tipo(tipo.STRING), value.valor + value2.valor);
-                    }else{
+                    // else if(value2.tipo == Tipo(tipo.CARACTER)){//? CARACTER -----> CADENA
+                    //     try {
+                    //         return new val(this.fila, this.column, Tipo(tipo.STRING), value.valor+value2.valor);
+                    //     } catch (error) {
+                    //         return new val(this.fila, this.column, Tipo(tipo.STRING), value.valor);
+                    //     }
+                    // }
+                    // else if(value2.tipo == Tipo(tipo.STRING)){//? CADENA -----> CADENA
+                    //     return new val(this.fila, this.column, Tipo(tipo.STRING), value.valor + value2.valor);
+                    // }
+                    else{
                         arbolIns.setError(instruccionesAPI.errorSemantico("No se puede sumar los tipos "+value.tipo+" y "+value2.tipo,this.fila,this.column));
                         return new val(this.fila, this.column, Tipo(tipo.ERROR), "(ERROR SEMANTICO) No se puede sumar los tipos "+value.tipo+" y "+value2.tipo);
                     }
@@ -341,6 +343,194 @@ class aritmetico{
                 //         return new val(this.fila, this.column, Tipo(tipo.ERROR), "(ERROR SEMANTICO) No se puede sumar los tipos "+value.tipo+" y "+value2.tipo);
                 //     }
                 // }
+                else{
+                    arbolIns.setError(instruccionesAPI.errorSemantico("No se puede sumar los tipos "+value.tipo+" y "+value2.tipo,this.fila,this.column));
+                    return new val(this.fila, this.column, Tipo(tipo.ERROR), "(ERROR SEMANTICO) No se puede sumar los tipos "+value.tipo+" y "+value2.tipo);
+                }
+            }
+            //! **********************     SI ES UNA MULTIPLICACION:  ***********************************
+            else if(this.tipo == 'MULTIPLICACION'){
+                if(value.tipo == Tipo(tipo.INT)){ //! ENTERO!!!!!!!!!!!!!!!!!!!!!!!!!
+                    if(value2.tipo == Tipo(tipo.INT)){ //? ENTERO -----> ENTERO
+                        return new val(this.fila, this.column, Tipo(tipo.INT), value.valor * value2.valor);
+                    }
+                    else if(value2.tipo == Tipo(tipo.DOUBLE)){//? DOUBLE -----> DOUBLE
+                        return new val(this.fila, this.column, Tipo(tipo.DOUBLE), value.valor * value2.valor);
+                    }
+                    else if(value2.tipo == Tipo(tipo.CARACTER)){//? CARACTER -----> ENTERO
+                        try {
+                            return new val(this.fila, this.column, Tipo(tipo.INT), value.valor * value2.valor.charCodeAt(0));
+                        } catch (error) {
+                            return new val(this.fila, this.column, Tipo(tipo.INT), value.valor);
+                        }
+                    }
+                    // else if(value2.tipo == Tipo(tipo.STRING)){//? CADENA -----> CADENA
+                    //     return new val(this.fila, this.column, Tipo(tipo.STRING), value.valor + value2.valor);
+                    // }
+                    else{
+                        arbolIns.setError(instruccionesAPI.errorSemantico("No se puede sumar los tipos "+value.tipo+" y "+value2.tipo,this.fila,this.column));
+                        return new val(this.fila, this.column, Tipo(tipo.ERROR), "(ERROR SEMANTICO) No se puede sumar los tipos "+value.tipo+" y "+value2.tipo);
+                    }
+                }
+                else if(value.tipo == Tipo(tipo.DOUBLE)){ //! DOUBLE!!!!!!!!!!!!!!!!!!!!!!!!!
+                    if(value2.tipo == Tipo(tipo.INT)){ //? ENTERO -----> DOUBLE
+                        return new val(this.fila, this.column, Tipo(tipo.DOUBLE), value.valor * value2.valor);
+                    }
+                    else if(value2.tipo == Tipo(tipo.DOUBLE)){//? DOUBLE -----> DOUBLE
+                        return new val(this.fila, this.column, Tipo(tipo.DOUBLE), value.valor * value2.valor);
+                    }
+                    else if(value2.tipo == Tipo(tipo.CARACTER)){//? CARACTER -----> DOUBLE
+                        try {
+                            return new val(this.fila, this.column, Tipo(tipo.DOUBLE ), value.valor * value2.valor.charCodeAt(0));
+                        } catch (error) {
+                            return new val(this.fila, this.column, Tipo(tipo.DOUBLE), value.valor);
+                        }
+                    }
+                    else{
+                        arbolIns.setError(instruccionesAPI.errorSemantico("No se puede sumar los tipos "+value.tipo+" y "+value2.tipo,this.fila,this.column));
+                        return new val(this.fila, this.column, Tipo(tipo.ERROR), "(ERROR SEMANTICO) No se puede sumar los tipos "+value.tipo+" y "+value2.tipo);
+                    }
+                }
+                else if(value.tipo == Tipo(tipo.CARACTER)){ //! CARACTER!!!!!!!!!!!!!!!!!!!!!!!!!
+                    if(value2.tipo == Tipo(tipo.INT)){ //? ENTERO -----> ENTERO
+                        try {
+                            return new val(this.fila, this.column, Tipo(tipo.INT), value.valor.charCodeAt(0)*value2.valor);
+                        } catch (error) {
+                            return new val(this.fila, this.column, Tipo(tipo.INT), value2.valor);
+                        }
+                    }
+                    else if(value2.tipo == Tipo(tipo.DOUBLE)){//? DOUBLE -----> DOUBLE
+                        return new val(this.fila, this.column, Tipo(tipo.DOUBLE), value2.valor * value.valor.charCodeAt(0));
+                    }
+                    else{
+                        arbolIns.setError(instruccionesAPI.errorSemantico("No se puede sumar los tipos "+value.tipo+" y "+value2.tipo,this.fila,this.column));
+                        return new val(this.fila, this.column, Tipo(tipo.ERROR), "(ERROR SEMANTICO) No se puede sumar los tipos "+value.tipo+" y "+value2.tipo);
+                    }
+                }
+                else{
+                    arbolIns.setError(instruccionesAPI.errorSemantico("No se puede sumar los tipos "+value.tipo+" y "+value2.tipo,this.fila,this.column));
+                    return new val(this.fila, this.column, Tipo(tipo.ERROR), "(ERROR SEMANTICO) No se puede sumar los tipos "+value.tipo+" y "+value2.tipo);
+                }
+            }
+            //! **********************     SI ES UNA DIVISION:  ***********************************
+            else if(this.tipo == 'DIVISION'){
+                if(value.tipo == Tipo(tipo.INT)){ //! ENTERO!!!!!!!!!!!!!!!!!!!!!!!!!
+                    if(value2.tipo == Tipo(tipo.INT)){ //? ENTERO -----> ENTERO
+                        return new val(this.fila, this.column, Tipo(tipo.DOUBLE), value.valor / value2.valor);
+                    }
+                    else if(value2.tipo == Tipo(tipo.DOUBLE)){//? DOUBLE -----> DOUBLE
+                        return new val(this.fila, this.column, Tipo(tipo.DOUBLE), value.valor / value2.valor);
+                    }
+                    else if(value2.tipo == Tipo(tipo.CARACTER)){//? CARACTER -----> ENTERO
+                        try {
+                            return new val(this.fila, this.column, Tipo(tipo.DOUBLE), value.valor / value2.valor.charCodeAt(0));
+                        } catch (error) {
+                            return new val(this.fila, this.column, Tipo(tipo.DOUBLE), value.valor);
+                        }
+                    }
+                    else{
+                        arbolIns.setError(instruccionesAPI.errorSemantico("No se puede sumar los tipos "+value.tipo+" y "+value2.tipo,this.fila,this.column));
+                        return new val(this.fila, this.column, Tipo(tipo.ERROR), "(ERROR SEMANTICO) No se puede sumar los tipos "+value.tipo+" y "+value2.tipo);
+                    }
+                }
+                else if(value.tipo == Tipo(tipo.DOUBLE)){ //! DOUBLE!!!!!!!!!!!!!!!!!!!!!!!!!
+                    if(value2.tipo == Tipo(tipo.INT)){ //? ENTERO -----> DOUBLE
+                        return new val(this.fila, this.column, Tipo(tipo.DOUBLE), value.valor / value2.valor);
+                    }
+                    else if(value2.tipo == Tipo(tipo.DOUBLE)){//? DOUBLE -----> DOUBLE
+                        return new val(this.fila, this.column, Tipo(tipo.DOUBLE), value.valor / value2.valor);
+                    }
+                    else if(value2.tipo == Tipo(tipo.CARACTER)){//? CARACTER -----> DOUBLE
+                        try {
+                            return new val(this.fila, this.column, Tipo(tipo.DOUBLE ), value.valor / value2.valor.charCodeAt(0));
+                        } catch (error) {
+                            return new val(this.fila, this.column, Tipo(tipo.DOUBLE), value.valor);
+                        }
+                    }
+                    else{
+                        arbolIns.setError(instruccionesAPI.errorSemantico("No se puede sumar los tipos "+value.tipo+" y "+value2.tipo,this.fila,this.column));
+                        return new val(this.fila, this.column, Tipo(tipo.ERROR), "(ERROR SEMANTICO) No se puede sumar los tipos "+value.tipo+" y "+value2.tipo);
+                    }
+                }
+                else if(value.tipo == Tipo(tipo.CARACTER)){ //! CARACTER!!!!!!!!!!!!!!!!!!!!!!!!!
+                    if(value2.tipo == Tipo(tipo.INT)){ //? ENTERO -----> DOUBLE
+                        try {
+                            return new val(this.fila, this.column, Tipo(tipo.DOUBLE), value.valor.charCodeAt(0)/value2.valor);
+                        } catch (error) {
+                            return new val(this.fila, this.column, Tipo(tipo.DOUBLE), value2.valor);
+                        }
+                    }
+                    else if(value2.tipo == Tipo(tipo.DOUBLE)){//? DOUBLE -----> DOUBLE
+                        return new val(this.fila, this.column, Tipo(tipo.DOUBLE), value2.valor / value.valor.charCodeAt(0));
+                    }
+                    else{
+                        arbolIns.setError(instruccionesAPI.errorSemantico("No se puede sumar los tipos "+value.tipo+" y "+value2.tipo,this.fila,this.column));
+                        return new val(this.fila, this.column, Tipo(tipo.ERROR), "(ERROR SEMANTICO) No se puede sumar los tipos "+value.tipo+" y "+value2.tipo);
+                    }
+                }
+                else{
+                    arbolIns.setError(instruccionesAPI.errorSemantico("No se puede DIVIDIR los tipos "+value.tipo+" y "+value2.tipo,this.fila,this.column));
+                    return new val(this.fila, this.column, Tipo(tipo.ERROR), "(ERROR SEMANTICO) No se puede DIVIDIR los tipos "+value.tipo+" y "+value2.tipo);
+                }
+            }
+            //! **********************     SI ES UNA POTENCIA:  ***********************************
+            else if(this.tipo == 'POTENCIA'){
+                if(value.tipo == Tipo(tipo.INT)){ //! ENTERO!!!!!!!!!!!!!!!!!!!!!!!!!
+                    if(value2.tipo == Tipo(tipo.INT)){ //? ENTERO -----> ENTERO
+                        return new val(this.fila, this.column, Tipo(tipo.INT), Math.pow(value.valor, value2.valor));
+                    }
+                    else if(value2.tipo == Tipo(tipo.DOUBLE)){//? DOUBLE -----> DOUBLE
+                        return new val(this.fila, this.column, Tipo(tipo.DOUBLE),  Math.pow(value.valor, value2.valor));
+                    }
+                    else{
+                        arbolIns.setError(instruccionesAPI.errorSemantico("No se puede sumar los tipos "+value.tipo+" y "+value2.tipo,this.fila,this.column));
+                        return new val(this.fila, this.column, Tipo(tipo.ERROR), "(ERROR SEMANTICO) No se puede sumar los tipos "+value.tipo+" y "+value2.tipo);
+                    }
+                }
+                else if(value.tipo == Tipo(tipo.DOUBLE)){ //! DOUBLE!!!!!!!!!!!!!!!!!!!!!!!!!
+                    if(value2.tipo == Tipo(tipo.INT)){ //? ENTERO -----> DOUBLE
+                        return new val(this.fila, this.column, Tipo(tipo.DOUBLE),  Math.pow(value.valor, value2.valor));
+                    }
+                    else if(value2.tipo == Tipo(tipo.DOUBLE)){//? DOUBLE -----> DOUBLE
+                        return new val(this.fila, this.column, Tipo(tipo.DOUBLE),  Math.pow(value.valor, value2.valor));
+                    }
+                    else{
+                        arbolIns.setError(instruccionesAPI.errorSemantico("No se puede elevar los tipos "+value.tipo+" y "+value2.tipo,this.fila,this.column));
+                        return new val(this.fila, this.column, Tipo(tipo.ERROR), "(ERROR SEMANTICO) No se puede sumar los tipos "+value.tipo+" y "+value2.tipo);
+                    }
+                }
+                
+                else{
+                    arbolIns.setError(instruccionesAPI.errorSemantico("No se puede elevar los tipos "+value.tipo+" y "+value2.tipo,this.fila,this.column));
+                    return new val(this.fila, this.column, Tipo(tipo.ERROR), "(ERROR SEMANTICO) No se puede sumar los tipos "+value.tipo+" y "+value2.tipo);
+                }
+            }
+            //! **********************     SI ES UNA MODULACION...:  ***********************************
+            else if(this.tipo == 'MODULO'){
+                if(value.tipo == Tipo(tipo.INT)){ //! ENTERO!!!!!!!!!!!!!!!!!!!!!!!!!
+                    if(value2.tipo == Tipo(tipo.INT)){ //? ENTERO -----> ENTERO
+                        return new val(this.fila, this.column, Tipo(tipo.DOUBLE), value.valor % value2.valor);
+                    }
+                    else if(value2.tipo == Tipo(tipo.DOUBLE)){//? DOUBLE -----> DOUBLE
+                        return new val(this.fila, this.column, Tipo(tipo.DOUBLE), value.valor % value2.valor);
+                    }
+                    else{
+                        arbolIns.setError(instruccionesAPI.errorSemantico("No se puede sacar el modulo de los tipos "+value.tipo+" y "+value2.tipo,this.fila,this.column));
+                        return new val(this.fila, this.column, Tipo(tipo.ERROR), "(ERROR SEMANTICO) No se puede sacar el modulo de  los tipos "+value.tipo+" y "+value2.tipo);
+                    }
+                }
+                else if(value.tipo == Tipo(tipo.DOUBLE)){ //! DOUBLE!!!!!!!!!!!!!!!!!!!!!!!!!
+                    if(value2.tipo == Tipo(tipo.INT)){ //? ENTERO -----> DOUBLE
+                        return new val(this.fila, this.column, Tipo(tipo.DOUBLE), value.valor % value2.valor);
+                    }
+                    else if(value2.tipo == Tipo(tipo.DOUBLE)){//? DOUBLE -----> DOUBLE
+                        return new val(this.fila, this.column, Tipo(tipo.DOUBLE), value.valor % value2.valor);
+                    }
+                    else{
+                        arbolIns.setError(instruccionesAPI.errorSemantico("No se puede sacar el modulo de los tipos "+value.tipo+" y "+value2.tipo,this.fila,this.column));
+                        return new val(this.fila, this.column, Tipo(tipo.ERROR), "(ERROR SEMANTICO) No se puede sacar el modulo de los tipos "+value.tipo+" y "+value2.tipo);
+                    }
+                }
                 else{
                     arbolIns.setError(instruccionesAPI.errorSemantico("No se puede sumar los tipos "+value.tipo+" y "+value2.tipo,this.fila,this.column));
                     return new val(this.fila, this.column, Tipo(tipo.ERROR), "(ERROR SEMANTICO) No se puede sumar los tipos "+value.tipo+" y "+value2.tipo);
