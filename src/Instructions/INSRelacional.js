@@ -164,23 +164,35 @@ class relacional {
             );
         }
         else if(value2.tipo == Tipo(tipo.BOOLEAN)){//? BOOLEAN -----> ENTERO
-            if(value2.valor == true){
-                return new val(this.fila, this.column, Tipo(tipo.INT), value.valor + 1);
-            }else{
-                return new val(this.fila, this.column, Tipo(tipo.INT), value.valor);
-            }
+            
+                return new val(
+                  this.fila,
+                  this.column,
+                  Tipo(tipo.BOOLEAN),
+                  value.valor == value2.valor
+                );
         }
         else if(value2.tipo == Tipo(tipo.CARACTER)){//? CARACTER -----> ENTERO
             try {
-                return new val(this.fila, this.column, Tipo(tipo.INT), value2.charCodeAt(0)+value.valor);
+                return new val(
+                  this.fila,
+                  this.column,
+                  Tipo(tipo.BOOLEAN),
+                  value2.charCodeAt(0) == value.valor
+                );
             } catch (error) {
-                return new val(this.fila, this.column, Tipo(tipo.INT), value.valor);
+                return new val(
+                  this.fila,
+                  this.column,
+                  Tipo(tipo.BOOLEAN),
+                  true
+                );
             }
         }
         else {
           arbolIns.setError(
             instruccionesAPI.errorSemantico(
-              "No se puede sumar los tipos " + value.tipo + " y " + value2.tipo,
+              "No se puede igualar los tipos " + value.tipo + " y " + value2.tipo,
               this.fila,
               this.column
             )
@@ -189,7 +201,7 @@ class relacional {
             this.fila,
             this.column,
             Tipo(tipo.ERROR),
-            "(ERROR SEMANTICO) No se puede sumar los tipos " +
+            "(ERROR SEMANTICO) No se puede igualar los tipos " +
               value.tipo +
               " y " +
               value2.tipo
@@ -203,14 +215,14 @@ class relacional {
               this.fila,
               this.column,
               Tipo(tipo.INT),
-              value.valor.charCodeAt(0) - value2.valor
+              value.valor.charCodeAt(0) == value2.valor
             );
           } catch (error) {
             return new val(
               this.fila,
               this.column,
               Tipo(tipo.INT),
-              value2.valor
+              true
             );
           }
         }
@@ -218,28 +230,41 @@ class relacional {
           return new val(
             this.fila,
             this.column,
-            Tipo(tipo.DOUBLE),
-            value2.valor - value.valor.charCodeAt(0)
+            Tipo(tipo.BOOLEAN),
+            value2.valor == value.valor.charCodeAt(0)
           );
         }
         else if(value2.tipo == Tipo(tipo.BOOLEAN)){//? BOOLEAN -----> ENTERO
-            if(value2.valor == true){
-                return new val(this.fila, this.column, Tipo(tipo.INT), value.valor + 1);
-            }else{
-                return new val(this.fila, this.column, Tipo(tipo.INT), value.valor);
-            }
+            
+                return new val(
+                  this.fila,
+                  this.column,
+                  Tipo(tipo.BOOLEAN),
+                  value.valor == value2.valor
+                );
+            
         }
         else if(value2.tipo == Tipo(tipo.CARACTER)){//? CARACTER -----> CADENA
             try {
-                return new val(this.fila, this.column, Tipo(tipo.STRING), value.valor+value2.valor);
+                return new val(
+                  this.fila,
+                  this.column,
+                  Tipo(tipo.BOOLEAN),
+                  value.valor == value2.valor
+                );
             } catch (error) {
-                return new val(this.fila, this.column, Tipo(tipo.STRING), value.valor);
+                return new val(
+                  this.fila,
+                  this.column,
+                  Tipo(tipo.BOOLEAN),
+                  true
+                );
             }
         }
         else {
           arbolIns.setError(
             instruccionesAPI.errorSemantico(
-              "No se puede sumar los tipos " + value.tipo + " y " + value2.tipo,
+              "No se puede igualar los tipos " + value.tipo + " y " + value2.tipo,
               this.fila,
               this.column
             )
@@ -248,7 +273,7 @@ class relacional {
             this.fila,
             this.column,
             Tipo(tipo.ERROR),
-            "(ERROR SEMANTICO) No se puede sumar los tipos " +
+            "(ERROR SEMANTICO) No se puede igualar los tipos " +
               value.tipo +
               " y " +
               value2.tipo
@@ -258,7 +283,7 @@ class relacional {
       else {
         arbolIns.setError(
           instruccionesAPI.errorSemantico(
-            "No se puede sumar los tipos " + value.tipo + " y " + value2.tipo,
+            "No se puede igualar los tipos " + value.tipo + " y " + value2.tipo,
             this.fila,
             this.column
           )
@@ -267,7 +292,7 @@ class relacional {
           this.fila,
           this.column,
           Tipo(tipo.ERROR),
-          "(ERROR SEMANTICO) No se puede sumar los tipos " +
+          "(ERROR SEMANTICO) No se puede igualar los tipos " +
             value.tipo +
             " y " +
             value2.tipo
@@ -275,21 +300,1334 @@ class relacional {
       }
       //! **********************     SI ES UNA NEGACION:  ***********************************
     } else if (this.tipo === "NEGACION") {
+      if (value.tipo == Tipo(tipo.INT)) {
+        //! ENTERO!!!!!!!!!!!!!!!!!!!!!!!!!
+        if (value2.tipo == Tipo(tipo.INT)) {
+          //? ENTERO -----> ENTERO
+          return new val(
+            this.fila,
+            this.column,
+            Tipo(tipo.BOOLEAN),
+            value.valor == value2.valor
+          );
+        } else if (value2.tipo == Tipo(tipo.DOUBLE)) {
+          //? DOUBLE -----> DOUBLE
+          return new val(
+            this.fila,
+            this.column,
+            Tipo(tipo.BOOLEAN),
+            value.valor == value2.valor
+          );
+        } else if (value2.tipo == Tipo(tipo.BOOLEAN)) {
+          //? BOOLEAN -----> ENTERO
+          return new val(
+            this.fila,
+            this.column,
+            Tipo(tipo.BOOLEAN),
+            value.valor == value2.valor
+          );
+        } else if (value2.tipo == Tipo(tipo.CARACTER)) {
+          //? CARACTER -----> ENTERO
+          try {
+            return new val(
+              this.fila,
+              this.column,
+              Tipo(tipo.BOOLEAN),
+              value.valor == value2.valor.charCodeAt(0)
+            );
+          } catch (error) {
+            return new val(this.fila, this.column, Tipo(tipo.BOOLEAN), true);
+          }
+        } else {
+          arbolIns.setError(
+            instruccionesAPI.errorSemantico(
+              "No se puede igualar los tipos " +
+                value.tipo +
+                " y " +
+                value2.tipo,
+              this.fila,
+              this.column
+            )
+          );
+          return new val(
+            this.fila,
+            this.column,
+            Tipo(tipo.ERROR),
+            "(ERROR SEMANTICO) No se puede igualar los tipos " +
+              value.tipo +
+              " y " +
+              value2.tipo
+          );
+        }
+      } else if (value.tipo == Tipo(tipo.DOUBLE)) {
+        //! DOUBLE!!!!!!!!!!!!!!!!!!!!!!!!!
+        if (value2.tipo == Tipo(tipo.INT)) {
+          //? ENTERO -----> DOUBLE
+          return new val(
+            this.fila,
+            this.column,
+            Tipo(tipo.BOOLEAN),
+            value.valor == value2.valor
+          );
+        } else if (value2.tipo == Tipo(tipo.DOUBLE)) {
+          //? DOUBLE -----> DOUBLE
+          return new val(
+            this.fila,
+            this.column,
+            Tipo(tipo.BOOLEAN),
+            value.valor == value2.valor
+          );
+        } else if (value2.tipo == Tipo(tipo.BOOLEAN)) {
+          //? BOOLEAN -----> DOUBLE
+          return new val(
+            this.fila,
+            this.column,
+            Tipo(tipo.BOOLEAN),
+            value.valor == value2.valor
+          );
+        } else if (value2.tipo == Tipo(tipo.CARACTER)) {
+          //? CARACTER -----> DOUBLE
+          try {
+            return new val(
+              this.fila,
+              this.column,
+              Tipo(tipo.BOOLEAN),
+              value.valor == value2.valor.charCodeAt(0)
+            );
+          } catch (error) {
+            return new val(this.fila, this.column, Tipo(tipo.BOOLEAN), true);
+          }
+        } else {
+          arbolIns.setError(
+            instruccionesAPI.errorSemantico(
+              "No se puede igualar los tipos " +
+                value.tipo +
+                " y " +
+                value2.tipo,
+              this.fila,
+              this.column
+            )
+          );
+          return new val(
+            this.fila,
+            this.column,
+            Tipo(tipo.ERROR),
+            "(ERROR SEMANTICO) No se puede igualar los tipos " +
+              value.tipo +
+              " y " +
+              value2.tipo
+          );
+        }
+      } else if (value.tipo == Tipo(tipo.BOOLEAN)) {
+        //! BOOLEAN!!!!!!!!!!!!!!!!!!!!!!!!!
+        if (value2.tipo == Tipo(tipo.INT)) {
+          //? ENTERO -----> ENTERO
+          return new val(
+            this.fila,
+            this.column,
+            Tipo(tipo.BOOLEAN),
+            value.valor == value2.valor
+          );
+        } else if (value2.tipo == Tipo(tipo.DOUBLE)) {
+          //? DOUBLE -----> DOUBLE
+          return new val(
+            this.fila,
+            this.column,
+            Tipo(tipo.BOOLEAN),
+            value.valor == value2.valor
+          );
+        } else if (value2.tipo == Tipo(tipo.BOOLEAN)) {
+          //? BOOLEAN -----> ENTERO
+
+          return new val(
+            this.fila,
+            this.column,
+            Tipo(tipo.BOOLEAN),
+            value.valor == value2.valor
+          );
+        } else if (value2.tipo == Tipo(tipo.CARACTER)) {
+          //? CARACTER -----> ENTERO
+          try {
+            return new val(
+              this.fila,
+              this.column,
+              Tipo(tipo.BOOLEAN),
+              value2.charCodeAt(0) == value.valor
+            );
+          } catch (error) {
+            return new val(this.fila, this.column, Tipo(tipo.BOOLEAN), true);
+          }
+        } else {
+          arbolIns.setError(
+            instruccionesAPI.errorSemantico(
+              "No se puede igualar los tipos " +
+                value.tipo +
+                " y " +
+                value2.tipo,
+              this.fila,
+              this.column
+            )
+          );
+          return new val(
+            this.fila,
+            this.column,
+            Tipo(tipo.ERROR),
+            "(ERROR SEMANTICO) No se puede igualar los tipos " +
+              value.tipo +
+              " y " +
+              value2.tipo
+          );
+        }
+      } else if (value.tipo == Tipo(tipo.CARACTER)) {
+        //! CARACTER!!!!!!!!!!!!!!!!!!!!!!!!!
+        if (value2.tipo == Tipo(tipo.INT)) {
+          //? ENTERO -----> ENTERO
+          try {
+            return new val(
+              this.fila,
+              this.column,
+              Tipo(tipo.INT),
+              value.valor.charCodeAt(0) == value2.valor
+            );
+          } catch (error) {
+            return new val(this.fila, this.column, Tipo(tipo.INT), true);
+          }
+        } else if (value2.tipo == Tipo(tipo.DOUBLE)) {
+          //? DOUBLE -----> DOUBLE
+          return new val(
+            this.fila,
+            this.column,
+            Tipo(tipo.BOOLEAN),
+            value2.valor == value.valor.charCodeAt(0)
+          );
+        } else if (value2.tipo == Tipo(tipo.BOOLEAN)) {
+          //? BOOLEAN -----> ENTERO
+
+          return new val(
+            this.fila,
+            this.column,
+            Tipo(tipo.BOOLEAN),
+            value.valor == value2.valor
+          );
+        } else if (value2.tipo == Tipo(tipo.CARACTER)) {
+          //? CARACTER -----> CADENA
+          try {
+            return new val(
+              this.fila,
+              this.column,
+              Tipo(tipo.BOOLEAN),
+              value.valor == value2.valor
+            );
+          } catch (error) {
+            return new val(this.fila, this.column, Tipo(tipo.BOOLEAN), true);
+          }
+        } else {
+          arbolIns.setError(
+            instruccionesAPI.errorSemantico(
+              "No se puede igualar los tipos " +
+                value.tipo +
+                " y " +
+                value2.tipo,
+              this.fila,
+              this.column
+            )
+          );
+          return new val(
+            this.fila,
+            this.column,
+            Tipo(tipo.ERROR),
+            "(ERROR SEMANTICO) No se puede igualar los tipos " +
+              value.tipo +
+              " y " +
+              value2.tipo
+          );
+        }
+      } else {
+        arbolIns.setError(
+          instruccionesAPI.errorSemantico(
+            "No se puede igualar los tipos " + value.tipo + " y " + value2.tipo,
+            this.fila,
+            this.column
+          )
+        );
+        return new val(
+          this.fila,
+          this.column,
+          Tipo(tipo.ERROR),
+          "(ERROR SEMANTICO) No se puede igualar los tipos " +
+            value.tipo +
+            " y " +
+            value2.tipo
+        );
+      }
+      //! **********************     SI ES MAYOR A:  ***********************************
+    } else if (this.tipo === "MAYOR") {
+      if (value.tipo == Tipo(tipo.INT)) {
+        //! ENTERO!!!!!!!!!!!!!!!!!!!!!!!!!
+        if (value2.tipo == Tipo(tipo.INT)) {
+          //? ENTERO -----> ENTERO
+          return new val(
+            this.fila,
+            this.column,
+            Tipo(tipo.BOOLEAN),
+            value.valor == value2.valor
+          );
+        } else if (value2.tipo == Tipo(tipo.DOUBLE)) {
+          //? DOUBLE -----> DOUBLE
+          return new val(
+            this.fila,
+            this.column,
+            Tipo(tipo.BOOLEAN),
+            value.valor == value2.valor
+          );
+        } else if (value2.tipo == Tipo(tipo.BOOLEAN)) {
+          //? BOOLEAN -----> ENTERO
+          return new val(
+            this.fila,
+            this.column,
+            Tipo(tipo.BOOLEAN),
+            value.valor == value2.valor
+          );
+        } else if (value2.tipo == Tipo(tipo.CARACTER)) {
+          //? CARACTER -----> ENTERO
+          try {
+            return new val(
+              this.fila,
+              this.column,
+              Tipo(tipo.BOOLEAN),
+              value.valor == value2.valor.charCodeAt(0)
+            );
+          } catch (error) {
+            return new val(this.fila, this.column, Tipo(tipo.BOOLEAN), true);
+          }
+        } else {
+          arbolIns.setError(
+            instruccionesAPI.errorSemantico(
+              "No se puede igualar los tipos " +
+                value.tipo +
+                " y " +
+                value2.tipo,
+              this.fila,
+              this.column
+            )
+          );
+          return new val(
+            this.fila,
+            this.column,
+            Tipo(tipo.ERROR),
+            "(ERROR SEMANTICO) No se puede igualar los tipos " +
+              value.tipo +
+              " y " +
+              value2.tipo
+          );
+        }
+      } else if (value.tipo == Tipo(tipo.DOUBLE)) {
+        //! DOUBLE!!!!!!!!!!!!!!!!!!!!!!!!!
+        if (value2.tipo == Tipo(tipo.INT)) {
+          //? ENTERO -----> DOUBLE
+          return new val(
+            this.fila,
+            this.column,
+            Tipo(tipo.BOOLEAN),
+            value.valor == value2.valor
+          );
+        } else if (value2.tipo == Tipo(tipo.DOUBLE)) {
+          //? DOUBLE -----> DOUBLE
+          return new val(
+            this.fila,
+            this.column,
+            Tipo(tipo.BOOLEAN),
+            value.valor == value2.valor
+          );
+        } else if (value2.tipo == Tipo(tipo.BOOLEAN)) {
+          //? BOOLEAN -----> DOUBLE
+          return new val(
+            this.fila,
+            this.column,
+            Tipo(tipo.BOOLEAN),
+            value.valor == value2.valor
+          );
+        } else if (value2.tipo == Tipo(tipo.CARACTER)) {
+          //? CARACTER -----> DOUBLE
+          try {
+            return new val(
+              this.fila,
+              this.column,
+              Tipo(tipo.BOOLEAN),
+              value.valor == value2.valor.charCodeAt(0)
+            );
+          } catch (error) {
+            return new val(this.fila, this.column, Tipo(tipo.BOOLEAN), true);
+          }
+        } else {
+          arbolIns.setError(
+            instruccionesAPI.errorSemantico(
+              "No se puede igualar los tipos " +
+                value.tipo +
+                " y " +
+                value2.tipo,
+              this.fila,
+              this.column
+            )
+          );
+          return new val(
+            this.fila,
+            this.column,
+            Tipo(tipo.ERROR),
+            "(ERROR SEMANTICO) No se puede igualar los tipos " +
+              value.tipo +
+              " y " +
+              value2.tipo
+          );
+        }
+      } else if (value.tipo == Tipo(tipo.BOOLEAN)) {
+        //! BOOLEAN!!!!!!!!!!!!!!!!!!!!!!!!!
+        if (value2.tipo == Tipo(tipo.INT)) {
+          //? ENTERO -----> ENTERO
+          return new val(
+            this.fila,
+            this.column,
+            Tipo(tipo.BOOLEAN),
+            value.valor == value2.valor
+          );
+        } else if (value2.tipo == Tipo(tipo.DOUBLE)) {
+          //? DOUBLE -----> DOUBLE
+          return new val(
+            this.fila,
+            this.column,
+            Tipo(tipo.BOOLEAN),
+            value.valor == value2.valor
+          );
+        } else if (value2.tipo == Tipo(tipo.BOOLEAN)) {
+          //? BOOLEAN -----> ENTERO
+
+          return new val(
+            this.fila,
+            this.column,
+            Tipo(tipo.BOOLEAN),
+            value.valor == value2.valor
+          );
+        } else if (value2.tipo == Tipo(tipo.CARACTER)) {
+          //? CARACTER -----> ENTERO
+          try {
+            return new val(
+              this.fila,
+              this.column,
+              Tipo(tipo.BOOLEAN),
+              value2.charCodeAt(0) == value.valor
+            );
+          } catch (error) {
+            return new val(this.fila, this.column, Tipo(tipo.BOOLEAN), true);
+          }
+        } else {
+          arbolIns.setError(
+            instruccionesAPI.errorSemantico(
+              "No se puede igualar los tipos " +
+                value.tipo +
+                " y " +
+                value2.tipo,
+              this.fila,
+              this.column
+            )
+          );
+          return new val(
+            this.fila,
+            this.column,
+            Tipo(tipo.ERROR),
+            "(ERROR SEMANTICO) No se puede igualar los tipos " +
+              value.tipo +
+              " y " +
+              value2.tipo
+          );
+        }
+      } else if (value.tipo == Tipo(tipo.CARACTER)) {
+        //! CARACTER!!!!!!!!!!!!!!!!!!!!!!!!!
+        if (value2.tipo == Tipo(tipo.INT)) {
+          //? ENTERO -----> ENTERO
+          try {
+            return new val(
+              this.fila,
+              this.column,
+              Tipo(tipo.INT),
+              value.valor.charCodeAt(0) == value2.valor
+            );
+          } catch (error) {
+            return new val(this.fila, this.column, Tipo(tipo.INT), true);
+          }
+        } else if (value2.tipo == Tipo(tipo.DOUBLE)) {
+          //? DOUBLE -----> DOUBLE
+          return new val(
+            this.fila,
+            this.column,
+            Tipo(tipo.BOOLEAN),
+            value2.valor == value.valor.charCodeAt(0)
+          );
+        } else if (value2.tipo == Tipo(tipo.BOOLEAN)) {
+          //? BOOLEAN -----> ENTERO
+
+          return new val(
+            this.fila,
+            this.column,
+            Tipo(tipo.BOOLEAN),
+            value.valor == value2.valor
+          );
+        } else if (value2.tipo == Tipo(tipo.CARACTER)) {
+          //? CARACTER -----> CADENA
+          try {
+            return new val(
+              this.fila,
+              this.column,
+              Tipo(tipo.BOOLEAN),
+              value.valor == value2.valor
+            );
+          } catch (error) {
+            return new val(this.fila, this.column, Tipo(tipo.BOOLEAN), true);
+          }
+        } else {
+          arbolIns.setError(
+            instruccionesAPI.errorSemantico(
+              "No se puede igualar los tipos " +
+                value.tipo +
+                " y " +
+                value2.tipo,
+              this.fila,
+              this.column
+            )
+          );
+          return new val(
+            this.fila,
+            this.column,
+            Tipo(tipo.ERROR),
+            "(ERROR SEMANTICO) No se puede igualar los tipos " +
+              value.tipo +
+              " y " +
+              value2.tipo
+          );
+        }
+      } else {
+        arbolIns.setError(
+          instruccionesAPI.errorSemantico(
+            "No se puede igualar los tipos " + value.tipo + " y " + value2.tipo,
+            this.fila,
+            this.column
+          )
+        );
+        return new val(
+          this.fila,
+          this.column,
+          Tipo(tipo.ERROR),
+          "(ERROR SEMANTICO) No se puede igualar los tipos " +
+            value.tipo +
+            " y " +
+            value2.tipo
+        );
+      }
+      //! **********************     SI ES MAYOR O IGUAL A:  ***********************************
+    } else if (this.ttipoipo === "MAYORIGUAL") {
+      if (value.tipo == Tipo(tipo.INT)) {
+        //! ENTERO!!!!!!!!!!!!!!!!!!!!!!!!!
+        if (value2.tipo == Tipo(tipo.INT)) {
+          //? ENTERO -----> ENTERO
+          return new val(
+            this.fila,
+            this.column,
+            Tipo(tipo.BOOLEAN),
+            value.valor == value2.valor
+          );
+        } else if (value2.tipo == Tipo(tipo.DOUBLE)) {
+          //? DOUBLE -----> DOUBLE
+          return new val(
+            this.fila,
+            this.column,
+            Tipo(tipo.BOOLEAN),
+            value.valor == value2.valor
+          );
+        } else if (value2.tipo == Tipo(tipo.BOOLEAN)) {
+          //? BOOLEAN -----> ENTERO
+          return new val(
+            this.fila,
+            this.column,
+            Tipo(tipo.BOOLEAN),
+            value.valor == value2.valor
+          );
+        } else if (value2.tipo == Tipo(tipo.CARACTER)) {
+          //? CARACTER -----> ENTERO
+          try {
+            return new val(
+              this.fila,
+              this.column,
+              Tipo(tipo.BOOLEAN),
+              value.valor == value2.valor.charCodeAt(0)
+            );
+          } catch (error) {
+            return new val(this.fila, this.column, Tipo(tipo.BOOLEAN), true);
+          }
+        } else {
+          arbolIns.setError(
+            instruccionesAPI.errorSemantico(
+              "No se puede igualar los tipos " +
+                value.tipo +
+                " y " +
+                value2.tipo,
+              this.fila,
+              this.column
+            )
+          );
+          return new val(
+            this.fila,
+            this.column,
+            Tipo(tipo.ERROR),
+            "(ERROR SEMANTICO) No se puede igualar los tipos " +
+              value.tipo +
+              " y " +
+              value2.tipo
+          );
+        }
+      } else if (value.tipo == Tipo(tipo.DOUBLE)) {
+        //! DOUBLE!!!!!!!!!!!!!!!!!!!!!!!!!
+        if (value2.tipo == Tipo(tipo.INT)) {
+          //? ENTERO -----> DOUBLE
+          return new val(
+            this.fila,
+            this.column,
+            Tipo(tipo.BOOLEAN),
+            value.valor == value2.valor
+          );
+        } else if (value2.tipo == Tipo(tipo.DOUBLE)) {
+          //? DOUBLE -----> DOUBLE
+          return new val(
+            this.fila,
+            this.column,
+            Tipo(tipo.BOOLEAN),
+            value.valor == value2.valor
+          );
+        } else if (value2.tipo == Tipo(tipo.BOOLEAN)) {
+          //? BOOLEAN -----> DOUBLE
+          return new val(
+            this.fila,
+            this.column,
+            Tipo(tipo.BOOLEAN),
+            value.valor == value2.valor
+          );
+        } else if (value2.tipo == Tipo(tipo.CARACTER)) {
+          //? CARACTER -----> DOUBLE
+          try {
+            return new val(
+              this.fila,
+              this.column,
+              Tipo(tipo.BOOLEAN),
+              value.valor == value2.valor.charCodeAt(0)
+            );
+          } catch (error) {
+            return new val(this.fila, this.column, Tipo(tipo.BOOLEAN), true);
+          }
+        } else {
+          arbolIns.setError(
+            instruccionesAPI.errorSemantico(
+              "No se puede igualar los tipos " +
+                value.tipo +
+                " y " +
+                value2.tipo,
+              this.fila,
+              this.column
+            )
+          );
+          return new val(
+            this.fila,
+            this.column,
+            Tipo(tipo.ERROR),
+            "(ERROR SEMANTICO) No se puede igualar los tipos " +
+              value.tipo +
+              " y " +
+              value2.tipo
+          );
+        }
+      } else if (value.tipo == Tipo(tipo.BOOLEAN)) {
+        //! BOOLEAN!!!!!!!!!!!!!!!!!!!!!!!!!
+        if (value2.tipo == Tipo(tipo.INT)) {
+          //? ENTERO -----> ENTERO
+          return new val(
+            this.fila,
+            this.column,
+            Tipo(tipo.BOOLEAN),
+            value.valor == value2.valor
+          );
+        } else if (value2.tipo == Tipo(tipo.DOUBLE)) {
+          //? DOUBLE -----> DOUBLE
+          return new val(
+            this.fila,
+            this.column,
+            Tipo(tipo.BOOLEAN),
+            value.valor == value2.valor
+          );
+        } else if (value2.tipo == Tipo(tipo.BOOLEAN)) {
+          //? BOOLEAN -----> ENTERO
+
+          return new val(
+            this.fila,
+            this.column,
+            Tipo(tipo.BOOLEAN),
+            value.valor == value2.valor
+          );
+        } else if (value2.tipo == Tipo(tipo.CARACTER)) {
+          //? CARACTER -----> ENTERO
+          try {
+            return new val(
+              this.fila,
+              this.column,
+              Tipo(tipo.BOOLEAN),
+              value2.charCodeAt(0) == value.valor
+            );
+          } catch (error) {
+            return new val(this.fila, this.column, Tipo(tipo.BOOLEAN), true);
+          }
+        } else {
+          arbolIns.setError(
+            instruccionesAPI.errorSemantico(
+              "No se puede igualar los tipos " +
+                value.tipo +
+                " y " +
+                value2.tipo,
+              this.fila,
+              this.column
+            )
+          );
+          return new val(
+            this.fila,
+            this.column,
+            Tipo(tipo.ERROR),
+            "(ERROR SEMANTICO) No se puede igualar los tipos " +
+              value.tipo +
+              " y " +
+              value2.tipo
+          );
+        }
+      } else if (value.tipo == Tipo(tipo.CARACTER)) {
+        //! CARACTER!!!!!!!!!!!!!!!!!!!!!!!!!
+        if (value2.tipo == Tipo(tipo.INT)) {
+          //? ENTERO -----> ENTERO
+          try {
+            return new val(
+              this.fila,
+              this.column,
+              Tipo(tipo.INT),
+              value.valor.charCodeAt(0) == value2.valor
+            );
+          } catch (error) {
+            return new val(this.fila, this.column, Tipo(tipo.INT), true);
+          }
+        } else if (value2.tipo == Tipo(tipo.DOUBLE)) {
+          //? DOUBLE -----> DOUBLE
+          return new val(
+            this.fila,
+            this.column,
+            Tipo(tipo.BOOLEAN),
+            value2.valor == value.valor.charCodeAt(0)
+          );
+        } else if (value2.tipo == Tipo(tipo.BOOLEAN)) {
+          //? BOOLEAN -----> ENTERO
+
+          return new val(
+            this.fila,
+            this.column,
+            Tipo(tipo.BOOLEAN),
+            value.valor == value2.valor
+          );
+        } else if (value2.tipo == Tipo(tipo.CARACTER)) {
+          //? CARACTER -----> CADENA
+          try {
+            return new val(
+              this.fila,
+              this.column,
+              Tipo(tipo.BOOLEAN),
+              value.valor == value2.valor
+            );
+          } catch (error) {
+            return new val(this.fila, this.column, Tipo(tipo.BOOLEAN), true);
+          }
+        } else {
+          arbolIns.setError(
+            instruccionesAPI.errorSemantico(
+              "No se puede igualar los tipos " +
+                value.tipo +
+                " y " +
+                value2.tipo,
+              this.fila,
+              this.column
+            )
+          );
+          return new val(
+            this.fila,
+            this.column,
+            Tipo(tipo.ERROR),
+            "(ERROR SEMANTICO) No se puede igualar los tipos " +
+              value.tipo +
+              " y " +
+              value2.tipo
+          );
+        }
+      } else {
+        arbolIns.setError(
+          instruccionesAPI.errorSemantico(
+            "No se puede igualar los tipos " + value.tipo + " y " + value2.tipo,
+            this.fila,
+            this.column
+          )
+        );
+        return new val(
+          this.fila,
+          this.column,
+          Tipo(tipo.ERROR),
+          "(ERROR SEMANTICO) No se puede igualar los tipos " +
+            value.tipo +
+            " y " +
+            value2.tipo
+        );
+      }
+      //! **********************     SI ES MENOR A:  ***********************************
+    } else if (this.tipo === "MENOR") {
+      if (value.tipo == Tipo(tipo.INT)) {
+        //! ENTERO!!!!!!!!!!!!!!!!!!!!!!!!!
+        if (value2.tipo == Tipo(tipo.INT)) {
+          //? ENTERO -----> ENTERO
+          return new val(
+            this.fila,
+            this.column,
+            Tipo(tipo.BOOLEAN),
+            value.valor == value2.valor
+          );
+        } else if (value2.tipo == Tipo(tipo.DOUBLE)) {
+          //? DOUBLE -----> DOUBLE
+          return new val(
+            this.fila,
+            this.column,
+            Tipo(tipo.BOOLEAN),
+            value.valor == value2.valor
+          );
+        } else if (value2.tipo == Tipo(tipo.BOOLEAN)) {
+          //? BOOLEAN -----> ENTERO
+          return new val(
+            this.fila,
+            this.column,
+            Tipo(tipo.BOOLEAN),
+            value.valor == value2.valor
+          );
+        } else if (value2.tipo == Tipo(tipo.CARACTER)) {
+          //? CARACTER -----> ENTERO
+          try {
+            return new val(
+              this.fila,
+              this.column,
+              Tipo(tipo.BOOLEAN),
+              value.valor == value2.valor.charCodeAt(0)
+            );
+          } catch (error) {
+            return new val(this.fila, this.column, Tipo(tipo.BOOLEAN), true);
+          }
+        } else {
+          arbolIns.setError(
+            instruccionesAPI.errorSemantico(
+              "No se puede igualar los tipos " +
+                value.tipo +
+                " y " +
+                value2.tipo,
+              this.fila,
+              this.column
+            )
+          );
+          return new val(
+            this.fila,
+            this.column,
+            Tipo(tipo.ERROR),
+            "(ERROR SEMANTICO) No se puede igualar los tipos " +
+              value.tipo +
+              " y " +
+              value2.tipo
+          );
+        }
+      } else if (value.tipo == Tipo(tipo.DOUBLE)) {
+        //! DOUBLE!!!!!!!!!!!!!!!!!!!!!!!!!
+        if (value2.tipo == Tipo(tipo.INT)) {
+          //? ENTERO -----> DOUBLE
+          return new val(
+            this.fila,
+            this.column,
+            Tipo(tipo.BOOLEAN),
+            value.valor == value2.valor
+          );
+        } else if (value2.tipo == Tipo(tipo.DOUBLE)) {
+          //? DOUBLE -----> DOUBLE
+          return new val(
+            this.fila,
+            this.column,
+            Tipo(tipo.BOOLEAN),
+            value.valor == value2.valor
+          );
+        } else if (value2.tipo == Tipo(tipo.BOOLEAN)) {
+          //? BOOLEAN -----> DOUBLE
+          return new val(
+            this.fila,
+            this.column,
+            Tipo(tipo.BOOLEAN),
+            value.valor == value2.valor
+          );
+        } else if (value2.tipo == Tipo(tipo.CARACTER)) {
+          //? CARACTER -----> DOUBLE
+          try {
+            return new val(
+              this.fila,
+              this.column,
+              Tipo(tipo.BOOLEAN),
+              value.valor == value2.valor.charCodeAt(0)
+            );
+          } catch (error) {
+            return new val(this.fila, this.column, Tipo(tipo.BOOLEAN), true);
+          }
+        } else {
+          arbolIns.setError(
+            instruccionesAPI.errorSemantico(
+              "No se puede igualar los tipos " +
+                value.tipo +
+                " y " +
+                value2.tipo,
+              this.fila,
+              this.column
+            )
+          );
+          return new val(
+            this.fila,
+            this.column,
+            Tipo(tipo.ERROR),
+            "(ERROR SEMANTICO) No se puede igualar los tipos " +
+              value.tipo +
+              " y " +
+              value2.tipo
+          );
+        }
+      } else if (value.tipo == Tipo(tipo.BOOLEAN)) {
+        //! BOOLEAN!!!!!!!!!!!!!!!!!!!!!!!!!
+        if (value2.tipo == Tipo(tipo.INT)) {
+          //? ENTERO -----> ENTERO
+          return new val(
+            this.fila,
+            this.column,
+            Tipo(tipo.BOOLEAN),
+            value.valor == value2.valor
+          );
+        } else if (value2.tipo == Tipo(tipo.DOUBLE)) {
+          //? DOUBLE -----> DOUBLE
+          return new val(
+            this.fila,
+            this.column,
+            Tipo(tipo.BOOLEAN),
+            value.valor == value2.valor
+          );
+        } else if (value2.tipo == Tipo(tipo.BOOLEAN)) {
+          //? BOOLEAN -----> ENTERO
+
+          return new val(
+            this.fila,
+            this.column,
+            Tipo(tipo.BOOLEAN),
+            value.valor == value2.valor
+          );
+        } else if (value2.tipo == Tipo(tipo.CARACTER)) {
+          //? CARACTER -----> ENTERO
+          try {
+            return new val(
+              this.fila,
+              this.column,
+              Tipo(tipo.BOOLEAN),
+              value2.charCodeAt(0) == value.valor
+            );
+          } catch (error) {
+            return new val(this.fila, this.column, Tipo(tipo.BOOLEAN), true);
+          }
+        } else {
+          arbolIns.setError(
+            instruccionesAPI.errorSemantico(
+              "No se puede igualar los tipos " +
+                value.tipo +
+                " y " +
+                value2.tipo,
+              this.fila,
+              this.column
+            )
+          );
+          return new val(
+            this.fila,
+            this.column,
+            Tipo(tipo.ERROR),
+            "(ERROR SEMANTICO) No se puede igualar los tipos " +
+              value.tipo +
+              " y " +
+              value2.tipo
+          );
+        }
+      } else if (value.tipo == Tipo(tipo.CARACTER)) {
+        //! CARACTER!!!!!!!!!!!!!!!!!!!!!!!!!
+        if (value2.tipo == Tipo(tipo.INT)) {
+          //? ENTERO -----> ENTERO
+          try {
+            return new val(
+              this.fila,
+              this.column,
+              Tipo(tipo.INT),
+              value.valor.charCodeAt(0) == value2.valor
+            );
+          } catch (error) {
+            return new val(this.fila, this.column, Tipo(tipo.INT), true);
+          }
+        } else if (value2.tipo == Tipo(tipo.DOUBLE)) {
+          //? DOUBLE -----> DOUBLE
+          return new val(
+            this.fila,
+            this.column,
+            Tipo(tipo.BOOLEAN),
+            value2.valor == value.valor.charCodeAt(0)
+          );
+        } else if (value2.tipo == Tipo(tipo.BOOLEAN)) {
+          //? BOOLEAN -----> ENTERO
+
+          return new val(
+            this.fila,
+            this.column,
+            Tipo(tipo.BOOLEAN),
+            value.valor == value2.valor
+          );
+        } else if (value2.tipo == Tipo(tipo.CARACTER)) {
+          //? CARACTER -----> CADENA
+          try {
+            return new val(
+              this.fila,
+              this.column,
+              Tipo(tipo.BOOLEAN),
+              value.valor == value2.valor
+            );
+          } catch (error) {
+            return new val(this.fila, this.column, Tipo(tipo.BOOLEAN), true);
+          }
+        } else {
+          arbolIns.setError(
+            instruccionesAPI.errorSemantico(
+              "No se puede igualar los tipos " +
+                value.tipo +
+                " y " +
+                value2.tipo,
+              this.fila,
+              this.column
+            )
+          );
+          return new val(
+            this.fila,
+            this.column,
+            Tipo(tipo.ERROR),
+            "(ERROR SEMANTICO) No se puede igualar los tipos " +
+              value.tipo +
+              " y " +
+              value2.tipo
+          );
+        }
+      } else {
+        arbolIns.setError(
+          instruccionesAPI.errorSemantico(
+            "No se puede igualar los tipos " + value.tipo + " y " + value2.tipo,
+            this.fila,
+            this.column
+          )
+        );
+        return new val(
+          this.fila,
+          this.column,
+          Tipo(tipo.ERROR),
+          "(ERROR SEMANTICO) No se puede igualar los tipos " +
+            value.tipo +
+            " y " +
+            value2.tipo
+        );
+      }
+      //! **********************     SI ES MANOR O IGUAL A:  ***********************************
+    } else if (this.tipo === "MENORIGUAL") {
+      if (value.tipo == Tipo(tipo.INT)) {
+        //! ENTERO!!!!!!!!!!!!!!!!!!!!!!!!!
+        if (value2.tipo == Tipo(tipo.INT)) {
+          //? ENTERO -----> ENTERO
+          return new val(
+            this.fila,
+            this.column,
+            Tipo(tipo.BOOLEAN),
+            value.valor == value2.valor
+          );
+        } else if (value2.tipo == Tipo(tipo.DOUBLE)) {
+          //? DOUBLE -----> DOUBLE
+          return new val(
+            this.fila,
+            this.column,
+            Tipo(tipo.BOOLEAN),
+            value.valor == value2.valor
+          );
+        } else if (value2.tipo == Tipo(tipo.BOOLEAN)) {
+          //? BOOLEAN -----> ENTERO
+          return new val(
+            this.fila,
+            this.column,
+            Tipo(tipo.BOOLEAN),
+            value.valor == value2.valor
+          );
+        } else if (value2.tipo == Tipo(tipo.CARACTER)) {
+          //? CARACTER -----> ENTERO
+          try {
+            return new val(
+              this.fila,
+              this.column,
+              Tipo(tipo.BOOLEAN),
+              value.valor == value2.valor.charCodeAt(0)
+            );
+          } catch (error) {
+            return new val(this.fila, this.column, Tipo(tipo.BOOLEAN), true);
+          }
+        } else {
+          arbolIns.setError(
+            instruccionesAPI.errorSemantico(
+              "No se puede igualar los tipos " +
+                value.tipo +
+                " y " +
+                value2.tipo,
+              this.fila,
+              this.column
+            )
+          );
+          return new val(
+            this.fila,
+            this.column,
+            Tipo(tipo.ERROR),
+            "(ERROR SEMANTICO) No se puede igualar los tipos " +
+              value.tipo +
+              " y " +
+              value2.tipo
+          );
+        }
+      } else if (value.tipo == Tipo(tipo.DOUBLE)) {
+        //! DOUBLE!!!!!!!!!!!!!!!!!!!!!!!!!
+        if (value2.tipo == Tipo(tipo.INT)) {
+          //? ENTERO -----> DOUBLE
+          return new val(
+            this.fila,
+            this.column,
+            Tipo(tipo.BOOLEAN),
+            value.valor == value2.valor
+          );
+        } else if (value2.tipo == Tipo(tipo.DOUBLE)) {
+          //? DOUBLE -----> DOUBLE
+          return new val(
+            this.fila,
+            this.column,
+            Tipo(tipo.BOOLEAN),
+            value.valor == value2.valor
+          );
+        } else if (value2.tipo == Tipo(tipo.BOOLEAN)) {
+          //? BOOLEAN -----> DOUBLE
+          return new val(
+            this.fila,
+            this.column,
+            Tipo(tipo.BOOLEAN),
+            value.valor == value2.valor
+          );
+        } else if (value2.tipo == Tipo(tipo.CARACTER)) {
+          //? CARACTER -----> DOUBLE
+          try {
+            return new val(
+              this.fila,
+              this.column,
+              Tipo(tipo.BOOLEAN),
+              value.valor == value2.valor.charCodeAt(0)
+            );
+          } catch (error) {
+            return new val(this.fila, this.column, Tipo(tipo.BOOLEAN), true);
+          }
+        } else {
+          arbolIns.setError(
+            instruccionesAPI.errorSemantico(
+              "No se puede igualar los tipos " +
+                value.tipo +
+                " y " +
+                value2.tipo,
+              this.fila,
+              this.column
+            )
+          );
+          return new val(
+            this.fila,
+            this.column,
+            Tipo(tipo.ERROR),
+            "(ERROR SEMANTICO) No se puede igualar los tipos " +
+              value.tipo +
+              " y " +
+              value2.tipo
+          );
+        }
+      } else if (value.tipo == Tipo(tipo.BOOLEAN)) {
+        //! BOOLEAN!!!!!!!!!!!!!!!!!!!!!!!!!
+        if (value2.tipo == Tipo(tipo.INT)) {
+          //? ENTERO -----> ENTERO
+          return new val(
+            this.fila,
+            this.column,
+            Tipo(tipo.BOOLEAN),
+            value.valor == value2.valor
+          );
+        } else if (value2.tipo == Tipo(tipo.DOUBLE)) {
+          //? DOUBLE -----> DOUBLE
+          return new val(
+            this.fila,
+            this.column,
+            Tipo(tipo.BOOLEAN),
+            value.valor == value2.valor
+          );
+        } else if (value2.tipo == Tipo(tipo.BOOLEAN)) {
+          //? BOOLEAN -----> ENTERO
+
+          return new val(
+            this.fila,
+            this.column,
+            Tipo(tipo.BOOLEAN),
+            value.valor == value2.valor
+          );
+        } else if (value2.tipo == Tipo(tipo.CARACTER)) {
+          //? CARACTER -----> ENTERO
+          try {
+            return new val(
+              this.fila,
+              this.column,
+              Tipo(tipo.BOOLEAN),
+              value2.charCodeAt(0) == value.valor
+            );
+          } catch (error) {
+            return new val(this.fila, this.column, Tipo(tipo.BOOLEAN), true);
+          }
+        } else {
+          arbolIns.setError(
+            instruccionesAPI.errorSemantico(
+              "No se puede igualar los tipos " +
+                value.tipo +
+                " y " +
+                value2.tipo,
+              this.fila,
+              this.column
+            )
+          );
+          return new val(
+            this.fila,
+            this.column,
+            Tipo(tipo.ERROR),
+            "(ERROR SEMANTICO) No se puede igualar los tipos " +
+              value.tipo +
+              " y " +
+              value2.tipo
+          );
+        }
+      } else if (value.tipo == Tipo(tipo.CARACTER)) {
+        //! CARACTER!!!!!!!!!!!!!!!!!!!!!!!!!
+        if (value2.tipo == Tipo(tipo.INT)) {
+          //? ENTERO -----> ENTERO
+          try {
+            return new val(
+              this.fila,
+              this.column,
+              Tipo(tipo.INT),
+              value.valor.charCodeAt(0) == value2.valor
+            );
+          } catch (error) {
+            return new val(this.fila, this.column, Tipo(tipo.INT), true);
+          }
+        } else if (value2.tipo == Tipo(tipo.DOUBLE)) {
+          //? DOUBLE -----> DOUBLE
+          return new val(
+            this.fila,
+            this.column,
+            Tipo(tipo.BOOLEAN),
+            value2.valor == value.valor.charCodeAt(0)
+          );
+        } else if (value2.tipo == Tipo(tipo.BOOLEAN)) {
+          //? BOOLEAN -----> ENTERO
+
+          return new val(
+            this.fila,
+            this.column,
+            Tipo(tipo.BOOLEAN),
+            value.valor == value2.valor
+          );
+        } else if (value2.tipo == Tipo(tipo.CARACTER)) {
+          //? CARACTER -----> CADENA
+          try {
+            return new val(
+              this.fila,
+              this.column,
+              Tipo(tipo.BOOLEAN),
+              value.valor == value2.valor
+            );
+          } catch (error) {
+            return new val(this.fila, this.column, Tipo(tipo.BOOLEAN), true);
+          }
+        } else {
+          arbolIns.setError(
+            instruccionesAPI.errorSemantico(
+              "No se puede igualar los tipos " +
+                value.tipo +
+                " y " +
+                value2.tipo,
+              this.fila,
+              this.column
+            )
+          );
+          return new val(
+            this.fila,
+            this.column,
+            Tipo(tipo.ERROR),
+            "(ERROR SEMANTICO) No se puede igualar los tipos " +
+              value.tipo +
+              " y " +
+              value2.tipo
+          );
+        }
+      } else {
+        arbolIns.setError(
+          instruccionesAPI.errorSemantico(
+            "No se puede igualar los tipos " + value.tipo + " y " + value2.tipo,
+            this.fila,
+            this.column
+          )
+        );
+        return new val(
+          this.fila,
+          this.column,
+          Tipo(tipo.ERROR),
+          "(ERROR SEMANTICO) No se puede igualar los tipos " +
+            value.tipo +
+            " y " +
+            value2.tipo
+        );
+      }
+    } else {
+      arbolIns.setError(
+        instruccionesAPI.errorSemantico(
+          "Operador Invalido, revise que exista o que los tipos coincidan " +
+            value.tipo +
+            " y " +
+            value2.tipo,
+          this.fila,
+          this.column
+        )
+      );
       return new val(
         this.fila,
         this.column,
-        Tipo(tipo.BOOLEAN),
-        value.valor == value2.valor
+        Tipo(tipo.ERROR),
+        "(ERROR SEMANTICO) Operador Invalido, revise que exista o que los tipos coincidan " +
+          value.tipo +
+          " y " +
+          value2.tipo
       );
-      //! **********************     SI ES MAYOR A:  ***********************************
-    } else if (this.tipo === "MAYOR") {
-      //! **********************     SI ES MAYOR O IGUAL A:  ***********************************
-    } else if (this.ttipoipo === "MAYORIGUAL") {
-      //! **********************     SI ES MENOR A:  ***********************************
-    } else if (this.tipo === "MENOR") {
-      //! **********************     SI ES MANOR O IGUAL A:  ***********************************
-    } else if (this.tipo === "MENORIGUAL") {
-    } else {
     }
     }
 }
