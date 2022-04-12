@@ -20,7 +20,7 @@ class print extends nodo.nodo {
         if(this.data != null){
         }
         else{
-            this.data = new val( line, column, Tipo(Tipo.tipos.VOID),' ')
+            this.data = new val( line, column, Tipo(tipo.VOID),' ')
         }
     }
     ejecutar(arbolIns, table){
