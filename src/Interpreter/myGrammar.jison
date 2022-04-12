@@ -5,6 +5,12 @@
 	const {MiArbolAST} = require('../ASTGlobal/InstructionAST');
 	const instruccionesAPI	= require('../Interpreter/interprete').instruccionesAPI; //las instrucciones de la API
     const {INSPrint} = require('../INSprint');
+    const {INSPrint} = require('../INSAritmetico');
+    const {INSPrint} = require('../INSRelacional');
+    // const {INSPrint} = require('../INSprint');
+    // const {INSPrint} = require('../INSprint');
+    // const {INSPrint} = require('../INSprint');
+    // const {INSPrint} = require('../INSprint');
 	var sintacticerror = "";
 	var acumoftext="";
 	// var MiArbolAST = new Tree();
@@ -271,17 +277,16 @@ expresion																				/*aqui es UNARIA XD*/
 	| expresion MODULO expresion			             	{ $$ = new INSAritmetico($1, $3, 'MODULO',  @1.first_line, @1.first_column); }
     | expresion POTENCIA expresion			             	{ $$ = new INSAritmetico($1, $3, 'POTENCIA',  @1.first_line, @1.first_column); }
     
-	| expresion MENORIGUALQ expresion	                    {  }
-	| expresion MENORQUE IGUAL expresion	 		        {  }
-	| expresion MENORQUE expresion	 		                {  }
-    | expresion MAYORIGUALQ expresion	                    {  }
-    | expresion MAYORQUE IGUAL expresion                    {  }
-    | expresion MAYORQUE expresion                          {  }
-    | expresion IGUALQUE expresion	  		                {  }
-    | expresion IGUAL IGUAL expresion	  		         	{  }
-    | expresion IGUALA expresion	  		                {  }
-    | expresion DIFERENTE expresion	   	                	{  }
-    | expresion NOT IGUAL expresion	   	                	{  }
+	| expresion MENORIGUALQ expresion	                    { $$ = new INSRelacional($1, $3, 'MENORIGUAL',  @1.first_line, @1.first_column); }
+	| expresion MENORQUE IGUAL expresion	 		        { $$ = new INSRelacional($1, $3, 'MENOR',  @1.first_line, @1.first_column); }
+	| expresion MENORQUE expresion	 		                { $$ = new INSRelacional($1, $3, 'MENOR',  @1.first_line, @1.first_column); }
+    | expresion MAYORIGUALQ expresion	                    { $$ = new INSRelacional($1, $3, 'MAYORIGUAL',  @1.first_line, @1.first_column); }
+    | expresion MAYORQUE IGUAL expresion                    { $$ = new INSRelacional($1, $3, 'MAYOR',  @1.first_line, @1.first_column); }
+    | expresion MAYORQUE expresion                          { $$ = new INSRelacional($1, $3, 'MAYOR',  @1.first_line, @1.first_column); }
+    | expresion IGUAL IGUAL expresion	  		         	{ $$ = new INSRelacional($1, $3, 'IGUAL',  @1.first_line, @1.first_column); }
+    | expresion IGUALA expresion	  		                { $$ = new INSRelacional($1, $3, 'IGUAL',  @1.first_line, @1.first_column); }
+    | expresion DIFERENTE expresion	   	                	{ $$ = new INSRelacional($1, $3, 'NEGACION',  @1.first_line, @1.first_column); }
+    | expresion NOT IGUAL expresion	   	                	{ $$ = new INSRelacional($1, $3, 'NEGACION',  @1.first_line, @1.first_column); }
     | expresion OR OR expresion	  			                {  }
     | expresion AND AND expresion			                {  }
 	
@@ -298,9 +303,9 @@ expresion																				/*aqui es UNARIA XD*/
 	| VARIABLE MENOS MENOS 									{  } /* edad-- */
 	| MENOS MENOS VARIABLE  								{  } /* --edad */
 	| VARIABLE CORIZQ expresion CORDER						{  } /* vector2[0];*/
-	| VARIABLE CORIZQ expresion CORDER CORIZQ expresion CORDER	{  } /* vectorDosd[0][0];*/
+	| VARIABLE CORIZQ expresion CORDER CORIZQ expresion CORDER	{ } /* vectorDosd[0][0];*/
 	| VARIABLE MAS MAS 										{  } /* vectorDosd[0][0]*/
-	| expresion INTERROGACION expresion DOSPUNTOS expresion {  } /*Ternarios*/
+	| expresion INTERROGACION expresion DOSPUNTOS expresion {  $$ = new INSTernario($1, $3, $5, @1.first_line, @1.first_column); } /*Ternarios*/
     | TOLOWER PARIZQ expresion PARDER  						{  } /* toLower  (  <EXPRESION>  );*/       
     | TOUPPER PARIZQ expresion PARDER  						{  } /* toUpper  (  <EXPRESION>  );*/      
     | ROUND PARIZQ DOUBLE PARDER    						{  } /* round  (  )  ;     */
@@ -319,17 +324,17 @@ expresion																				/*aqui es UNARIA XD*/
 valor
 	:listavalores       {  }
 	|CADENA       		{  }
-	|VARIABLE       	{  } 
+	|VARIABLE       	{  }
 ;
 
 /* ------------------------------------    TIPOS    ------------------------------------ */
 tipo
-	:ENTERO       	{  }
-	|DOUBLE       	{  }
-	|BOOLEANO     	{  }
-	|CARACTER    	{  }
-	|STRING        	{  } 
-	|VOID           {  }
+	:ENTERO       	{ $$ = new Tipo(tipos.INT); }
+	|DOUBLE       	{ $$ = new Tipo(tipos.DOUBLE); }
+	|BOOLEANO     	{ $$ = new Tipo(tipos.BOOLEAN); }
+	|CARACTER    	{ $$ = new Tipo(tipos.CARACTER); }
+	|STRING        	{ $$ = new Tipo(tipos.STRING); }
+	|VOID           { $$ = new Tipo(tipos.VOID); }
 ;
 
 /* ------------------------------------    IF    ------------------------------------ */

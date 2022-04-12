@@ -6,7 +6,7 @@ var tipos;
   //!   -----------------------       PARA TABLA DE SIMBOLOS      ----------------------------
   tipos[(tipos["DECLARACION"] = 0)] = "DECLARACION";
   tipos[(tipos["ASIGNACION"] = 1)] = "ASIGNACION";
-  tipos[(tipos["DECIMAL"] = 2)] = "DECIMAL"; //DOUBLE
+  tipos[(tipos["DOUBLE"] = 2)] = "DOUBLE"; //DOUBLE
   tipos[(tipos["CARACTER"] = 3)] = "CARACTER"; //CHAR
   tipos[(tipos["STRING"] = 4)] = "STRING";
   tipos[(tipos["BOOLEAN"] = 5)] = "BOOLEAN";
@@ -84,7 +84,7 @@ function isInt(numero) {
   if (numero % 1 == 0) {
     return tipos.ENTERO;
   } else {
-    return tipos.DECIMAL;
+    return tipos.DOUBLE;
   }
 }
 exports.isInt = isInt;
@@ -97,8 +97,8 @@ var Tipo = /** @class */ (function () {
       return "declaracion";
     } else if (this.tipo === tipos.ASIGNACION) {
       return "asignacion";
-    } else if (this.tipo === tipos.DECIMAL) {
-      return "decimal";
+    } else if (this.tipo === tipos.DOUBLE) {
+      return "double";
     } else if (this.tipo === tipos.CARACTER) {
       return "caracter";
     } else if (this.tipo === tipos.STRING) {
