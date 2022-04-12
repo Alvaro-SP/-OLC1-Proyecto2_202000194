@@ -262,72 +262,74 @@ listavalores2
 ;
 
 /* ------------------------------------ EXPRESIONES ------------------------------------ */
-expresion
-	: MENOS expresion %prec UMENOS  		{ $$ = $2 * -1; }
-	| expresion MAS expresion      						 { $$ = new INSAritmetico($1, $3, 'SUMA',  @1.first_line, @1.first_column) }/*constructor(expDer, expIzq, tipo, fila, column){*/
-	| expresion RESTA expresion     					{ $$ = $1 - $3; }
-	| expresion MULTIPLICACION expresion       						{ $$ = $1 * $3; }
-	| expresion DIVISION expresion 						{ $$ = $1 / $3; }
-	| expresion MODULO expresion			                   { $$ = $1 % $3; }	
-    | expresion POTENCIA expresion			                    { $$ = $1 ^ $3; }	
-    | expresion MENORIGUALQ expresion	                    {  }	
-	| expresion MENORQUE IGUAL expresion	 		        {  }			   
-	| expresion MENORQUE expresion	 		                {  }	
-    | expresion MAYORIGUALQ expresion	                    {  }			
-    | expresion MAYORQUE IGUAL expresion                    {  }				  
-    | expresion MAYORQUE expresion                          {  }		
-    | expresion IGUALQUE expresion	  		                {  }			
-    | expresion IGUAL IGUAL expresion	  		         	{  }			
-    | expresion IGUALA expresion	  		                	{  }			
+expresion																				/*aqui es UNARIA XD*/
+	: MENOS expresion %prec UMENOS  						{ $$ = new INSAritmetico(null, $3, 'UNITARIA',  @1.first_line, @1.first_column); }
+	| expresion MAS expresion      						 	{ $$ = new INSAritmetico($1, $3, 'SUMA',  @1.first_line, @1.first_column); }/*constructor(expDer, expIzq, tipo, fila, column){*/
+	| expresion RESTA expresion     					 	{ $$ = new INSAritmetico($1, $3, 'RESTA',  @1.first_line, @1.first_column); }
+	| expresion MULTIPLICACION expresion       			 	{ $$ = new INSAritmetico($1, $3, 'MULTIPLICACION',  @1.first_line, @1.first_column); }
+	| expresion DIVISION expresion 						 	{ $$ = new INSAritmetico($1, $3, 'DIVISION',  @1.first_line, @1.first_column); }
+	| expresion MODULO expresion			             	{ $$ = new INSAritmetico($1, $3, 'MODULO',  @1.first_line, @1.first_column); }
+    | expresion POTENCIA expresion			             	{ $$ = new INSAritmetico($1, $3, 'POTENCIA',  @1.first_line, @1.first_column); }
+    
+	| expresion MENORIGUALQ expresion	                    {  }
+	| expresion MENORQUE IGUAL expresion	 		        {  }
+	| expresion MENORQUE expresion	 		                {  }
+    | expresion MAYORIGUALQ expresion	                    {  }
+    | expresion MAYORQUE IGUAL expresion                    {  }
+    | expresion MAYORQUE expresion                          {  }
+    | expresion IGUALQUE expresion	  		                {  }
+    | expresion IGUAL IGUAL expresion	  		         	{  }
+    | expresion IGUALA expresion	  		                {  }
     | expresion DIFERENTE expresion	   	                	{  }
     | expresion NOT IGUAL expresion	   	                	{  }
     | expresion OR OR expresion	  			                {  }
     | expresion AND AND expresion			                {  }
+	
 	| PARA tipo PARC expresion								{  } /* (int) 18.6*//*(<TIPO>) <EXPRESION>*/
-	| VENTERO                      									 {  }
-	| VDOUBLE                       								{ }
-	| CADENA															{  }
-	| VCARACTER		 												{  }
-	| TRUE                       											{  }
-	| FALSE                       											{  }
-	| PARIZQ expresion PARDER       { $$ = $2; }
-	| VARIABLE MAS MAS 				{  } /* anio-- */
-	| MAS MAS VARIABLE 				{  } /* --anio */
-	| VARIABLE MENOS MENOS 			{  } /* edad-- */
-	| MENOS MENOS VARIABLE  		{  } /* --edad */
-	| VARIABLE CORIZQ expresion CORDER	{  } /* vector2[0];*/
+	| VENTERO                      							{  }
+	| VDOUBLE                       						{  }
+	| CADENA												{  }
+	| VCARACTER		 										{  }
+	| TRUE                       							{  }
+	| FALSE                       							{  }
+	| PARIZQ expresion PARDER       						{ $$ = $2; }
+	| VARIABLE MAS MAS 										{  } /* anio-- */
+	| MAS MAS VARIABLE 										{  } /* --anio */
+	| VARIABLE MENOS MENOS 									{  } /* edad-- */
+	| MENOS MENOS VARIABLE  								{  } /* --edad */
+	| VARIABLE CORIZQ expresion CORDER						{  } /* vector2[0];*/
 	| VARIABLE CORIZQ expresion CORDER CORIZQ expresion CORDER	{  } /* vectorDosd[0][0];*/
-	| VARIABLE MAS MAS 				{  } /* vectorDosd[0][0]*/
-	| expresion INTERROGACION expresion DOSPUNTOS expresion  {  } /*Ternarios*/
-    | TOLOWER PARIZQ expresion PARDER  {  } /* toLower  (  <EXPRESION>  );*/       
-    | TOUPPER PARIZQ expresion PARDER  {  } /* toUpper  (  <EXPRESION>  );*/      
-    | ROUND PARIZQ DOUBLE PARDER    {  } /* round  (  )  ;     */
-    | TYPEOF PARIZQ expresion PARDER   {  }
-    | TOSTRING PARIZQ expresion PARDER {  }
-    | llamar                           {  } /*5.25. Funciones nativas*/
-	| LENGTH PARIZQ valor PARDER   {  } /* length  ( <VALOR>  )  ;*/
-	| TYPEOF PARIZQ valor PARDER   {  }/* typeof  ( <VALOR>  )  ;*/
-	| TOSTRING PARIZQ valor PARDER   {  }/* toString  ( <VALOR>  )  ;*/
-	| TOCHARARRAY PARIZQ valor PARDER   {  }/* toCharArray  ( <VALOR>  )  ;*/
+	| VARIABLE MAS MAS 										{  } /* vectorDosd[0][0]*/
+	| expresion INTERROGACION expresion DOSPUNTOS expresion {  } /*Ternarios*/
+    | TOLOWER PARIZQ expresion PARDER  						{  } /* toLower  (  <EXPRESION>  );*/       
+    | TOUPPER PARIZQ expresion PARDER  						{  } /* toUpper  (  <EXPRESION>  );*/      
+    | ROUND PARIZQ DOUBLE PARDER    						{  } /* round  (  )  ;     */
+    | TYPEOF PARIZQ expresion PARDER   						{  }
+    | TOSTRING PARIZQ expresion PARDER 						{  }
+    | llamar                           						{  } /*5.25. Funciones nativas*/
+	| LENGTH PARIZQ valor PARDER   							{  } /* length  ( <VALOR>  )  ;*/
+	| TYPEOF PARIZQ valor PARDER   							{  }/* typeof  ( <VALOR>  )  ;*/
+	| TOSTRING PARIZQ valor PARDER   						{  }/* toString  ( <VALOR>  )  ;*/
+	| TOCHARARRAY PARIZQ valor PARDER   					{  }/* toCharArray  ( <VALOR>  )  ;*/
 ;
 /* ------------------------------------    VALOR    ------------------------------------ */
  /*- lista
  -vector
  -cadena*/
 valor
-	:listavalores       		{  }
-	|CADENA       			{  }
-	|VARIABLE       	   {  } 
+	:listavalores       {  }
+	|CADENA       		{  }
+	|VARIABLE       	{  } 
 ;
 
 /* ------------------------------------    TIPOS    ------------------------------------ */
 tipo
-	:ENTERO       		{  }
-	|DOUBLE       		{  }
+	:ENTERO       	{  }
+	|DOUBLE       	{  }
 	|BOOLEANO     	{  }
-	|CARACTER    	 {  }
-	|STRING        		  {  } 
-	|VOID           		{  }
+	|CARACTER    	{  }
+	|STRING        	{  } 
+	|VOID           {  }
 ;
 
 /* ------------------------------------    IF    ------------------------------------ */
@@ -341,8 +343,8 @@ instruccionif
 /* ------------------------------------  SWITCH  ------------------------------------ */
 instruccionswitch
     :SWITCH PARIZQ expresion PARDER LLAIZQ caselist default LLADER  {}/* switch   (   <EXPRESION>   )  { <CASES_LIST>   <DEFAULT> } */
-    |SWITCH PARIZQ expresion PARDER LLAIZQ caselist LLADER              {}/* switch   ( <EXPRESION>  )  {<CASES_LIST> } */
-    |SWITCH PARIZQ expresion PARDER LLAIZQ default LLADER           	{}/* switch   ( <EXPRESION>  )   { <DEFAULT> } */
+    |SWITCH PARIZQ expresion PARDER LLAIZQ caselist LLADER          {}/* switch   ( <EXPRESION>  )  {<CASES_LIST> } */
+    |SWITCH PARIZQ expresion PARDER LLAIZQ default LLADER          	{}/* switch   ( <EXPRESION>  )   { <DEFAULT> } */
 
 ;
 /* ------------------------------------  caselist  ------------------------------------ */
