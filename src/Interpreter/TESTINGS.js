@@ -10,4 +10,4 @@ console.log(Math.pow(5, -4));
 console.log( true==1);
 console.log(5=='5');
 console.log(true+true);
-console.log(false+false);
+console.log("asdfasfd">false);

@@ -308,7 +308,7 @@ class relacional {
             this.fila,
             this.column,
             Tipo(tipo.BOOLEAN),
-            value.valor == value2.valor
+            value.valor != value2.valor
           );
         } else if (value2.tipo == Tipo(tipo.DOUBLE)) {
           //? DOUBLE -----> DOUBLE
@@ -316,7 +316,7 @@ class relacional {
             this.fila,
             this.column,
             Tipo(tipo.BOOLEAN),
-            value.valor == value2.valor
+            value.valor != value2.valor
           );
         } else if (value2.tipo == Tipo(tipo.BOOLEAN)) {
           //? BOOLEAN -----> ENTERO
@@ -324,7 +324,7 @@ class relacional {
             this.fila,
             this.column,
             Tipo(tipo.BOOLEAN),
-            value.valor == value2.valor
+            value.valor != value2.valor
           );
         } else if (value2.tipo == Tipo(tipo.CARACTER)) {
           //? CARACTER -----> ENTERO
@@ -333,7 +333,7 @@ class relacional {
               this.fila,
               this.column,
               Tipo(tipo.BOOLEAN),
-              value.valor == value2.valor.charCodeAt(0)
+              value.valor != value2.valor.charCodeAt(0)
             );
           } catch (error) {
             return new val(this.fila, this.column, Tipo(tipo.BOOLEAN), true);
@@ -367,7 +367,7 @@ class relacional {
             this.fila,
             this.column,
             Tipo(tipo.BOOLEAN),
-            value.valor == value2.valor
+            value.valor != value2.valor
           );
         } else if (value2.tipo == Tipo(tipo.DOUBLE)) {
           //? DOUBLE -----> DOUBLE
@@ -375,7 +375,7 @@ class relacional {
             this.fila,
             this.column,
             Tipo(tipo.BOOLEAN),
-            value.valor == value2.valor
+            value.valor != value2.valor
           );
         } else if (value2.tipo == Tipo(tipo.BOOLEAN)) {
           //? BOOLEAN -----> DOUBLE
@@ -383,7 +383,7 @@ class relacional {
             this.fila,
             this.column,
             Tipo(tipo.BOOLEAN),
-            value.valor == value2.valor
+            value.valor != value2.valor
           );
         } else if (value2.tipo == Tipo(tipo.CARACTER)) {
           //? CARACTER -----> DOUBLE
@@ -392,7 +392,7 @@ class relacional {
               this.fila,
               this.column,
               Tipo(tipo.BOOLEAN),
-              value.valor == value2.valor.charCodeAt(0)
+              value.valor != value2.valor.charCodeAt(0)
             );
           } catch (error) {
             return new val(this.fila, this.column, Tipo(tipo.BOOLEAN), true);
@@ -426,7 +426,7 @@ class relacional {
             this.fila,
             this.column,
             Tipo(tipo.BOOLEAN),
-            value.valor == value2.valor
+            value.valor != value2.valor
           );
         } else if (value2.tipo == Tipo(tipo.DOUBLE)) {
           //? DOUBLE -----> DOUBLE
@@ -434,7 +434,7 @@ class relacional {
             this.fila,
             this.column,
             Tipo(tipo.BOOLEAN),
-            value.valor == value2.valor
+            value.valor != value2.valor
           );
         } else if (value2.tipo == Tipo(tipo.BOOLEAN)) {
           //? BOOLEAN -----> ENTERO
@@ -443,7 +443,7 @@ class relacional {
             this.fila,
             this.column,
             Tipo(tipo.BOOLEAN),
-            value.valor == value2.valor
+            value.valor != value2.valor
           );
         } else if (value2.tipo == Tipo(tipo.CARACTER)) {
           //? CARACTER -----> ENTERO
@@ -452,7 +452,7 @@ class relacional {
               this.fila,
               this.column,
               Tipo(tipo.BOOLEAN),
-              value2.charCodeAt(0) == value.valor
+              value2.charCodeAt(0) != value.valor
             );
           } catch (error) {
             return new val(this.fila, this.column, Tipo(tipo.BOOLEAN), true);
@@ -487,7 +487,7 @@ class relacional {
               this.fila,
               this.column,
               Tipo(tipo.INT),
-              value.valor.charCodeAt(0) == value2.valor
+              value.valor.charCodeAt(0) != value2.valor
             );
           } catch (error) {
             return new val(this.fila, this.column, Tipo(tipo.INT), true);
@@ -498,7 +498,7 @@ class relacional {
             this.fila,
             this.column,
             Tipo(tipo.BOOLEAN),
-            value2.valor == value.valor.charCodeAt(0)
+            value2.valor != value.valor.charCodeAt(0)
           );
         } else if (value2.tipo == Tipo(tipo.BOOLEAN)) {
           //? BOOLEAN -----> ENTERO
@@ -507,7 +507,7 @@ class relacional {
             this.fila,
             this.column,
             Tipo(tipo.BOOLEAN),
-            value.valor == value2.valor
+            value.valor != value2.valor
           );
         } else if (value2.tipo == Tipo(tipo.CARACTER)) {
           //? CARACTER -----> CADENA
@@ -516,7 +516,7 @@ class relacional {
               this.fila,
               this.column,
               Tipo(tipo.BOOLEAN),
-              value.valor == value2.valor
+              value.valor != value2.valor
             );
           } catch (error) {
             return new val(this.fila, this.column, Tipo(tipo.BOOLEAN), true);
@@ -545,7 +545,10 @@ class relacional {
       } else {
         arbolIns.setError(
           instruccionesAPI.errorSemantico(
-            "No se puede igualar los tipos " + value.tipo + " y " + value2.tipo,
+            "No se puede comparar los tipos " +
+              value.tipo +
+              " y " +
+              value2.tipo,
             this.fila,
             this.column
           )
@@ -554,7 +557,7 @@ class relacional {
           this.fila,
           this.column,
           Tipo(tipo.ERROR),
-          "(ERROR SEMANTICO) No se puede igualar los tipos " +
+          "(ERROR SEMANTICO) No se puede comparar los tipos " +
             value.tipo +
             " y " +
             value2.tipo
@@ -570,7 +573,7 @@ class relacional {
             this.fila,
             this.column,
             Tipo(tipo.BOOLEAN),
-            value.valor == value2.valor
+            value.valor > value2.valor
           );
         } else if (value2.tipo == Tipo(tipo.DOUBLE)) {
           //? DOUBLE -----> DOUBLE
@@ -578,7 +581,7 @@ class relacional {
             this.fila,
             this.column,
             Tipo(tipo.BOOLEAN),
-            value.valor == value2.valor
+            value.valor > value2.valor
           );
         } else if (value2.tipo == Tipo(tipo.BOOLEAN)) {
           //? BOOLEAN -----> ENTERO
@@ -586,7 +589,7 @@ class relacional {
             this.fila,
             this.column,
             Tipo(tipo.BOOLEAN),
-            value.valor == value2.valor
+            value.valor > value2.valor
           );
         } else if (value2.tipo == Tipo(tipo.CARACTER)) {
           //? CARACTER -----> ENTERO
@@ -595,7 +598,7 @@ class relacional {
               this.fila,
               this.column,
               Tipo(tipo.BOOLEAN),
-              value.valor == value2.valor.charCodeAt(0)
+              value.valor > value2.valor.charCodeAt(0)
             );
           } catch (error) {
             return new val(this.fila, this.column, Tipo(tipo.BOOLEAN), true);
@@ -629,7 +632,7 @@ class relacional {
             this.fila,
             this.column,
             Tipo(tipo.BOOLEAN),
-            value.valor == value2.valor
+            value.valor > value2.valor
           );
         } else if (value2.tipo == Tipo(tipo.DOUBLE)) {
           //? DOUBLE -----> DOUBLE
@@ -637,7 +640,7 @@ class relacional {
             this.fila,
             this.column,
             Tipo(tipo.BOOLEAN),
-            value.valor == value2.valor
+            value.valor > value2.valor
           );
         } else if (value2.tipo == Tipo(tipo.BOOLEAN)) {
           //? BOOLEAN -----> DOUBLE
@@ -645,7 +648,7 @@ class relacional {
             this.fila,
             this.column,
             Tipo(tipo.BOOLEAN),
-            value.valor == value2.valor
+            value.valor > value2.valor
           );
         } else if (value2.tipo == Tipo(tipo.CARACTER)) {
           //? CARACTER -----> DOUBLE
@@ -654,7 +657,7 @@ class relacional {
               this.fila,
               this.column,
               Tipo(tipo.BOOLEAN),
-              value.valor == value2.valor.charCodeAt(0)
+              value.valor > value2.valor.charCodeAt(0)
             );
           } catch (error) {
             return new val(this.fila, this.column, Tipo(tipo.BOOLEAN), true);
@@ -688,7 +691,7 @@ class relacional {
             this.fila,
             this.column,
             Tipo(tipo.BOOLEAN),
-            value.valor == value2.valor
+            value.valor > value2.valor
           );
         } else if (value2.tipo == Tipo(tipo.DOUBLE)) {
           //? DOUBLE -----> DOUBLE
@@ -696,7 +699,7 @@ class relacional {
             this.fila,
             this.column,
             Tipo(tipo.BOOLEAN),
-            value.valor == value2.valor
+            value.valor > value2.valor
           );
         } else if (value2.tipo == Tipo(tipo.BOOLEAN)) {
           //? BOOLEAN -----> ENTERO
@@ -705,7 +708,7 @@ class relacional {
             this.fila,
             this.column,
             Tipo(tipo.BOOLEAN),
-            value.valor == value2.valor
+            value.valor > value2.valor
           );
         } else if (value2.tipo == Tipo(tipo.CARACTER)) {
           //? CARACTER -----> ENTERO
@@ -714,7 +717,7 @@ class relacional {
               this.fila,
               this.column,
               Tipo(tipo.BOOLEAN),
-              value2.charCodeAt(0) == value.valor
+              value2.charCodeAt(0) > value.valor
             );
           } catch (error) {
             return new val(this.fila, this.column, Tipo(tipo.BOOLEAN), true);
@@ -748,8 +751,8 @@ class relacional {
             return new val(
               this.fila,
               this.column,
-              Tipo(tipo.INT),
-              value.valor.charCodeAt(0) == value2.valor
+              Tipo(tipo.BOOLEAN),
+              value.valor.charCodeAt(0) > value2.valor
             );
           } catch (error) {
             return new val(this.fila, this.column, Tipo(tipo.INT), true);
@@ -760,7 +763,7 @@ class relacional {
             this.fila,
             this.column,
             Tipo(tipo.BOOLEAN),
-            value2.valor == value.valor.charCodeAt(0)
+            value2.valor > value.valor.charCodeAt(0)
           );
         } else if (value2.tipo == Tipo(tipo.BOOLEAN)) {
           //? BOOLEAN -----> ENTERO
@@ -769,7 +772,7 @@ class relacional {
             this.fila,
             this.column,
             Tipo(tipo.BOOLEAN),
-            value.valor == value2.valor
+            value.valor > value2.valor
           );
         } else if (value2.tipo == Tipo(tipo.CARACTER)) {
           //? CARACTER -----> CADENA
@@ -778,7 +781,7 @@ class relacional {
               this.fila,
               this.column,
               Tipo(tipo.BOOLEAN),
-              value.valor == value2.valor
+              value.valor > value2.valor
             );
           } catch (error) {
             return new val(this.fila, this.column, Tipo(tipo.BOOLEAN), true);
@@ -786,7 +789,7 @@ class relacional {
         } else {
           arbolIns.setError(
             instruccionesAPI.errorSemantico(
-              "No se puede igualar los tipos " +
+              "No se puede comparar los tipos " +
                 value.tipo +
                 " y " +
                 value2.tipo,
@@ -798,7 +801,7 @@ class relacional {
             this.fila,
             this.column,
             Tipo(tipo.ERROR),
-            "(ERROR SEMANTICO) No se puede igualar los tipos " +
+            "(ERROR SEMANTICO) No se puede comparar los tipos " +
               value.tipo +
               " y " +
               value2.tipo
@@ -832,7 +835,7 @@ class relacional {
             this.fila,
             this.column,
             Tipo(tipo.BOOLEAN),
-            value.valor == value2.valor
+            value.valor >= value2.valor
           );
         } else if (value2.tipo == Tipo(tipo.DOUBLE)) {
           //? DOUBLE -----> DOUBLE
@@ -840,7 +843,7 @@ class relacional {
             this.fila,
             this.column,
             Tipo(tipo.BOOLEAN),
-            value.valor == value2.valor
+            value.valor >= value2.valor
           );
         } else if (value2.tipo == Tipo(tipo.BOOLEAN)) {
           //? BOOLEAN -----> ENTERO
@@ -848,7 +851,7 @@ class relacional {
             this.fila,
             this.column,
             Tipo(tipo.BOOLEAN),
-            value.valor == value2.valor
+            value.valor >= value2.valor
           );
         } else if (value2.tipo == Tipo(tipo.CARACTER)) {
           //? CARACTER -----> ENTERO
@@ -857,7 +860,7 @@ class relacional {
               this.fila,
               this.column,
               Tipo(tipo.BOOLEAN),
-              value.valor == value2.valor.charCodeAt(0)
+              value.valor >= value2.valor
             );
           } catch (error) {
             return new val(this.fila, this.column, Tipo(tipo.BOOLEAN), true);
@@ -891,7 +894,7 @@ class relacional {
             this.fila,
             this.column,
             Tipo(tipo.BOOLEAN),
-            value.valor == value2.valor
+            value.valor >= value2.valor
           );
         } else if (value2.tipo == Tipo(tipo.DOUBLE)) {
           //? DOUBLE -----> DOUBLE
@@ -899,7 +902,7 @@ class relacional {
             this.fila,
             this.column,
             Tipo(tipo.BOOLEAN),
-            value.valor == value2.valor
+            value.valor >= value2.valor
           );
         } else if (value2.tipo == Tipo(tipo.BOOLEAN)) {
           //? BOOLEAN -----> DOUBLE
@@ -907,7 +910,7 @@ class relacional {
             this.fila,
             this.column,
             Tipo(tipo.BOOLEAN),
-            value.valor == value2.valor
+            value.valor >= value2.valor
           );
         } else if (value2.tipo == Tipo(tipo.CARACTER)) {
           //? CARACTER -----> DOUBLE
@@ -916,7 +919,7 @@ class relacional {
               this.fila,
               this.column,
               Tipo(tipo.BOOLEAN),
-              value.valor == value2.valor.charCodeAt(0)
+              value.valor >= value2.valor.charCodeAt(0)
             );
           } catch (error) {
             return new val(this.fila, this.column, Tipo(tipo.BOOLEAN), true);
@@ -924,7 +927,7 @@ class relacional {
         } else {
           arbolIns.setError(
             instruccionesAPI.errorSemantico(
-              "No se puede igualar los tipos " +
+              "No se puede comparar los tipos " +
                 value.tipo +
                 " y " +
                 value2.tipo,
@@ -936,7 +939,7 @@ class relacional {
             this.fila,
             this.column,
             Tipo(tipo.ERROR),
-            "(ERROR SEMANTICO) No se puede igualar los tipos " +
+            "(ERROR SEMANTICO) No se puede comparar los tipos " +
               value.tipo +
               " y " +
               value2.tipo
@@ -950,7 +953,7 @@ class relacional {
             this.fila,
             this.column,
             Tipo(tipo.BOOLEAN),
-            value.valor == value2.valor
+            value.valor >= value2.valor
           );
         } else if (value2.tipo == Tipo(tipo.DOUBLE)) {
           //? DOUBLE -----> DOUBLE
@@ -958,7 +961,7 @@ class relacional {
             this.fila,
             this.column,
             Tipo(tipo.BOOLEAN),
-            value.valor == value2.valor
+            value.valor >= value2.valor
           );
         } else if (value2.tipo == Tipo(tipo.BOOLEAN)) {
           //? BOOLEAN -----> ENTERO
@@ -967,7 +970,7 @@ class relacional {
             this.fila,
             this.column,
             Tipo(tipo.BOOLEAN),
-            value.valor == value2.valor
+            value.valor >= value2.valor
           );
         } else if (value2.tipo == Tipo(tipo.CARACTER)) {
           //? CARACTER -----> ENTERO
@@ -976,7 +979,7 @@ class relacional {
               this.fila,
               this.column,
               Tipo(tipo.BOOLEAN),
-              value2.charCodeAt(0) == value.valor
+              value2.charCodeAt(0) >= value.valor
             );
           } catch (error) {
             return new val(this.fila, this.column, Tipo(tipo.BOOLEAN), true);
@@ -984,7 +987,7 @@ class relacional {
         } else {
           arbolIns.setError(
             instruccionesAPI.errorSemantico(
-              "No se puede igualar los tipos " +
+              "No se puede comparar los tipos " +
                 value.tipo +
                 " y " +
                 value2.tipo,
@@ -996,7 +999,7 @@ class relacional {
             this.fila,
             this.column,
             Tipo(tipo.ERROR),
-            "(ERROR SEMANTICO) No se puede igualar los tipos " +
+            "(ERROR SEMANTICO) No se puede comparar los tipos " +
               value.tipo +
               " y " +
               value2.tipo
@@ -1010,8 +1013,8 @@ class relacional {
             return new val(
               this.fila,
               this.column,
-              Tipo(tipo.INT),
-              value.valor.charCodeAt(0) == value2.valor
+              Tipo(tipo.BOOLEAN),
+              value.valor.charCodeAt(0) >= value2.valor
             );
           } catch (error) {
             return new val(this.fila, this.column, Tipo(tipo.INT), true);
@@ -1022,7 +1025,7 @@ class relacional {
             this.fila,
             this.column,
             Tipo(tipo.BOOLEAN),
-            value2.valor == value.valor.charCodeAt(0)
+            value2.valor >= value.valor.charCodeAt(0)
           );
         } else if (value2.tipo == Tipo(tipo.BOOLEAN)) {
           //? BOOLEAN -----> ENTERO
@@ -1031,7 +1034,7 @@ class relacional {
             this.fila,
             this.column,
             Tipo(tipo.BOOLEAN),
-            value.valor == value2.valor
+            value.valor >= value2.valor
           );
         } else if (value2.tipo == Tipo(tipo.CARACTER)) {
           //? CARACTER -----> CADENA
@@ -1040,7 +1043,7 @@ class relacional {
               this.fila,
               this.column,
               Tipo(tipo.BOOLEAN),
-              value.valor == value2.valor
+              value.valor >= value2.valor
             );
           } catch (error) {
             return new val(this.fila, this.column, Tipo(tipo.BOOLEAN), true);
@@ -1048,7 +1051,7 @@ class relacional {
         } else {
           arbolIns.setError(
             instruccionesAPI.errorSemantico(
-              "No se puede igualar los tipos " +
+              "No se puede comparar los tipos " +
                 value.tipo +
                 " y " +
                 value2.tipo,
@@ -1060,7 +1063,7 @@ class relacional {
             this.fila,
             this.column,
             Tipo(tipo.ERROR),
-            "(ERROR SEMANTICO) No se puede igualar los tipos " +
+            "(ERROR SEMANTICO) No se puede comparar los tipos " +
               value.tipo +
               " y " +
               value2.tipo
@@ -1069,7 +1072,7 @@ class relacional {
       } else {
         arbolIns.setError(
           instruccionesAPI.errorSemantico(
-            "No se puede igualar los tipos " + value.tipo + " y " + value2.tipo,
+            "No se puede comparar los tipos " + value.tipo + " y " + value2.tipo,
             this.fila,
             this.column
           )
@@ -1078,7 +1081,7 @@ class relacional {
           this.fila,
           this.column,
           Tipo(tipo.ERROR),
-          "(ERROR SEMANTICO) No se puede igualar los tipos " +
+          "(ERROR SEMANTICO) No se puede comparar los tipos " +
             value.tipo +
             " y " +
             value2.tipo
@@ -1094,7 +1097,7 @@ class relacional {
             this.fila,
             this.column,
             Tipo(tipo.BOOLEAN),
-            value.valor == value2.valor
+            value.valor < value2.valor
           );
         } else if (value2.tipo == Tipo(tipo.DOUBLE)) {
           //? DOUBLE -----> DOUBLE
@@ -1102,7 +1105,7 @@ class relacional {
             this.fila,
             this.column,
             Tipo(tipo.BOOLEAN),
-            value.valor == value2.valor
+            value.valor < value2.valor
           );
         } else if (value2.tipo == Tipo(tipo.BOOLEAN)) {
           //? BOOLEAN -----> ENTERO
@@ -1110,7 +1113,7 @@ class relacional {
             this.fila,
             this.column,
             Tipo(tipo.BOOLEAN),
-            value.valor == value2.valor
+            value.valor < value2.valor
           );
         } else if (value2.tipo == Tipo(tipo.CARACTER)) {
           //? CARACTER -----> ENTERO
@@ -1119,7 +1122,7 @@ class relacional {
               this.fila,
               this.column,
               Tipo(tipo.BOOLEAN),
-              value.valor == value2.valor.charCodeAt(0)
+              value.valor < value2.valor.charCodeAt(0)
             );
           } catch (error) {
             return new val(this.fila, this.column, Tipo(tipo.BOOLEAN), true);
@@ -1153,7 +1156,7 @@ class relacional {
             this.fila,
             this.column,
             Tipo(tipo.BOOLEAN),
-            value.valor == value2.valor
+            value.valor < value2.valor
           );
         } else if (value2.tipo == Tipo(tipo.DOUBLE)) {
           //? DOUBLE -----> DOUBLE
@@ -1161,7 +1164,7 @@ class relacional {
             this.fila,
             this.column,
             Tipo(tipo.BOOLEAN),
-            value.valor == value2.valor
+            value.valor < value2.valor
           );
         } else if (value2.tipo == Tipo(tipo.BOOLEAN)) {
           //? BOOLEAN -----> DOUBLE
@@ -1169,7 +1172,7 @@ class relacional {
             this.fila,
             this.column,
             Tipo(tipo.BOOLEAN),
-            value.valor == value2.valor
+            value.valor < value2.valor
           );
         } else if (value2.tipo == Tipo(tipo.CARACTER)) {
           //? CARACTER -----> DOUBLE
@@ -1178,7 +1181,7 @@ class relacional {
               this.fila,
               this.column,
               Tipo(tipo.BOOLEAN),
-              value.valor == value2.valor.charCodeAt(0)
+              value.valor < value2.valor.charCodeAt(0)
             );
           } catch (error) {
             return new val(this.fila, this.column, Tipo(tipo.BOOLEAN), true);
@@ -1212,7 +1215,7 @@ class relacional {
             this.fila,
             this.column,
             Tipo(tipo.BOOLEAN),
-            value.valor == value2.valor
+            value.valor < value2.valor
           );
         } else if (value2.tipo == Tipo(tipo.DOUBLE)) {
           //? DOUBLE -----> DOUBLE
@@ -1220,7 +1223,7 @@ class relacional {
             this.fila,
             this.column,
             Tipo(tipo.BOOLEAN),
-            value.valor == value2.valor
+            value.valor < value2.valor
           );
         } else if (value2.tipo == Tipo(tipo.BOOLEAN)) {
           //? BOOLEAN -----> ENTERO
@@ -1229,7 +1232,7 @@ class relacional {
             this.fila,
             this.column,
             Tipo(tipo.BOOLEAN),
-            value.valor == value2.valor
+            value.valor < value2.valor
           );
         } else if (value2.tipo == Tipo(tipo.CARACTER)) {
           //? CARACTER -----> ENTERO
@@ -1238,7 +1241,7 @@ class relacional {
               this.fila,
               this.column,
               Tipo(tipo.BOOLEAN),
-              value2.charCodeAt(0) == value.valor
+              value2.charCodeAt(0) < value.valor
             );
           } catch (error) {
             return new val(this.fila, this.column, Tipo(tipo.BOOLEAN), true);
@@ -1246,7 +1249,7 @@ class relacional {
         } else {
           arbolIns.setError(
             instruccionesAPI.errorSemantico(
-              "No se puede igualar los tipos " +
+              "No se puede comparar los tipos " +
                 value.tipo +
                 " y " +
                 value2.tipo,
@@ -1258,7 +1261,7 @@ class relacional {
             this.fila,
             this.column,
             Tipo(tipo.ERROR),
-            "(ERROR SEMANTICO) No se puede igualar los tipos " +
+            "(ERROR SEMANTICO) No se puede comparar los tipos " +
               value.tipo +
               " y " +
               value2.tipo
