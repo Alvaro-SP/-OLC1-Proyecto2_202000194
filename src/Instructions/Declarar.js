@@ -5,6 +5,7 @@ const nodo = require("./ASTGlobal/nodo");
 const Tipo = require("./ASTGlobal/tiponodo");
 const tipo = require("./ASTGlobal/tiponodo");
 const val = require("./val");
+const Simbolos = require("./simbolo/Simbolo");
 const instruccionesAPI = require("../Interpreter/interprete").instruccionesAPI; //las instrucciones de la API
 const nodoAST = require("./ASTGlobal/nodoAST");
 class declarar {
@@ -20,23 +21,8 @@ class declarar {
         var value = valortemp;
         //! Primero verifico de que no de ningun tipo de errores la EJECUCION
         if (value.valor != Tipo(tipo.ERROR)) {
-            if(this.valor.tipo != this.tipo){
-                if (this.tipo == Tipo(tipo.DOUBLE) &&(this.valor.tipo == Tipo(tipo.DOUBLE) || this.valor.tipo == Tipo(tipo.INT))) {
-                    this.valor.tipo = Tipo(tipo.DOUBLE);
-                } else {
-                  const error = new Excepcion_1.Excepcion(
-                    "Semantico",
-                    `La variable no puede ser declarada debido a que son de diferentes tipos`,
-                    this.line,
-                    this.column
-                  );
-                  tree.excepciones.push(error);
-                  tree.consola.push(error.toString());
-                  return error;
-                }
-            }
-            //! si no hay una expresion es decir que se DECLARA una variable
-            //! sin ningun tipo de valor.
+            //! si no hay una expresion ENTONCES se DECLARA una variable
+            //! sin ningun tipo de valor  (VALORES POR DEFECTO).
             if (this.valor == null) {
                 if (this.tipo == Tipo(tipo.INT)) {
                   this.valor = new val(
@@ -75,10 +61,40 @@ class declarar {
                   );
                 }
             }
-            //! Ahora sino entonces simplemente voy a agregar un valor por defecto.
-            else {
-
+            if(this.valor.tipo != this.tipo){
+                //! verifico si el tipo del valor es un double o entero y es del mismo tipo que el tipo de la declaracion
+                if (this.tipo == Tipo(tipo.DOUBLE) &&(this.valor.tipo == Tipo(tipo.DOUBLE) || this.valor.tipo == Tipo(tipo.INT))) {
+                    this.valor.tipo = Tipo(tipo.DOUBLE);// por defecto asigno el double
+                }//! ahora sino, asigno ERROR SEMANTICO
+                else {
+                arbolIns.setError(
+                instruccionesAPI.errorSemantico(
+                    "No se puede Declarar la variable (tipo incompatible), de tipo " +
+                    value.tipo,
+                    this.fila,
+                    this.column
+                )
+                );
+                return new val(
+                    this.fila,
+                    this.column,
+                    Tipo(tipo.ERROR),
+                    "No se puede Declarar la variable (tipo incompatible), de tipo  " +
+                    value.tipo
+                );
+                }
             }
+
+            let simbolo;
+            simbolo = new Simbolos.Simbolo(
+                this.variable,
+                value,
+                this.tipo,
+                this.line,
+                this.column
+            );
+            // const res = table.setVariable(simbolo);
+            // tree.Variables.push(simbolo);
         }
     }
 }
