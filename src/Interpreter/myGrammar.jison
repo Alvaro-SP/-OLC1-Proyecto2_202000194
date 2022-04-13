@@ -4,13 +4,11 @@
 %{
 	const {MiArbolAST} = require('../ASTGlobal/InstructionAST');
 	const instruccionesAPI	= require('../Interpreter/interprete').instruccionesAPI; //las instrucciones de la API
-    const {INSPrint} = require('../INSprint');
-    const {INSPrint} = require('../INSAritmetico');
-    const {INSPrint} = require('../INSRelacional');
-    // const {INSPrint} = require('../INSprint');
-    // const {INSPrint} = require('../INSprint');
-    // const {INSPrint} = require('../INSprint');
-    // const {INSPrint} = require('../INSprint');
+    const {INSPrint} = require('../Instructions/INSprint.js');
+    const {INSAritmetico} = require('../Instructions/INSAritmetico');
+    const {INSRelacional} = require('../Instructions/INSRelacional');
+    const {Asignar} = require('../Instructions/Asignar');
+    const {Declarar} = require('../Instructions/Declarar');
 	var sintacticerror = "";
 	var acumoftext="";
 	// var MiArbolAST = new Tree();
@@ -236,16 +234,16 @@ instruccion
 
 /* -------------------------- DECLARACION ASIGNACION VARIABLES ------------------------------ */
 declaracion
-	: tipo VARIABLE PTCOMA																				{  } /*<TIPO> identificador;*/
+	: tipo VARIABLE PTCOMA																				{ $$ = new Declarar($1, $2, null,  @1.first_line, @1.first_column); } /*<TIPO> identificador;*/
 	| tipo notacioncomas PTCOMA																			{  } /*<TIPO> id1, id2, id3, id4;*/
-	| tipo VARIABLE IGUAL expresion PTCOMA																{  } /*TIPO> identificador = <EXPRESION>;*/
+	| tipo VARIABLE IGUAL expresion PTCOMA																{ $$ = new Declarar($1, $2, $4,  @1.first_line, @1.first_column);} /*TIPO> identificador = <EXPRESION>;*/
 	| tipo notacioncomas IGUAL expresion PTCOMA 														{  } /*<TIPO> id1, id2, id3, id4 = <EXPRESION>;*/
 	| tipo VARIABLE CORIZQ CORDER IGUAL NEW tipo CORIZQ expresion CORDER PTCOMA							{  } /*<TIPO> <ID>[ ] = new <TIPO>[ <EXPRESION> ] ;						 DECLARACION TIPO 1 */
 	| tipo VARIABLE CORIZQ CORDER IGUAL NEW tipo CORIZQ expresion CORDER CORIZQ expresion CORDER PTCOMA	{  } /*<TIPO> <ID>[ ][ ]= new <TIPO>[ <EXPRESION> ][ <EXPRESION> ] ;*/
 	| tipo VARIABLE CORIZQ CORDER IGUAL CORIZQ listavalores CORDER PTCOMA								{  }  /*<TIPO> <ID>[ ] = [ <LISTAVALORES> ] ;							 DECLARACION TIPO 2 */
 	| tipo VARIABLE IGUAL VARIABLE CORIZQ expresion CORDER PTCOMA									{  } /*<TIPO> <ID>[ ] = new <TIPO>[ <EXPRESION> ] ;	 */
 	| tipo VARIABLE IGUAL VARIABLE CORIZQ expresion CORDER CORIZQ expresion CORDER PTCOMA			{  } /*<TIPO> <ID>[ ][ ]= new <TIPO>[ <EXPRESION> ][ <EXPRESION> ] ;*/
-	| VARIABLE IGUAL expresion PTCOMA																{  } /*identificador = <EXPRESION>;*/
+	| VARIABLE IGUAL expresion PTCOMA																{ $$ = new Asignar($1, $2, $4, @1.first_line, @1.first_column);  } /*identificador = <EXPRESION>;*/
 			/*5.15.1.3 Modificación de Vectores*/
 	| VARIABLE CORIZQ expresion CORDER IGUAL expresion PTCOMA										{  } /*<ID> [ EXPRESION ] = EXPRESION;						 DECLARACION TIPO 1*/
 	| VARIABLE CORIZQ expresion CORDER CORIZQ expresion CORDER IGUAL expresion PTCOMA				{  } /*<ID> [ EXPRESION ][ EXPRESION ] = EXPRESION;          DECLARACION TIPO 2 */
