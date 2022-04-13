@@ -6,6 +6,7 @@ const Tipo = require("./ASTGlobal/tiponodo");
 const tipo = require("./ASTGlobal/tiponodo");
 const val = require("./val");
 const Simbolos = require("./simbolo/Simbolo");
+const Tablita = require("./TS/TablaSimbolos");
 const instruccionesAPI = require("../Interpreter/interprete").instruccionesAPI; //las instrucciones de la API
 const nodoAST = require("./ASTGlobal/nodoAST");
 class declarar {
@@ -84,17 +85,17 @@ class declarar {
                 );
                 }
             }
-
-            let simbolo;
-            simbolo = new Simbolos.Simbolo(
+            //! como tengo una variable por declarar me compete agregarla a la tabla de simbolos
+            //! la agrego como un objeto simbolo
+            var simbolo = new Simbolos.Simbolo(
                 this.variable,
                 value,
                 this.tipo,
                 this.line,
                 this.column
             );
-            // const res = table.setVariable(simbolo);
-            // tree.Variables.push(simbolo);
+            var respuesta = Tablita.symbolTable.insertar(simbolo);
+            arbolIns.setVariables(simbolo);
         }
     }
 }
