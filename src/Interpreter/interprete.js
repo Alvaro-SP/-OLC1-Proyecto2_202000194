@@ -5,6 +5,7 @@ var Tablita = require("../Instructions/TS/TablaSimbolos");
 // const instruccionesAPI	= require('../Interpreter/interprete').instruccionesAPI; //las instrucciones de la API
 let operations = []
 var arbolIns = new aInstructionAST.InstructionAST();
+var arbolInsSIHAYERRORES = new aInstructionAST.InstructionAST();
 var ErroresTable = new aErrores.Errorlist();
 var table
 //************ EL AST*************** */
@@ -17,7 +18,14 @@ const instruccionesAPI = {
             arbolIns=parser.parse(data.toString());
 			//! Creo mi tabla de simbolos la cual me servira para mi patron interprete
 			table = new Tablita.Table(null)
-			
+			if (arbolIns instanceof aInstructionAST.InstructionAST){
+				// si mi tetorno JISON es un arbol entonces prosigo
+			}// sino entonces voy a ver los errores sintacticos
+			else{
+				if(arbolIns != null){
+					arbolInsSIHAYERRORES.setError(this.errorsintactico(arbolIns));
+				}
+			}
 			//Ahora necesito correr cada una de mis lineas y mandarlas a ejecutar 
 			//esto se me ocurre colocar a cada clase (AMBITO E INSTRUCCION) una funcion ejecucion
 			// el cual empezara con la ejecucion del mismo y se tenga un orden por cada ambito y lugar el cual corresponda realizarlo

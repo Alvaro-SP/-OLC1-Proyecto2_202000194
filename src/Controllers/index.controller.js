@@ -30,11 +30,21 @@ exports.analizar= async(req, res) => {
     console.log("2. Cadena de Entrada (el codigo): " + cadena);
     const arbolIns =  interprete.instruccionesAPI.setInsAST(cadena);
     //* necesito retornar
-    res.send({  Salida: "COMPILADO",
-                AST: arbolIns.variables ,
-                ListaErrores: arbolIns.error,
-                Consola: arbolIns.console
-            });
+    if(arbolIns instanceof InstructionsAST.InstructionAST){
+        res.send({  Salida: "COMPILADO",
+            AST: arbolIns.variables ,
+            ListaErrores: arbolIns.error,
+            Consola: arbolIns.console
+        });
+    }else{
+        res.send({
+          Salida: "COMPILADO",
+          AST: [],
+          ListaErrores: [arbolIns],
+          Consola: ['Existen errores es por eso de que no se pudo continuar, Revise el listado de errores para conocer a detalle donde se ubica su error y su tipo.'],
+        });
+    }
+    
 }
 // ? ████████████████████████████████ POSTMAN ████████████████████████████████
 exports.postman= async(req, res) => {

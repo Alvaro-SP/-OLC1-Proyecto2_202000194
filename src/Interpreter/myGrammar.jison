@@ -199,7 +199,7 @@ relacionales. */
 ini
 	: instrucciones EOF		{  $$ = new MiArbolAST($1); return $$;  }//here i gonna to save my AST 
 	| error  			{ 	sintacticerror="Detectado error Sintactico se esperaba otro valor y se recibio: "+yytext+" reparelo.";
-							console.error('Este es un error sintactico: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column);
+							console.log('Este es un error sintactico: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column);
 							// instruccionesAPI.getAST.error.push(instruccionesAPI.errorsintactico(sintacticerror,this._$.first_line,this._$.first_column));
 							return (instruccionesAPI.errorsintactico(sintacticerror,this._$.first_line,this._$.first_column));
 						}  /*OJITO: se coloca el ptocoma por si hay un error semantico, entonces se va a recuperar*/
