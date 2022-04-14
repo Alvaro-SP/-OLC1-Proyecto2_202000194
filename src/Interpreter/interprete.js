@@ -1,10 +1,12 @@
 var aInstructionAST = require('../Instructions/ASTGlobal/InstructionAST')
 var aErrores = require('../Instructions/Errores/Errorlist')
 var parser = require('../Interpreter/myGrammar');
+var Tablita = require("../Instructions/TS/TablaSimbolos");
 // const instruccionesAPI	= require('../Interpreter/interprete').instruccionesAPI; //las instrucciones de la API
 let operations = []
 var arbolIns = new aInstructionAST.InstructionAST();
 var ErroresTable = new aErrores.Errorlist();
+var table
 //************ EL AST*************** */
 const instruccionesAPI = {
     setInsAST: function (data){
@@ -14,7 +16,8 @@ const instruccionesAPI = {
 			//! las acciones que voy a ejecutar y asi poder generar mis reportes
             arbolIns=parser.parse(data.toString());
 			//! Creo mi tabla de simbolos la cual me servira para mi patron interprete
-			table = new Tabla.Table(null)
+			table = new Tablita.Table(null)
+			
 			//Ahora necesito correr cada una de mis lineas y mandarlas a ejecutar 
 			//esto se me ocurre colocar a cada clase (AMBITO E INSTRUCCION) una funcion ejecucion
 			// el cual empezara con la ejecucion del mismo y se tenga un orden por cada ambito y lugar el cual corresponda realizarlo

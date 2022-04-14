@@ -25,8 +25,8 @@ exports.analizar= async(req, res) => {
     console.log("▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬REQUEST▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
     console.log(req.body.codigo);
     cadena = JSON.stringify(req.body.codigo);  //vere cual de los dos funcio
-    const texto = req.body.text;
-    console.log("1. Cadena de Entrada (el codigo): " + texto);
+    // const texto = req.body.text;
+    // console.log("1. Cadena de Entrada (el codigo): " + texto);
     console.log("2. Cadena de Entrada (el codigo): " + cadena);
     const arbolIns =  interprete.instruccionesAPI.setInsAST(cadena);
     //* necesito retornar

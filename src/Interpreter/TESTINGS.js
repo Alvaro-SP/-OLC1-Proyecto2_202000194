@@ -11,3 +11,19 @@ console.log( true==1);
 console.log(5=='5');
 console.log(true+true);
 console.log("asdfasfd">false);
+
+var prueba=[];
+prueba.push(5)
+prueba.push(8)
+prueba.push(53)
+prueba.push(2)
+
+if(prueba instanceof Array){
+    alert("HOLA CHAVALES TODO BIEN Y TODO CORRECTO Y...")
+}
+const map1 = prueba.map((x) =>(
+    console.log(x)
+
+))
+console.log(map1)
+

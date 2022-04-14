@@ -16,7 +16,7 @@ export const Home = (props) => {
   var compilar = (e) => {
     alert(currentText);
     e.preventDefault();
-    fetch(`${API}`, {
+    fetch(`${API}` + '/analizar', {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

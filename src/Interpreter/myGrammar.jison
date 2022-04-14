@@ -2,16 +2,19 @@
  * mi primer proyecto con Jison utilizando Nodejs en WINDOWS :)
  */
 %{
-	const {MiArbolAST} = require('../ASTGlobal/InstructionAST');
+	const {MiArbolAST} = require('../Instructions/ASTGlobal/InstructionAST');
+	var InstructionAST = require('../Instructions/ASTGlobal/InstructionAST')
 	const instruccionesAPI	= require('../Interpreter/interprete').instruccionesAPI; //las instrucciones de la API
     const {INSPrint} = require('../Instructions/INSprint.js');
     const {INSAritmetico} = require('../Instructions/INSAritmetico');
     const {INSRelacional} = require('../Instructions/INSRelacional');
     const {Asignar} = require('../Instructions/Asignar');
     const {Declarar} = require('../Instructions/Declarar');
+    const {INSCastear} = require('../Instructions/INSCastear');
 	var sintacticerror = "";
 	var acumoftext="";
-	// var MiArbolAST = new Tree();
+	// var arbolIns = new aInstructionAST.InstructionAST();
+	// var MiArbolAST = new InstructionAST();
 %}
 /*------------------------ Definición éLexca --------------------------*/
 %lex
@@ -41,16 +44,16 @@ deber soportar dos tipos de comentarios que son los siguientes:
 
 /*============================== LEXICO ============================== */
 /* 5.3 Tipos de Datos RESERVADAS */
-"Int"                  		  return 'ENTERO';
-"Double"                  return 'DOUBLE';
-"Boolean"              	 return 'BOOLEANO';
-"Char"                  	return 'CARACTER';
-"String"                	return 'STRING';
-[0-9]("."[0-9]+)\b  	 return 'VDOUBLE';
-[0-9]+\b 	            	return 'VENTERO';
+"Int"               return 'ENTERO';
+"Double"            return 'DOUBLE';
+"Boolean"           return 'BOOLEANO';
+"Char"              return 'CARACTER';
+"String"            return 'STRING';
+[0-9]("."[0-9]+)\b  return 'VDOUBLE';
+[0-9]+\b 	        return 'VENTERO';
 
-"true"        					return 'TRUE'
-"false"         				return 'FALSE'
+"true"        		return 'TRUE'
+"false"         	return 'FALSE'
 /* 5.4 Secuencias de Escape  */
 
 /* 5.5 Operadores Aritméticos */
@@ -169,10 +172,10 @@ relacionales. */
 
 <<EOF>>                 return 'EOF';
 
-.                       { console.error('Este es un error lexico: ' + yytext + ', en la linea: ' + yylloc.first_line + ', en la columna: ' + yylloc.first_column);
-						instruccionesAPI.getAST.setError(instruccionesAPI.errorlexico(yytext,yylloc.first_line,yylloc.first_column));
-						// instruccionesAPI.getErrores.getInstance().insertar(new ErrorList("Lexico","Caracter: \" "+yytext+"\" no es valido" ,yylloc.first_line,yylloc.first_column)); 
-						}
+.   { 	console.error('Este es un error lexico: ' + yytext + ', en la linea: ' + yylloc.first_line + ', en la columna: ' + yylloc.first_column);
+		instruccionesAPI.getAST.error.push(instruccionesAPI.errorlexico(yytext,yylloc.first_line,yylloc.first_column));
+	// instruccionesAPI.getErrores.getInstance().insertar(new ErrorList("Lexico","Caracter: \" "+yytext+"\" no es valido" ,yylloc.first_line,yylloc.first_column)); 
+	}
 /lex
 
 
@@ -197,7 +200,8 @@ ini
 	: instrucciones EOF		{  $$ = new MiArbolAST($1); return $$;  }//here i gonna to save my AST 
 	| error  			{ 	sintacticerror="Detectado error Sintactico se esperaba otro valor y se recibio: "+yytext+" reparelo.";
 							console.error('Este es un error sintactico: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column);
-							instruccionesAPI.getAST.setError(instruccionesAPI.errorsintactico(sintacticerror,yylloc.first_line,yylloc.first_column));
+							// instruccionesAPI.getAST.error.push(instruccionesAPI.errorsintactico(sintacticerror,this._$.first_line,this._$.first_column));
+							return (instruccionesAPI.errorsintactico(sintacticerror,this._$.first_line,this._$.first_column));
 						}  /*OJITO: se coloca el ptocoma por si hay un error semantico, entonces se va a recuperar*/
 ;
 
@@ -225,7 +229,6 @@ instruccion
     | instruccionrun PTCOMA         { $$ = $1; }
 	| VARIABLE MAS MAS PTCOMA 		{ $$ = $1; } /* anio++*/
 	| VARIABLE MENOS MENOS PTCOMA 	{ $$ = $1; } /* edad-- */
-
 	/*| incredecre	{  }  5.14 Incremento y Decremento*/
 ;
 /* ================================================================*/
@@ -235,26 +238,27 @@ instruccion
 /* -------------------------- DECLARACION ASIGNACION VARIABLES ------------------------------ */
 declaracion
 	: tipo VARIABLE PTCOMA																				{ $$ = new Declarar($1, $2, null,  @1.first_line, @1.first_column); } /*<TIPO> identificador;*/
-	| tipo notacioncomas PTCOMA																			{  } /*<TIPO> id1, id2, id3, id4;*/
+	| tipo notacioncomas PTCOMA																			{ $$ = new Declarar($1, $2, null,  @1.first_line, @1.first_column); } /*<TIPO> id1, id2, id3, id4;*/
 	| tipo VARIABLE IGUAL expresion PTCOMA																{ $$ = new Declarar($1, $2, $4,  @1.first_line, @1.first_column);} /*TIPO> identificador = <EXPRESION>;*/
-	| tipo notacioncomas IGUAL expresion PTCOMA 														{  } /*<TIPO> id1, id2, id3, id4 = <EXPRESION>;*/
+	| tipo notacioncomas IGUAL expresion PTCOMA 														{ $$ = new Declarar($1, $2, $4,  @1.first_line, @1.first_column); } /*<TIPO> id1, id2, id3, id4 = <EXPRESION>;*/
 	| tipo VARIABLE CORIZQ CORDER IGUAL NEW tipo CORIZQ expresion CORDER PTCOMA							{  } /*<TIPO> <ID>[ ] = new <TIPO>[ <EXPRESION> ] ;						 DECLARACION TIPO 1 */
 	| tipo VARIABLE CORIZQ CORDER IGUAL NEW tipo CORIZQ expresion CORDER CORIZQ expresion CORDER PTCOMA	{  } /*<TIPO> <ID>[ ][ ]= new <TIPO>[ <EXPRESION> ][ <EXPRESION> ] ;*/
 	| tipo VARIABLE CORIZQ CORDER IGUAL CORIZQ listavalores CORDER PTCOMA								{  }  /*<TIPO> <ID>[ ] = [ <LISTAVALORES> ] ;							 DECLARACION TIPO 2 */
-	| tipo VARIABLE IGUAL VARIABLE CORIZQ expresion CORDER PTCOMA									{  } /*<TIPO> <ID>[ ] = new <TIPO>[ <EXPRESION> ] ;	 */
-	| tipo VARIABLE IGUAL VARIABLE CORIZQ expresion CORDER CORIZQ expresion CORDER PTCOMA			{  } /*<TIPO> <ID>[ ][ ]= new <TIPO>[ <EXPRESION> ][ <EXPRESION> ] ;*/
-	| VARIABLE IGUAL expresion PTCOMA																{ $$ = new Asignar($1, $2, $4, @1.first_line, @1.first_column);  } /*identificador = <EXPRESION>;*/
+	| tipo VARIABLE IGUAL VARIABLE CORIZQ expresion CORDER PTCOMA										{  } /*<TIPO> <ID>[ ] = new <TIPO>[ <EXPRESION> ] ;	 */
+	| tipo VARIABLE IGUAL VARIABLE CORIZQ expresion CORDER CORIZQ expresion CORDER PTCOMA				{  } /*<TIPO> <ID>[ ][ ]= new <TIPO>[ <EXPRESION> ][ <EXPRESION> ] ;*/
+	| VARIABLE IGUAL expresion PTCOMA																	{ $$ = new Asignar($1, $3, @1.first_line, @1.first_column);  } /*identificador = <EXPRESION>;*/
+	| notacioncomas IGUAL expresion PTCOMA																{ $$ = new Asignar($1, $3, @1.first_line, @1.first_column);  } /*identificador = <EXPRESION>;*/
 			/*5.15.1.3 Modificación de Vectores*/
-	| VARIABLE CORIZQ expresion CORDER IGUAL expresion PTCOMA										{  } /*<ID> [ EXPRESION ] = EXPRESION;						 DECLARACION TIPO 1*/
-	| VARIABLE CORIZQ expresion CORDER CORIZQ expresion CORDER IGUAL expresion PTCOMA				{  } /*<ID> [ EXPRESION ][ EXPRESION ] = EXPRESION;          DECLARACION TIPO 2 */
+	| VARIABLE CORIZQ expresion CORDER IGUAL expresion PTCOMA											{  } /*<ID> [ EXPRESION ] = EXPRESION;						 DECLARACION TIPO 1*/
+	| VARIABLE CORIZQ expresion CORDER CORIZQ expresion CORDER IGUAL expresion PTCOMA					{  } /*<> [ EXPRESION ][ EXPRESION ] = EXPRESION;          DECLARACION TIPO 2 */
 ;
 
 notacioncomas
-	: VARIABLE notacioncomas2 {  }
+	: VARIABLE notacioncomas2 { $$=$2; $$.push($1) }
 ;
 
 notacioncomas2
-	: COMA VARIABLE notacioncomas2 {  }
+	: COMA VARIABLE notacioncomas2 { $$=[]; $$.push($2) }
 ;
 
 listavalores
@@ -288,7 +292,7 @@ expresion																				/*aqui es UNARIA XD*/
     | expresion OR OR expresion	  			                {  }
     | expresion AND AND expresion			                {  }
 	
-	| PARA tipo PARC expresion								{  } /* (int) 18.6*//*(<TIPO>) <EXPRESION>*/
+	| PARA tipo PARC expresion								{ $$ = new INSCastear($2, $4, @1.first_line, @1.first_column); } /* (int) 18.6*//*(<TIPO>) <EXPRESION>*/
 	| VENTERO                      							{  }
 	| VDOUBLE                       						{  }
 	| CADENA												{  }
@@ -299,10 +303,11 @@ expresion																				/*aqui es UNARIA XD*/
 	| VARIABLE MAS MAS 										{  } /* anio-- */
 	| VARIABLE MENOS MENOS 									{  } /* edad-- */
 	| VARIABLE CORIZQ expresion CORDER						{  } /* vector2[0];*/
-	| VARIABLE CORIZQ expresion CORDER CORIZQ expresion CORDER	{ } /* vectorDosd[0][0];*/
+	| VARIABLE CORIZQ expresion CORDER CORIZQ expresion CORDER { } /* vectorDosd[0][0];*/
 	| VARIABLE MAS MAS 										{  } /* vectorDosd[0][0]*/
 	| expresion INTERROGACION expresion DOSPUNTOS expresion {  $$ = new INSTernario($1, $3, $5, @1.first_line, @1.first_column); } /*Ternarios*/
-    | TOLOWER PARIZQ expresion PARDER  						{  } /* toLower  (  <EXPRESION>  );*/       
+    
+	| TOLOWER PARIZQ expresion PARDER  						{  } /* toLower  (  <EXPRESION>  );*/       
     | TOUPPER PARIZQ expresion PARDER  						{  } /* toUpper  (  <EXPRESION>  );*/      
     | ROUND PARIZQ DOUBLE PARDER    						{  } /* round  (  )  ;     */
     | TYPEOF PARIZQ expresion PARDER   						{  }
@@ -343,19 +348,19 @@ instruccionif
 
 /* ------------------------------------  SWITCH  ------------------------------------ */
 instruccionswitch
-    :SWITCH PARIZQ expresion PARDER LLAIZQ caselist default LLADER  {}/* switch   (   <EXPRESION>   )  { <CASES_LIST>   <DEFAULT> } */
-    |SWITCH PARIZQ expresion PARDER LLAIZQ caselist LLADER          {}/* switch   ( <EXPRESION>  )  {<CASES_LIST> } */
-    |SWITCH PARIZQ expresion PARDER LLAIZQ default LLADER          	{}/* switch   ( <EXPRESION>  )   { <DEFAULT> } */
+    :SWITCH PARIZQ expresion PARDER LLAIZQ caselist default LLADER  {  }/* switch   (   <EXPRESION>   )  { <CASES_LIST>   <DEFAULT> } */
+    |SWITCH PARIZQ expresion PARDER LLAIZQ caselist LLADER          {  }/* switch   ( <EXPRESION>  )  {<CASES_LIST> } */
+    |SWITCH PARIZQ expresion PARDER LLAIZQ default LLADER          	{  }/* switch   ( <EXPRESION>  )   { <DEFAULT> } */
 
 ;
 /* ------------------------------------  caselist  ------------------------------------ */
 instruccioncaselist
-    :caselist CASE expresion DOSPUNTOS instrucciones    {} 
-    |CASE expresion DOSPUNTOS instrucciones             	 {} /* case   <EXPRESION>   :  <INSTRUCCIONES> */
+    :caselist CASE expresion DOSPUNTOS instrucciones    {  }
+    |CASE expresion DOSPUNTOS instrucciones             {  } /* case   <EXPRESION>   :  <INSTRUCCIONES> */
 ;
 /* ------------------------------------  DEFAULT  ------------------------------------ */
 instrucciondefault
-    :DEFAULT DOSPUNTOS instrucciones	 {}
+    :DEFAULT DOSPUNTOS instrucciones  {  }
 ;
 
 /*--------------------------------------5.17 SenTencias cíclicas----------------------------------*/
@@ -369,13 +374,13 @@ instruccionfor
     :FOR PARIZQ fordeclarar PTCOMA expresion PTCOMA actualizacion PARDER LLAIZQ instrucciones LLADER  {}/* for  ((<DECLARACION>|<ASIGNACION>);<CONDICION>;< ACTUALIZACION>){<INSTRUCCIONES>} */
 ;
 fordeclarar
-    : tipo VARIABLE IGUAL expresion 			{  } /*TIPO> identificador = <EXPRESION>;*/
-	| VARIABLE IGUAL expresion 					  {  } /*identificador = <EXPRESION>;*/
+    : tipo VARIABLE IGUAL expresion {  } /*TIPO> identificador = <EXPRESION>;*/
+	| VARIABLE IGUAL expresion 		{  } /*identificador = <EXPRESION>;*/
 ;
 actualizacion
-    : VARIABLE MAS MAS 						{  } /* anio++ */
-	| VARIABLE MENOS MENOS 				{  } /* edad-- */
-	| VARIABLE IGUAL expresion 				{  } /*identificador = <EXPRESION>;*/
+    : VARIABLE MAS MAS 				{  } /* anio++ */
+	| VARIABLE MENOS MENOS 			{  } /* edad-- */
+	| VARIABLE IGUAL expresion 		{  } /*identificador = <EXPRESION>;*/
 ;
 /*5.17.3. Do-While*/
 instrucciondowhile
@@ -385,19 +390,19 @@ instrucciondowhile
 /*--------------------------------------  5.19 Funciones  ----------------------------------*/
 funciones
     : VARIABLE PARIZQ parametros PARDER DOSPUNTOS tipo LLAIZQ instrucciones LLADER {  } /* <ID>(<PARAMETROS>):<TIPO>{ <INSTRUCCIONES>} */
-    | VARIABLE PARIZQ PARDER DOSPUNTOS tipo LLAIZQ instrucciones LLADER            		   {  }
+    | VARIABLE PARIZQ PARDER DOSPUNTOS tipo LLAIZQ instrucciones LLADER            {  }
 ;
 parametros
     :parametros COMA tipo VARIABLE  	{  }
-    |tipo VARIABLE                   					{  }         
+    |tipo VARIABLE                   	{  }         
 ;
 
 /*--------------------------------------  5.20 Meodos  ----------------------------------*/
 metodos
-    : VARIABLE PARIZQ parametros PARDER DOSPUNTOS VOID LLAIZQ instrucciones LLADER 		{  } /* <ID>(<PARAMETROS>):<TIPO>{ <INSTRUCCIONES>} */
-    | VARIABLE PARIZQ parametros PARDER LLAIZQ instrucciones LLADER											 {  } /* <ID>(<PARAMETROS>){ <INSTRUCCIONES>} */
-    | VARIABLE PARIZQ PARDER DOSPUNTOS VOID LLAIZQ instrucciones LLADER 						{  } /* <ID>():<TIPO>{ <INSTRUCCIONES>} */
-    | VARIABLE PARIZQ PARDER LLAIZQ instrucciones LLADER 															 {  } /* <ID>(){ <INSTRUCCIONES>} */
+    : VARIABLE PARIZQ parametros PARDER DOSPUNTOS VOID LLAIZQ instrucciones LLADER {  } /* <ID>(<PARAMETROS>):<TIPO>{ <INSTRUCCIONES>} */
+    | VARIABLE PARIZQ parametros PARDER LLAIZQ instrucciones LLADER				   {  } /* <ID>(<PARAMETROS>){ <INSTRUCCIONES>} */
+    | VARIABLE PARIZQ PARDER DOSPUNTOS VOID LLAIZQ instrucciones LLADER 		   {  } /* <ID>():<TIPO>{ <INSTRUCCIONES>} */
+    | VARIABLE PARIZQ PARDER LLAIZQ instrucciones LLADER 						   {  } /* <ID>(){ <INSTRUCCIONES>} */
 ;
 /*--------------------------------------  5.21 Llamadas  ----------------------------------*/
 
