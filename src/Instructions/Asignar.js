@@ -9,13 +9,16 @@ const val = require("./val");
 const instruccionesAPI = require("../Interpreter/interprete").instruccionesAPI; //las instrucciones de la API
 const nodoAST = require("./ASTGlobal/nodoAST");
 class asignar {
-constructor(variable, valor, fila, column) {
+constructor(variable, valor, ambito, fila, column) {
     // this.tipo = tipo;
     this.variable = variable;
     this.valor = valor;
     this.fila = fila;
     this.column = column;
+    this.ambito = ambito;
 }
+// La diferencia en esta asignacion es de que necesito agregar el ambito de la variable que voy a agregar
+// entonces necesito ese nuevo parametro al ejecutar 
 ejecutar(arbolIns, table) {
     let valortemp = this.valor.ejecutar(arbolIns, table);
     var value = valortemp;
@@ -26,7 +29,7 @@ ejecutar(arbolIns, table) {
             //! Primero verifico de que no de ningun tipo de errores la EJECUCION
             if (value.valor != Tipo(tipo.ERROR)) {
                 //! Busco en mi lista Simbolos el valor para saber el tipo a asignar.
-                var tipoasignar = Tablita.symbolTable.getSimbol(this.variable[i]); // envio el nombre de la variable
+                var tipoasignar = Tablita.TablaSimbolos().getSimbol(this.variable[i]); // envio el nombre de la variable
 
                 if (this.valor == null) {
                 //! si el valor es nulo es porque no hay nada que asignar
@@ -113,7 +116,7 @@ ejecutar(arbolIns, table) {
       //! Primero verifico de que no de ningun tipo de errores la EJECUCION
         if (value.valor != Tipo(tipo.ERROR)) {
             //! Busco en mi lista Simbolos el valor para saber el tipo a asignar.
-            var tipoasignar = Tablita.symbolTable.getSimbol(this.variable); // envio el nombre de la variable
+            var tipoasignar = Tablita.TablaSimbolos().getSimbol(this.variable); // envio el nombre de la variable
 
             if (this.valor == null) {
             //! si el valor es nulo es porque no hay nada que asignar

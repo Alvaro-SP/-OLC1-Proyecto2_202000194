@@ -17,35 +17,50 @@ const instruccionesAPI = {
 			//! las acciones que voy a ejecutar y asi poder generar mis reportes
             arbolIns=parser.parse(data.toString());
 			//! Creo mi tabla de simbolos la cual me servira para mi patron interprete
-			table = new Tablita.Table(null)
-			if (arbolIns instanceof aInstructionAST.InstructionAST){
+			table = new Tablita.TablaSimbolos(null);
+			if (arbolIns){
 				// si mi tetorno JISON es un arbol entonces prosigo
+
+				//Ahora necesito correr cada una de mis lineas y mandarlas a ejecutar
+				//esto se me ocurre colocar a cada clase (AMBITO E INSTRUCCION) una funcion ejecucion
+				// el cual empezara con la ejecucion del mismo y se tenga un orden por cada ambito y lugar el cual corresponda realizarlo
+				// Map...
+				if (arbolIns.ins != null){
+					arbolIns.ins.map((instruccion) => {
+						try {
+						var retornado = instruccion.ejecutar(arbolIns, table);
+						} catch (error) {
+						//* si no se pudo ejecutar una instruccion simplemente se agregara al error sintactico
+						//* y luego seguira recorriendo las demas instrucciones para que no se quede trabado :v
+						console.log(error);
+						var sintacticerror =
+							"Detectado error Sintactico para la instruccion actual NO se puede recuperar. Salto a la siguiente.";
+						console.error(
+							"Este es un error sintactico: " +
+							"Irrecuperable" +
+							", en la linea: " +
+							"a" +
+							", en la columna: " +
+							"a"
+						);
+						arbolIns.setError(this.errorsintactico(sintacticerror, 0, 0));
+						arbolIns.console.push(error + "\n" + sintacticerror + " ");
+						}
+					});
+				}
+				return arbolIns;
 			}// sino entonces voy a ver los errores sintacticos
 			else{
-				if(arbolIns != null){
-					arbolInsSIHAYERRORES.setError(this.errorsintactico(arbolIns));
-				}
+				console.log("problema")
+				// if(arbolIns != null){
+					
+				// 	arbolInsSIHAYERRORES.setError(arbolIns);
+				// 	return arbolInsSIHAYERRORES
+				// }
 			}
-			//Ahora necesito correr cada una de mis lineas y mandarlas a ejecutar 
-			//esto se me ocurre colocar a cada clase (AMBITO E INSTRUCCION) una funcion ejecucion
-			// el cual empezara con la ejecucion del mismo y se tenga un orden por cada ambito y lugar el cual corresponda realizarlo
-			// Map...
-			arbolIns.ins.map((instruccion)=>{
-				try {
-					var retornado = instruccion.ejecutar(arbolIns, table);
-				} catch (error) {
-					//* si no se pudo ejecutar una instruccion simplemente se agregara al error sintactico 
-					//* y luego seguira recorriendo las demas instrucciones para que no se quede trabado :v
-					console.log(error);
-					var sintacticerror="Detectado error Sintactico para la instruccion actual NO se puede recuperar. Salto a la siguiente.";
-					console.error('Este es un error sintactico: ' + 'Irrecuperable' + ', en la linea: ' + 'a' + ', en la columna: ' + 'a');
-					arbolIns.setError(this.errorsintactico(sintacticerror,0,0));
-					arbolIns.console.push(error+'\n'+sintacticerror+' ')
-				}
-			});
-            return arbolIns;
+			
         } catch (error) {
-            console.error(error);
+            console.log(error);
             return;
         }
     },

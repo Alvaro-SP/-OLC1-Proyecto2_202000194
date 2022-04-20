@@ -26,4 +26,8 @@ const map1 = prueba.map((x) =>(
 
 ))
 console.log(map1)
+console.log(45.445545);
 
+
+console.log("GERARDI")
+console.log("24/12/2000")

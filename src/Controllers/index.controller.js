@@ -30,7 +30,7 @@ exports.analizar= async(req, res) => {
     console.log("2. Cadena de Entrada (el codigo): " + cadena);
     const arbolIns =  interprete.instruccionesAPI.setInsAST(cadena);
     //* necesito retornar
-    if(arbolIns instanceof InstructionsAST.InstructionAST){
+    if(arbolIns ){
         res.send({  Salida: "COMPILADO",
             AST: arbolIns.variables ,
             ListaErrores: arbolIns.error,
