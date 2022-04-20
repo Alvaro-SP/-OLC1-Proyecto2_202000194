@@ -25,7 +25,6 @@
 	//pauses
 	const {INSBreak} = require('../Instructions/break');
 	const {INSContinue} = require('../Instructions/break');
-	const {INSContinue} = require('../Instructions/continue');
 	var sintacticerror = "";
 	var acumoftext="";
 	var arbolINSERRORES = new aInstructionAST.InstructionAST();//por si hay errores
