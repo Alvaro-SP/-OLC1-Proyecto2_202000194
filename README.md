@@ -2,7 +2,7 @@
   <img alt="JavaScript" src="https://img.shields.io/badge/-JavaScript-F7DF1E?style=flat-square&logo=JavaScript&logoColor=white" />
   <img alt="angular" src="https://img.shields.io/badge/-React-DD0031?style=flat-square&logo=react&logoColor=white" /> 
   
-## 🥇🥇🥇🤗🤗🤗  Bienvenid@ a mi Proyecto #2  🤗🤗🤗🥇🥇🥇
+## 🥇🥇🥇🤗🤗🤗  Bienvenid@ a mi Proyecto #2  🤗🤗🤗🥇🥇🥇 
 
 El curso de Organización de Lenguajes y Compiladores 1, ha puesto en marcha un nuevo proyecto, requerido por la Escuela de Ciencias y Sistemas de la Facultad de Ingeniería, que consiste en crear un lenguaje de programación para que los estudiantes, del curso de Introducción a la Programación y Computación 1, aprendan a programar y tener conocimiento de todas las generalidades de un lenguaje de programación. Cabe destacar, que este lenguaje será utilizado para generar sus primeras prácticas de laboratorio del curso antes mencionado.
 
