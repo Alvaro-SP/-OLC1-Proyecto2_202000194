@@ -33,7 +33,7 @@ class Switch {
         for(var i = 0; i < this.cases.length; i++){
             var otrocase = this.cases[i].ejecutar(newtable, tree);
                                             // new INSRelacional($1, $3, 'IGUAL',  @1.first_line, @1.first_column);
-            var respuestacondi = new Relacional_1.Relacional(this.condicion, otrocase.expresion, '==', this.line, this.column);
+            var respuestacondi = new Relacional_1.Relacional(this.condicion, otrocase.condicion, 'IGUAL', this.line, this.column);
             if (respuestacondi.tipo.tipo == Tipo.tipos.BOOLEANO) {
                 if (respuestacondi.ejecutar(newtable, tree) || !ejecutado) {
                     for (let i = 0; i < otrocase.instrucciones.length; i++) {

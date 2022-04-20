@@ -15,6 +15,13 @@
     const {INSPrimitivo} = require('../Instructions/INSPrimitivo');
     const {INSid} = require('../Instructions/id');
     const {INSincredecre} = require('../Instructions/INSincredecre');
+
+	//SENTENCIAS
+    const {INSif} = require('../Instructions/INSif');
+    const {INSwhile} = require('../Instructions/INSwhile');
+    const {INSdowhile} = require('../Instructions/INSdowhile');
+    const {INSswitch} = require('../Instructions/INSswitch');
+	const {INSCase} = require('../Instructions/INSCase');
 	var sintacticerror = "";
 	var acumoftext="";
 	var arbolINSERRORES = new aInstructionAST.InstructionAST();//por si hay errores
@@ -289,29 +296,29 @@ instruccionif
 ;
 /* ------------------------------------  SWITCH  ------------------------------------ */
 instruccionswitch
-    :SWITCH PARIZQ expresion PARDER LLAIZQ instruccioncaselist instrucciondefault LLADER  	{ $$ = new Switch($3, $6, $7, @1.first_line, @1.first_column); }/* switch   (   <EXPRESION>   )  { <CASES_LIST>   <DEFAULT> } */
-    |SWITCH PARIZQ expresion PARDER LLAIZQ instruccioncaselist LLADER          				{ $$ = new Switch($3, $6, null, @1.first_line, @1.first_column); }/* switch   ( <EXPRESION>  )  {<CASES_LIST> } */
-    |SWITCH PARIZQ expresion PARDER LLAIZQ instrucciondefault LLADER          				{ $$ = new Switch($3, null, $6, @1.first_line, @1.first_column); }/* switch   ( <EXPRESION>  )   { <DEFAULT> } */
+    :SWITCH PARIZQ expresion PARDER LLAIZQ instruccioncaselist instrucciondefault LLADER  	{ $$ = new INSswitch($3, $6, $7, @1.first_line, @1.first_column); }/* switch   (   <EXPRESION>   )  { <CASES_LIST>   <DEFAULT> } */
+    |SWITCH PARIZQ expresion PARDER LLAIZQ instruccioncaselist LLADER          				{ $$ = new INSswitch($3, $6, null, @1.first_line, @1.first_column); }/* switch   ( <EXPRESION>  )  {<CASES_LIST> } */
+    |SWITCH PARIZQ expresion PARDER LLAIZQ instrucciondefault LLADER          				{ $$ = new INSswitch($3, null, $6, @1.first_line, @1.first_column); }/* switch   ( <EXPRESION>  )   { <DEFAULT> } */
 ;
 /* ------------------------------------  caselist  ------------------------------------ */
 instruccioncaselist
-    :instruccioncaselist CASE expresion DOSPUNTOS instrucciones    {  }
-    |CASE expresion DOSPUNTOS instrucciones             {  } /* case   <EXPRESION>   :  <INSTRUCCIONES> */
+    :instruccioncaselist CASE expresion DOSPUNTOS instrucciones { $$ = $1; $$.push(new INSCase($3, $5, @1.first_line, @1.first_column)); }
+    |CASE expresion DOSPUNTOS instrucciones             		{ $$ = []; $$.push(new INSCase($2, $4, @1.first_line, @1.first_column)); } /* case   <EXPRESION>   :  <INSTRUCCIONES> */
 ;
 /* ------------------------------------  DEFAULT  ------------------------------------ */
 instrucciondefault
-    :DEFAULT DOSPUNTOS instrucciones  {  }
+    :DEFAULT DOSPUNTOS instrucciones  { $$ = $3 }
 ;
 /*--------------------------------------5.17 SenTencias cíclicas----------------------------------*/
 
  /*5.17.1. While  while   (  <EXPRESION>   )   {  <INSTRUCCIONES>  } */
 instruccionwhile
-    :WHILE PARIZQ expresion PARDER LLAIZQ instrucciones LLADER 		{$$ = new While($3, $6, @1.first_line, @1.first_column);}
+    :WHILE PARIZQ expresion PARDER LLAIZQ instrucciones LLADER 		{$$ = new INSwhile($3, $6, @1.first_line, @1.first_column);}
 ;
 
 /*5.17.3. Do-While*/
 instrucciondowhile
-    :DO LLAIZQ instrucciones LLADER WHILE PARIZQ expresion PARDER PTCOMA  {}/*do{ <INSTRUCCIONES> }while(<EXPRESION>);*/
+    :DO LLAIZQ instrucciones LLADER WHILE PARIZQ expresion PARDER PTCOMA  {$$ = new INSdowhile($7, $3, @1.first_line, @1.first_column);}/*do{ <INSTRUCCIONES> }while(<EXPRESION>);*/
 ;
 /*5.17.2. For*/
 instruccionfor
