@@ -22,6 +22,10 @@
     const {INSdowhile} = require('../Instructions/INSdowhile');
     const {INSswitch} = require('../Instructions/INSswitch');
 	const {INSCase} = require('../Instructions/INSCase');
+	//pauses
+	const {INSBreak} = require('../Instructions/break');
+	const {INSContinue} = require('../Instructions/break');
+	const {INSContinue} = require('../Instructions/continue');
 	var sintacticerror = "";
 	var acumoftext="";
 	var arbolINSERRORES = new aInstructionAST.InstructionAST();//por si hay errores
@@ -241,8 +245,8 @@ instruccion
 	| VARIABLE INC PTCOMA 			{ $$ = new INSincredecre($1, "INCREMENT", @1.first_line, @1.first_column); } /* anio++*/
 	| VARIABLE DEC PTCOMA 			{ $$ = new INSincredecre($1, "DECREMENT", @1.first_line, @1.first_column); } /* anio++*/
 	// | llamadas PTCOMA				{ $$ = $1; } /* 5.21 Llamadas*/
-	| CONTINUE PTCOMA              	{ $$ = $1; } /* CONTINUE */
-    | BREAK PTCOMA                 	{ $$ = $1; } /* BREAK */
+	| CONTINUE PTCOMA              	{ $$ = new INSContinue("CONTINUE",@1.first_line, @1.first_column); } /* CONTINUE */
+    | BREAK PTCOMA                 	{ $$ = new INSBreak("BREAK",@1.first_line, @1.first_column); } /* BREAK */
 	| returns PTCOMA      			{ $$ = $1; }
     | RUN call				        { $$ = $1; }
 	// | VARIABLE MAS MAS PTCOMA 		{ $$ = $1; } /* anio++*/
@@ -268,7 +272,7 @@ metodos
 
 /*--------------------------------------  5.21 Llamadas  ----------------------------------*/
 call
-	:llamadas PTCOMA
+	:llamadas PTCOMA	{ $$ = $1; }
 ;
 
 llamadas
