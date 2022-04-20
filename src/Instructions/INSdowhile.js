@@ -22,8 +22,6 @@ class Dowhile {
   ejecutar(arbolIns, table) {
     if(this.condicion!=null){
       let respuesta
-
-      
       do{
         respuesta = this.condicion.ejecutar(arbolIns, table);
         if (respuesta.tipo.tipo == Tipo.tipos.BOOLEAN) {
@@ -48,10 +46,7 @@ class Dowhile {
           arbolIns.setError(instruccionesAPI.errorSemantico("En el while debe existir una condicion BOOLEANA no de tipo: " +respuesta.tipo ,this.fila,this.column));
           return new val(this.fila,this.column,Tipo.tipos.ERROR,"(ERROR SEMANTICO) En el while debe existir una condicion BOOLEANA no de tipo: " +respuesta.tipo );
         }
-      }
-
-
-      while(respuesta);
+      }while(respuesta);
     }else{
       //error
       arbolIns.setError(instruccionesAPI.errorSemantico("la condicion no debe ser null se esperaba BOOLEANO y no " +respuesta.tipo ,this.fila,this.column));
