@@ -10,8 +10,8 @@ const instruccionesAPI = require("../Interpreter/interprete").instruccionesAPI; 
 const nodoAST = require("./ASTGlobal/nodoAST");
 const {INSBreak} = require('../Instructions/break');
 const {INSContinue} = require('../Instructions/continue');
-//! 5.5 Operadores Aritméticos
-// *SUMA RESTA MULTIPLICACION DIVISION POTENCIA MODULO ENTRE OTROS...
+//! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬5.17 Sentencias cíclicas▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+// *5.17.1. While
 class While {
   constructor(condicion, dentrowhile, fila, column) {
     this.condicion = condicion;

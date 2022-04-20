@@ -20,6 +20,7 @@
     const {INSif} = require('../Instructions/INSif');
     const {INSwhile} = require('../Instructions/INSwhile');
     const {INSdowhile} = require('../Instructions/INSdowhile');
+    const {INSfor} = require('../Instructions/INSfor');
     const {INSswitch} = require('../Instructions/INSswitch');
 	const {INSCase} = require('../Instructions/INSCase');
 	//pauses
@@ -325,16 +326,16 @@ instrucciondowhile
 ;
 /*5.17.2. For*/
 instruccionfor
-    :FOR PARIZQ fordeclarar PTCOMA expresion PTCOMA actualizacion PARDER LLAIZQ instrucciones LLADER  {}/* for  ((<DECLARACION>|<ASIGNACION>);<CONDICION>;< ACTUALIZACION>){<INSTRUCCIONES>} */
+    :FOR PARIZQ fordeclarar PTCOMA expresion PTCOMA actualizacion PARDER LLAIZQ instrucciones LLADER  {$$ = new INSfor(@3, @5, @7, @10,@1.first_line, @1.first_column);}/* for  ((<DECLARACION>|<ASIGNACION>);<CONDICION>;< ACTUALIZACION>){<INSTRUCCIONES>} */
 ;
 fordeclarar
-    : tipo VARIABLE IGUAL expresion {  } /*TIPO> identificador = <EXPRESION>;*/
-	| VARIABLE IGUAL expresion 		{  } /*identificador = <EXPRESION>;*/
+    : tipo VARIABLE IGUAL expresion { $$ = new Declarar($1, $2, $4,  @1.first_line, @1.first_column);  } /*TIPO> identificador = <EXPRESION>;*/
+	| VARIABLE IGUAL expresion 		{ $$ = new Asignar($1, $3, @1.first_line, @1.first_column); } /*identificador = <EXPRESION>;*/
 ;
 actualizacion
-    : VARIABLE INC	 				{  } /* anio++ */
-	| VARIABLE DEC 					{  } /* edad-- */
-	| VARIABLE IGUAL expresion 		{  } /*identificador = <EXPRESION>;*/
+    : VARIABLE INC	 				{ $$ = new INSincredecre($1, "INCREMENT", @1.first_line, @1.first_column); } /* anio++ */
+	| VARIABLE DEC 					{ $$ = new INSincredecre($1, "DECREMENT", @1.first_line, @1.first_column); } /* edad-- */
+	| VARIABLE IGUAL expresion 		{ $$ = new Asignar($1, $3, @1.first_line, @1.first_column); } /*identificador = <EXPRESION>;*/
 ;
 /*--------------------------------------  5.22 Función Print  ----------------------------------*/
 instruccionprint /* valores únicamente de tipo entero, doble, booleano, cadena y carácter. */
@@ -380,8 +381,8 @@ declaracion
 ;
 
 notacioncomas
-	: notacioncomas COMA VARIABLE  { $$=[]; $$.push($1) }
-	| VARIABLE
+	: notacioncomas COMA VARIABLE  	{ $$=$1; $$.push($3) }
+	| VARIABLE 						{ $$=[]; $$.push($1) }
 ;
 /* ------------------------------------ EXPRESIONES ------------------------------------ */
 expresion																				/*aqui es UNARIA XD*/

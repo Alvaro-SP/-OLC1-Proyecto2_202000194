@@ -10,8 +10,8 @@ const instruccionesAPI = require("../Interpreter/interprete").instruccionesAPI; 
 const nodoAST = require("./ASTGlobal/nodoAST");
 const {INSBreak} = require('../Instructions/break');
 const {INSContinue} = require('../Instructions/continue');
-//! 5.5 Operadores Aritméticos
-// *SUMA RESTA MULTIPLICACION DIVISION POTENCIA MODULO ENTRE OTROS...
+//! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬5.17 Sentencias cíclicas▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+// *5.17.3. Do-While
 class Dowhile {
   constructor(condicion, dentrowhile, fila, column) {
     this.condicion = condicion;
@@ -21,9 +21,11 @@ class Dowhile {
   }
   ejecutar(arbolIns, table) {
     if(this.condicion!=null){
-      let respuesta 
-      respuesta = this.condicion.ejecutar(arbolIns, table);
-      while(respuesta.valor){
+      let respuesta
+
+      
+      do{
+        respuesta = this.condicion.ejecutar(arbolIns, table);
         if (respuesta.tipo.tipo == Tipo.tipos.BOOLEAN) {
           if(this.dentrowhile!=null){
             if(respuesta){
@@ -46,8 +48,10 @@ class Dowhile {
           arbolIns.setError(instruccionesAPI.errorSemantico("En el while debe existir una condicion BOOLEANA no de tipo: " +respuesta.tipo ,this.fila,this.column));
           return new val(this.fila,this.column,Tipo.tipos.ERROR,"(ERROR SEMANTICO) En el while debe existir una condicion BOOLEANA no de tipo: " +respuesta.tipo );
         }
-        respuesta = this.condicion.ejecutar(arbolIns, table);
       }
+
+
+      while(respuesta);
     }else{
       //error
       arbolIns.setError(instruccionesAPI.errorSemantico("la condicion no debe ser null se esperaba BOOLEANO y no " +respuesta.tipo ,this.fila,this.column));

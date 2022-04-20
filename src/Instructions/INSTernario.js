@@ -7,6 +7,7 @@ const tipo = require("./ASTGlobal/tiponodo");
 const val = require("./val");
 const instruccionesAPI = require("../Interpreter/interprete").instruccionesAPI; //las instrucciones de la API
 const nodoAST = require("./ASTGlobal/nodoAST");
+//! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬  5.7 Operador Ternario  ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 class ternario {
     //!<CONDICION> ‘?’ <EXPRESION> ‘:’ <EXPRESION>
     constructor(condicion, secumple, nosecumple, line, column) {
