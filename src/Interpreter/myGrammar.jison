@@ -15,6 +15,8 @@
     const {INSPrimitivo} = require('../Instructions/INSPrimitivo');
     const {INSid} = require('../Instructions/id');
     const {INSincredecre} = require('../Instructions/INSincredecre');
+    const {INSreturn} = require('../Instructions/return');
+    const {INSllamada} = require('../Instructions/llamar');
 
 	//SENTENCIAS
     const {INSif} = require('../Instructions/INSif');
@@ -276,20 +278,20 @@ call
 ;
 
 llamadas
-    :VARIABLE PARIZQ paramllamada PARDER    {   }
-    |VARIABLE PARIZQ PARDER                 {   }
+    :VARIABLE PARIZQ paramllamada PARDER    {$$ = new INSllamada($1, $3, @1.first_line, @1.first_column);}
+    |VARIABLE PARIZQ PARDER                 {$$ = new INSllamada($1, null, @1.first_line, @1.first_column);   }
 ;
 /*LLAMADA -> [<ID>] ( [<PARAMETROS_LLAMADA>] )
 | [<ID>] ( )*/
 
 paramllamada
-    :paramllamada COMA expresion      	{  }
-    |expresion                        	{  }
+    :paramllamada COMA expresion      	{ $$ = $1; $$.push($3); } //add to a list array
+    |expresion                        	{ $$ = [$1]; }
 ;
 
 parametros
     :parametros COMA tipo VARIABLE  	{  }
-    |tipo VARIABLE                   	{  }         
+    |tipo VARIABLE                   	{  }
 ;
 /* ------------------------------------    IF    ------------------------------------ */
 instruccionif
@@ -359,8 +361,8 @@ instruccionprintln/*entero,doble, booleano, cadena y carácter.*/
 
 /* -------------------------------------- RETURN --------------------------------------*/
 returns
-	: RETURN expresion       	{ $$ = $1; }
-    | RETURN                 	{ $$ = $1; }
+	: RETURN expresion       	{ $$ = new INSreturn($2,@1.first_line, @1.first_column); }
+    | RETURN                 	{ $$ = new INSreturn(null,@1.first_line, @1.first_column); }
 ;
 /* -------------------------- DECLARACION ASIGNACION VARIABLES ------------------------------ */
 declaracion

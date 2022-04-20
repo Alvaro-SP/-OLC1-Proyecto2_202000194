@@ -10,13 +10,13 @@ const instruccionesAPI = require("../Interpreter/interprete").instruccionesAPI; 
 const nodoAST = require("./ASTGlobal/nodoAST");
 //! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬5.12 Declaración y asignación de variables▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 class asignar {
-constructor(variable, valor, ambito, fila, column) {
+constructor(variable, valor, fila, column) {
     // this.tipo = tipo;
     this.variable = variable;
     this.valor = valor;
     this.fila = fila;
     this.column = column;
-    this.ambito = ambito;
+    // this.ambito = ambito;
 }
 // La diferencia en esta asignacion es de que necesito agregar el ambito de la variable que voy a agregar
 // entonces necesito ese nuevo parametro al ejecutar 

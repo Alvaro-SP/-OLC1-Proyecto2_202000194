@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.llamada = void 0;
+exports.asignar = void 0;
 const nodo = require("./ASTGlobal/nodo");
 const Tipo = require("./ASTGlobal/tiponodo");
 const tipo = require("./ASTGlobal/tiponodo");
@@ -11,24 +11,24 @@ const nodoAST = require("./ASTGlobal/nodoAST");
 const INSRelacional = require('../Instructions/INSRelacional');
 const INSBreak = require('../Instructions/break');
 //! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬  5.21 Llamadas  ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
-class llamada {
-    constructor(variable, parametros, fila, column) {
-        this.variable = variable;
-        this.parametros = parametros;
+class asignar {
+    constructor(valor,  fila, column) {
+        // this.variable = variable;
+        this.valor = valor;
         this.fila = fila;
         this.column = column;
+        // this.ambito = ambito;
     }
     ejecutar(arbolIns, table) {
-        var addtable = new Tablita.TablaSimbolos(table);
-        //* no se que valores se van a pasar en la funcion entonces necesito ejecutar
-        //* cada uno de los parametros para que se guarden sus valores:
-        for (let i = 0; i < this.parametros.length; i++) {
-            this.parametros[i].ejecutar(arbolIns, table);
+        //* si no hay valor a retornar se manda el objeto como tal :v
+        if (this.valor == null) {
+            return this
+        }else{
+            //* si hay valor a retornar se manda el valor de la variable
+            this.newvalor=this.valor.ejecutar(arbolIns, table);
+            return this
         }
-        //* luego de haber ejecutado todos los parametros debo buscar la funcion en 
-        //* la tabla de simbolos
-        var funcion = addtable.buscarFuncion(this.variable.nombre);
     }
 }
 
-exports.llamada = llamada
+exports.asignar = asignar;
