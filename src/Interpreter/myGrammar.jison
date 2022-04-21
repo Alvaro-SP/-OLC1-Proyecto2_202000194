@@ -17,6 +17,7 @@
     const {INSincredecre} = require('../Instructions/INSincredecre');
     const {INSreturn} = require('../Instructions/return');
     const {INSllamada} = require('../Instructions/llamar');
+    const {INSMetodo} = require('../Instructions/metodo');
 
 	//SENTENCIAS
     const {INSif} = require('../Instructions/INSif');
@@ -261,15 +262,15 @@ instruccion
 
 /*--------------------------------------  5.19 Funciones  ----------------------------------*/
 funciones
-    : VARIABLE PARIZQ parametros PARDER DOSPUNTOS tipo LLAIZQ instrucciones LLADER {  } /* <ID>(<PARAMETROS>):<TIPO>{ <INSTRUCCIONES>} */
-    | VARIABLE PARIZQ PARDER DOSPUNTOS tipo LLAIZQ instrucciones LLADER            {  }
+    : VARIABLE PARIZQ parametros PARDER DOSPUNTOS tipo LLAIZQ instrucciones LLADER { $$ = new INSMetodo($1 ,$3, $6, $8, @1.first_line, @1.first_column); } /* <ID>(<PARAMETROS>):<TIPO>{ <INSTRUCCIONES>} */
+    | VARIABLE PARIZQ PARDER DOSPUNTOS tipo LLAIZQ instrucciones LLADER            { $$ = new INSMetodo($1 ,null, $5, $7, @1.first_line, @1.first_column); }
 ;
 /*--------------------------------------  5.20 Meodos  ----------------------------------*/
-metodos
-    : VARIABLE PARIZQ parametros PARDER DOSPUNTOS VOID LLAIZQ instrucciones LLADER {  } /* <ID>(<PARAMETROS>):<TIPO>{ <INSTRUCCIONES>} */
-    | VARIABLE PARIZQ parametros PARDER LLAIZQ instrucciones LLADER				   {  } /* <ID>(<PARAMETROS>){ <INSTRUCCIONES>} */
-    | VARIABLE PARIZQ PARDER DOSPUNTOS VOID LLAIZQ instrucciones LLADER 		   {  } /* <ID>():<TIPO>{ <INSTRUCCIONES>} */
-    | VARIABLE PARIZQ PARDER LLAIZQ instrucciones LLADER 						   {  } /* <ID>(){ <INSTRUCCIONES>} */
+metodos																										//*variable,param,tipo,ins, line, column
+    : VARIABLE PARIZQ parametros PARDER DOSPUNTOS VOID LLAIZQ instrucciones LLADER { $$ = new INSMetodo($1 ,$3, null, $8, @1.first_line, @1.first_column); } /* <ID>(<PARAMETROS>):<TIPO>{ <INSTRUCCIONES>} */
+    | VARIABLE PARIZQ parametros PARDER LLAIZQ instrucciones LLADER				   { $$ = new INSMetodo($1 ,$3, null, $6, @1.first_line, @1.first_column); } /* <ID>(<PARAMETROS>){ <INSTRUCCIONES>} */
+    | VARIABLE PARIZQ PARDER DOSPUNTOS VOID LLAIZQ instrucciones LLADER 		   { $$ = new INSMetodo($1 ,null, null, $7, @1.first_line, @1.first_column); } /* <ID>():<TIPO>{ <INSTRUCCIONES>} */
+    | VARIABLE PARIZQ PARDER LLAIZQ instrucciones LLADER 						   { $$ = new INSMetodo($1 ,null, null, $5, @1.first_line, @1.first_column); } /* <ID>(){ <INSTRUCCIONES>} */
 ;
 
 /*--------------------------------------  5.21 Llamadas  ----------------------------------*/
@@ -290,8 +291,8 @@ paramllamada
 ;
 
 parametros
-    :parametros COMA tipo VARIABLE  	{  }
-    |tipo VARIABLE                   	{  }
+    :parametros COMA tipo VARIABLE  	{ $$ = $1; $$.push(new Declarar($3, $4, null,  @1.first_line, @1.first_column)); }
+    |tipo VARIABLE                   	{ $$= [new Declarar($1, $2, null,  @1.first_line, @1.first_column)]; }
 ;
 /* ------------------------------------    IF    ------------------------------------ */
 instruccionif
