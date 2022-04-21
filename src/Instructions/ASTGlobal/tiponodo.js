@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Tipo = exports.isInt = exports.tipos = void 0;
 var tipos;
 (function (tipos) {
   //!   -----------------------       PARA TABLA DE SIMBOLOS      ----------------------------
@@ -79,20 +78,11 @@ var tipos;
   tipos[(tipos["CASTEO"] = 61)] = "CASTEO";
   tipos[(tipos["NATIVA"] = 62)] = "NATIVA";
 })((tipos = exports.tipos || (exports.tipos = {})));
-// por si es un entero o un decimal
-function isInt(numero) {
-  if (numero % 1 == 0) {
-    return tipos.ENTERO;
-  } else {
-    return tipos.DOUBLE;
-  }
-}
-exports.isInt = isInt;
-var Tipo = /** @class */ (function () {
-  function Tipo(tipo) {
-    this.tipo = tipo;
-  }
-  Tipo.prototype.toString = function () {
+class Tipo {
+    constructor(tipo) {
+        this.tipo = tipo;
+    }
+    toString() {
     if (this.tipo === tipos.DECLARACION) {
       return "declaracion";
     } else if (this.tipo === tipos.ASIGNACION) {
@@ -220,7 +210,6 @@ var Tipo = /** @class */ (function () {
     } else if (this.tipo === tipos.NATIVA) {
       return "nativa";
     }
-  };
-  return Tipo;
-})();
+  }
+}
 exports.Tipo = Tipo;

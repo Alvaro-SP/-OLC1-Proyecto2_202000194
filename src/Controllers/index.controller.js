@@ -24,7 +24,8 @@ exports.index = async(req, res) => {
 exports.analizar= async(req, res) => {
     console.log("▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬REQUEST▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
     console.log(req.body.codigo);
-    cadena = JSON.stringify(req.body.codigo);  //vere cual de los dos funcio
+    // cadena = JSON.stringify(req.body.codigo);  //vere cual de los dos funcio
+    cadena = req.body.codigo.toString()  //este jalo xdxd
     // const texto = req.body.text;
     // console.log("1. Cadena de Entrada (el codigo): " + texto);
     console.log("2. Cadena de Entrada (el codigo): " + cadena);

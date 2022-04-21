@@ -12,12 +12,12 @@
     const {Asignar} = require('../Instructions/Asignar');
     const {Declarar} = require('../Instructions/Declarar');
     const {INSCastear} = require('../Instructions/INSCastear');
-    const {INSPrimitivo} = require('../Instructions/INSPrimitivo');
+    const {INSPrimitivo} = require('../Instructions/INSPrimitivos');
     const {INSid} = require('../Instructions/id');
     const {INSincredecre} = require('../Instructions/INSincredecre');
     const {INSreturn} = require('../Instructions/return');
     const {INSllamada} = require('../Instructions/llamar');
-    const {INSMetodo} = require('../Instructions/metodo');
+    const {INSMetodo} = require('../Instructions/metodos');
 
 	//SENTENCIAS
     const {INSif} = require('../Instructions/INSif');
@@ -29,9 +29,11 @@
 	//pauses
 	const {INSBreak} = require('../Instructions/break');
 	const {INSContinue} = require('../Instructions/break');
+	const Tipo = require("../Instructions/ASTGlobal/tiponodo");
+	const tipos = require("../Instructions/ASTGlobal/tiponodo");
 	var sintacticerror = "";
 	var acumoftext="";
-	var arbolINSERRORES = new aInstructionAST.InstructionAST();//por si hay errores
+	var arbolINSERRORES = new InstructionAST.InstructionAST();//por si hay errores
 	// var MiArbolAST = new InstructionAST();
 %}
 
@@ -216,7 +218,7 @@ relacionales. */
 %%
  /* ======================Definición de la gramatica==================== */
 ini
-	: instrucciones EOF		{  $$ = new MiArbolAST($1); return $$;  }//here i gonna to save my AST 
+	: instrucciones EOF		{  $$ = new InstructionAST($1); return $$;  }//here i gonna to save my AST 
 	| error  			{ 	var sintacticerror="Detectado error Sintactico se esperaba otro valor y se recibio: "+$$+" reparelo.";
 							console.log('Este es un error sintactico: ' +$$ + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column);
 							// instruccionesAPI.getAST.error.push(instruccionesAPI.errorsintactico(sintacticerror,this._$.first_line,this._$.first_column));
