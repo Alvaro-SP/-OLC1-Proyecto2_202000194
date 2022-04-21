@@ -11,7 +11,7 @@ const nodoAST = require("./ASTGlobal/nodoAST");
 const INSRelacional = require('../Instructions/INSRelacional');
 const INSBreak = require('../Instructions/break');
 //! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬  5.21 Llamadas  ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
-class asignar {
+class Return {
     constructor(valor,  fila, column) {
         // this.variable = variable;
         this.valor = valor;
@@ -31,4 +31,4 @@ class asignar {
     }
 }
 
-exports.asignar = asignar;
+exports.Return = Return;

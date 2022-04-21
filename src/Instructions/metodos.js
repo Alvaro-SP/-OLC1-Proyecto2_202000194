@@ -4,6 +4,7 @@ exports.metodo = void 0;
 const nodo = require("./ASTGlobal/nodo");
 const Tipo = require("./ASTGlobal/tiponodo");
 const tipo = require("./ASTGlobal/tiponodo");
+const Simbolos = require("./simbolo/Simbolo");
 const Tablita = require("./TS/TablaSimbolos");
 const val = require("./val");
 const instruccionesAPI = require("../Interpreter/interprete").instruccionesAPI; //las instrucciones de la API
@@ -34,11 +35,19 @@ class metodo{
                 arbolIns.setError(instruccionesAPI.errorSemantico("No se ha encontrado el metodo " + this.variable + " se obtuvo null",this.line,this.column));
                 return new val(this.line,this.column,Tipo(tipo.ERROR),"No se ha encontrado el metodo " + this.variable + " se obtuvo null");
             }else{
-                //* ahora que ya se que no existe procedo a crearlo
+                //* ahora que ya se que no existe procedo a crear mi objeto parametro-instrucciones
                 var metodo=new objMetodos.objmetodo(this.param,this.ins);
                 //* si el tipo del metodo es null no se debe retornar nada
                 if(this.tipo == null){
-                    
+                    //*es unn metodo         (id, data, tipo,  fila, column)
+                    //! la agrego como un objeto simbolo
+                    var simbolo = new Simbolos.Simbolo(value,metodo,Tipo(tipo.METODO),this.line,this.column);
+                    table.insertar(simbolo);
+                }else{
+                    //! la agrego como un objeto simbolo
+                    var simbolo = new Simbolos.Simbolo(value,metodo,Tipo(tipo.FUNCION),this.line,this.column);
+                    //*es una funcion
+                    table.insertar(value,metodo,Tipo(tipo.FUNCION),this.line,this.column);
                 }
             }
         }
