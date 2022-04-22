@@ -46,18 +46,18 @@ class For {
                 iniciofor= this.fordeclarar.valor.valor
             }
             if(iniciofor != null || iniciofor != undefined || iniciofor != NaN || iniciofor != ""){
-                if(this.expre.tipo!=Tipo.tipos.INT){
+                if(this.expre.tipo!=Tipo.INT){
                     arbolIns.setError(instruccionesAPI.errorSemantico("En la asignacion del for debe existir una expresion ENTERA no de tipo: " +this.expre.tipo ,this.fila,this.column));
-                    return new val(this.fila,this.column,Tipo.tipos.ERROR,"(ERROR SEMANTICO) En la asignacion del for debe existir una expresion ENTERA no de tipo:  " +this.expre.tipo );
+                    return new val(this.fila,this.column,Tipo.ERROR,"(ERROR SEMANTICO) En la asignacion del for debe existir una expresion ENTERA no de tipo:  " +this.expre.tipo );
                 }else{
-                    if(finfor.tipo.tipo!==Tipo.tipos.BOOLEAN){
+                    if(finfor.tipo.tipo!==Tipo.BOOLEAN){
                         arbolIns.setError(instruccionesAPI.errorSemantico("En la expresion del for debe existir una expresion BOOLEANA no de tipo: " +finfor.tipo.tipo ,this.fila,this.column));
-                        return new val(this.fila,this.column,Tipo.tipos.ERROR,"(ERROR SEMANTICO) En la expresion del for debe existir una expresion BOOLEANA no de tipo:  " +finfor.tipo.tipo );
+                        return new val(this.fila,this.column,Tipo.ERROR,"(ERROR SEMANTICO) En la expresion del for debe existir una expresion BOOLEANA no de tipo:  " +finfor.tipo.tipo );
                     }else{
                         //si es entera
                         do{
                             respuesta = finfor.ejecutar(arbolIns, addtable);
-                            if (respuesta.tipo.tipo == Tipo.tipos.BOOLEAN) {
+                            if (respuesta.tipo.tipo == Tipo.BOOLEAN) {
                             if(this.ins!=null){
                                 if(respuesta){
                                 for(let i=0;i<this.ins.length;i++){
@@ -77,7 +77,7 @@ class For {
                             }
                             }else {
                             arbolIns.setError(instruccionesAPI.errorSemantico("En el while debe existir una condicion BOOLEANA no de tipo: " +respuesta.tipo ,this.fila,this.column));
-                            return new val(this.fila,this.column,Tipo.tipos.ERROR,"(ERROR SEMANTICO) En el while debe existir una condicion BOOLEANA no de tipo: " +respuesta.tipo );
+                            return new val(this.fila,this.column,Tipo.ERROR,"(ERROR SEMANTICO) En el while debe existir una condicion BOOLEANA no de tipo: " +respuesta.tipo );
                             }
                             this.actua.ejecutar(arbolIns, table);
                         }while(respuesta);
@@ -85,7 +85,7 @@ class For {
                 }
             }else{
                 arbolIns.setError(instruccionesAPI.errorSemantico("En la asignacion del for debe existir una expresion ENTERA no de tipo: " +this.expre.tipo ,this.fila,this.column));
-                return new val(this.fila,this.column,Tipo.tipos.ERROR,"(ERROR SEMANTICO) En la asignacion del for debe existir una expresion ENTERA no de tipo:  " +this.expre.tipo );
+                return new val(this.fila,this.column,Tipo.ERROR,"(ERROR SEMANTICO) En la asignacion del for debe existir una expresion ENTERA no de tipo:  " +this.expre.tipo );
             }
         }
     }

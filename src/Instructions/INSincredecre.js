@@ -40,14 +40,14 @@ class IncreoDecre {
                 return new val(
                   this.fila,
                   this.column,
-                  Tipo(tipo.ERROR),
+                  Tipo.ERROR,
                   "(ERROR SEMANTICO) op Invalido, revise que exista o que los tipos coincidan " +
                     value.tipo +
                     " y " +
                     value2.tipo
                 );
               }
-            } else if (value.tipo.tipo === Tipo.tipos.DOUBLE) {
+            } else if (value.tipo.tipo === Tipo.DOUBLE) {
               if (this.op === "INCREMENT") {
                 value.valor = value.valor + 1;
                 var tempvalue = table.getSimbol(this.id);
@@ -68,7 +68,7 @@ class IncreoDecre {
                 return new val(
                   this.line,
                   this.column,
-                  Tipo(tipo.ERROR),
+                  Tipo.ERROR,
                   "(ERROR SEMANTICO) No se puede aumentar/disminuir a una variable de tipo " +
                     value.tipo
                 );
@@ -85,7 +85,7 @@ class IncreoDecre {
               return new val(
                 this.line,
                 this.column,
-                Tipo(tipo.ERROR),
+                Tipo.ERROR,
                 "(ERROR SEMANTICO) No se puede aumentar/disminuir a una variable de tipo " +
                   value.tipo
               );
@@ -103,7 +103,7 @@ class IncreoDecre {
             return new val(
               this.line,
               this.column,
-              Tipo(tipo.ERROR),
+              Tipo.ERROR,
               "(ERROR SEMANTICO) La variable no existe osea no ha sido declarada " +
                 this.id
             );

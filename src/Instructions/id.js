@@ -27,7 +27,7 @@ class id {
       return new val(
         this.line,
         this.column,
-        Tipo(tipo.ERROR),
+        Tipo.ERROR,
         "No se ha encontrado la variable " + this.id + " se obtuvo null"
       );
     }

@@ -23,19 +23,19 @@ class ternario {
     ejecutar(arbolIns,table){
         var respuesta = this.condicion.ejecutar(arbolIns,table)
         var value= respuesta;
-        if(respuesta==null|| value==Tipo(tipo.VOID)|| value==Tipo(tipo.ERROR) || value==Tipo(tipo.BOOLEAN)){
-            return Tipo(tipo.ERROR);
+        if(respuesta==null|| value==Tipo.VOID|| value==Tipo.ERROR || value==Tipo.BOOLEAN){
+            return Tipo.ERROR;
         }else{
             if(value.valor){
                 var tempresponse= this.secumple.ejecutar(arbolIns,table);
-                if(tempresponse==Tipo(tipo.Error)){
-                    return Tipo(tipo.Error);
+                if(tempresponse==Tipo.ERROR){
+                    return Tipo.ERROR;
                 }
                 return tempresponse;
             }else{
                 var tempresponse = this.nosecumple.ejecutar(arbolIns, table);
-                if (tempresponse == Tipo(tipo.Error)) {
-                    return Tipo(tipo.Error);
+                if (tempresponse == Tipo.ERROR) {
+                    return Tipo.ERROR;
                 }
                 return tempresponse;
             }

@@ -29,19 +29,19 @@ class If {
     //* estructuras donde no se dependa o no se utilice las variables globalmente ccomo las 
     //* venia manejando con anterioridad.
     var respuesta = this.condicion.ejecutar(arbolIns, addtable);
-    if(respuesta==null|| respuesta==Tipo.tipos.VOID|| respuesta==Tipo.tipos.ERROR){
+    if(respuesta==null|| respuesta==Tipo.VOID|| respuesta==Tipo.ERROR){
         return null;
     }
     else{
         if(respuesta){
-            if (respuesta.tipo == Tipo.tipos.BOOLEANO) {
+            if (respuesta.tipo == Tipo.BOOLEANO) {
                 if (respuesta.valor) {// si es true:
                     for (let i = 0; i < this.dentroif.length; i++) {
                         //ejecuto cada instruccion dentro del if
                         this.dentroif[i].ejecutar(arbolIns, addtable);
                         //valido si tengo algun parametro que detenga mi sentencia
                         // break, continue, return
-                        if (this.dentroif[i].tipo === Tipo.tipos.BREAK || this.dentroif[i].tipo === Tipo.tipos.CONTINUE || this.dentroif[i].tipo === Tipo.tipos.RETURN) {
+                        if (this.dentroif[i].tipo === Tipo.BREAK || this.dentroif[i].tipo ===Tipo.CONTINUE || this.dentroif[i].tipo === Tipo.tipos.RETURN) {
                             return this.dentroif[i]
                         }
                     }
@@ -52,7 +52,7 @@ class If {
                             this.dentroelse[i].ejecutar(arbolIns, addtable);
                             //valido si tengo algun parametro que detenga mi sentencia
                             // break, continue, return
-                            if (this.dentroelse[i].tipo === Tipo.tipos.BREAK || this.dentroelse[i].tipo === Tipo.tipos.CONTINUE || this.dentroelse[i].tipo === Tipo.tipos.RETURN) {
+                            if (this.dentroelse[i].tipo === Tipo.BREAK || this.dentroelse[i].tipo ===Tipo.CONTINUE || this.dentroelse[i].tipo === Tipo.tipos.RETURN) {
                                 return this.dentroelse[i]
                             }
                         }
@@ -62,12 +62,12 @@ class If {
             }else{
                 //error
                 arbolIns.setError(instruccionesAPI.errorSemantico("En el if debe existir una condicion BOOLEANA no de tipo: " +respuesta.tipo ,this.fila,this.column));
-                return new val(this.fila,this.column,Tipo.tipos.ERROR,"(ERROR SEMANTICO) En el if debe existir una condicion BOOLEANA no de tipo: " +respuesta.tipo );
+                return new val(this.fila,this.column,Tipo.ERROR,"(ERROR SEMANTICO) En el if debe existir una condicion BOOLEANA no de tipo: " +respuesta.tipo );
             }
         }else{
             //error
             arbolIns.setError(instruccionesAPI.errorSemantico("Error al obtener la condicion " +respuesta,this.fila,this.column));
-            return new val(this.fila,this.column,Tipo.tipos.ERROR,"(ERROR SEMANTICO) Error al obtener la condicion" +respuesta) ;
+            return new val(this.fila,this.column,Tipo.ERROR,"(ERROR SEMANTICO) Error al obtener la condicion" +respuesta) ;
         }
     }
   }

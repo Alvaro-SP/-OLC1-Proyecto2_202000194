@@ -415,12 +415,12 @@ expresion																				/*aqui es UNARIA XD*/
 	
 	| PARA tipo PARC expresion								{ $$ = new INSCastear($2, $4, @1.first_line, @1.first_column); } /* (int) 18.6*//*(<TIPO>) <EXPRESION>*/
 	| VARIABLE                      						{ $$ = new INSid($1, @1.first_line, @1.first_column); }
-	| VENTERO                      							{ $$ = new INSPrimitivo(new Tipo(tipos.INT), Number($1), @1.first_line, @1.first_column); }
-	| VDOUBLE                       						{ $$ = new INSPrimitivo(new Tipo(tipos.DOUBLE), Number($1), @1.first_line, @1.first_column); }
-	| CADENA												{ $$ = new INSPrimitivo(new Tipo(tipos.STRING), $1, @1.first_line, @1.first_column); }
-	| VCARACTER		 										{ $$ = new INSPrimitivo(new Tipo(tipos.CARACTER), $1, @1.first_line, @1.first_column); }
-	| TRUE                       							{ $$ = new INSPrimitivo(new Tipo(tipos.BOOLEAN), true, @1.first_line, @1.first_column); }
-	| FALSE                       							{ $$ = new INSPrimitivo(new Tipo(tipos.BOOLEAN), false, @1.first_line, @1.first_column); }
+	| VENTERO                      							{ $$ = new INSPrimitivo(Tipo.INT, Number($1), @1.first_line, @1.first_column); }
+	| VDOUBLE                       						{ $$ = new INSPrimitivo(Tipo.DOUBLE, Number($1), @1.first_line, @1.first_column); }
+	| CADENA												{ $$ = new INSPrimitivo(Tipo.STRING, $1, @1.first_line, @1.first_column); }
+	| VCARACTER		 										{ $$ = new INSPrimitivo(Tipo.CARACTER, $1, @1.first_line, @1.first_column); }
+	| TRUE                       							{ $$ = new INSPrimitivo(Tipo.BOOLEAN, true, @1.first_line, @1.first_column); }
+	| FALSE                       							{ $$ = new INSPrimitivo(Tipo.BOOLEAN, false, @1.first_line, @1.first_column); }
 	| PARIZQ expresion PARDER       						{ $$ = $2; }
 	// | VARIABLE MAS MAS 										{  } /* anio-- */
 	// | VARIABLE MENOS MENOS 									{  } /* edad-- */
@@ -447,12 +447,12 @@ listavalores
 ;
 /* ------------------------------------    TIPOS    ------------------------------------ */
 tipo
-	:ENTERO       	{ $$ = new Tipo(tipos.INT); }
-	|DOUBLE       	{ $$ = new Tipo(tipos.DOUBLE); }
-	|BOOLEANO     	{ $$ = new Tipo(tipos.BOOLEAN); }
-	|CARACTER    	{ $$ = new Tipo(tipos.CARACTER); }
-	|STRING        	{ $$ = new Tipo(tipos.STRING); }
-	|VOID           { $$ = new Tipo(tipos.VOID); }
+	:ENTERO       	{ $$ = Tipo.INT; }
+	|DOUBLE       	{ $$ = Tipo.DOUBLE; }
+	|BOOLEANO     	{ $$ = Tipo.BOOLEAN; }
+	|CARACTER    	{ $$ = Tipo.CARACTER; }
+	|STRING        	{ $$ = Tipo.STRING; }
+	|VOID           { $$ = Tipo.VOID; }
 ;
 
 

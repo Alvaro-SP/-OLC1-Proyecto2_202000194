@@ -26,14 +26,14 @@ class metodo{
         value=this.variable.toString()
         if(value==null){
             arbolIns.setError(instruccionesAPI.errorSemantico("No se ha encontrado la variable " + this.variable + " se obtuvo null",this.line,this.column));
-            return new val(this.line,this.column,Tipo(tipo.ERROR),"No se ha encontrado la variable " + this.variable + " se obtuvo null");
+            return new val(this.line,this.column,Tipo.ERROR,"No se ha encontrado la variable " + this.variable + " se obtuvo null");
         }else{
             value+="_M2412"// mi id que se le asigna a todos los metodos :)
             //* verifico que el metodo no exista en la tabla de simbolos
             var metodo=table.getSimbol(value);
             if(metodo!=null){
                 arbolIns.setError(instruccionesAPI.errorSemantico("No se ha encontrado el metodo " + this.variable + " se obtuvo null",this.line,this.column));
-                return new val(this.line,this.column,Tipo(tipo.ERROR),"No se ha encontrado el metodo " + this.variable + " se obtuvo null");
+                return new val(this.line,this.column,Tipo.ERROR,"No se ha encontrado el metodo " + this.variable + " se obtuvo null");
             }else{
                 //* ahora que ya se que no existe procedo a crear mi objeto parametro-instrucciones
                 var metodo=new objMetodos.objmetodo(this.param,this.ins);
@@ -41,7 +41,7 @@ class metodo{
                 if(this.tipo == null){
                     //*es unn metodo         (id, data, tipo,  fila, column)
                     //! la agrego como un objeto simbolo
-                    var simbolo = new Simbolos.Simbolo(value,metodo,Tipo(tipo.METODO),this.line,this.column);
+                    var simbolo = new Simbolos.Simbolo(value,metodo,Tipo.METODO,this.line,this.column);
                     table.insertar(simbolo);
                 }else{
                     //! la agrego como un objeto simbolo

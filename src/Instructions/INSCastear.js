@@ -25,12 +25,12 @@ class castear {
         //? • Int a double
         //? • Int a String
         //? • Int a Char
-      if (value.tipo === Tipo(tipo.INT)) {
-        if (this.tipo.tipo === Tipo(tipo.DOUBLE)) {
+      if (value.tipo === Tipo.INT) {
+        if (this.tipo.tipo === Tipo.DOUBLE) {
           return value.valor;
-        } else if (this.tipo === Tipo(tipo.STRING)) {
+        } else if (this.tipo === Tipo.STRING) {
           return value.valor.toString();
-        } else if (this.tipo === Tipo(tipo.CARACTER)) {
+        } else if (this.tipo === Tipo.CARACTER) {
           return String.fromCharCode(value.valor);
         } else {
           arbolIns.setError(
@@ -46,7 +46,7 @@ class castear {
           return new val(
             this.fila,
             this.column,
-            Tipo(tipo.ERROR),
+            Tipo.ERROR,
             "No se puede CASTEAR el tipo de expresion " +
               value.tipo +
               " con valor: " +
@@ -55,10 +55,10 @@ class castear {
         }
       } //? • Double a Int
         //? • Double a String
-      else if (value.tipo === Tipo(tipo.DOUBLE)) {
-        if (this.tipo.tipo === Tipo(tipo.INT)) {
+      else if (value.tipo === Tipo.DOUBLE) {
+        if (this.tipo.tipo === Tipo.INT) {
           return Math.trunc(value.valor);
-        } else if (this.tipo.tipo === Tipo(tipo.STRING)) {
+        } else if (this.tipo.tipo === Tipo.STRING) {
           return value.valor.toString();
         } else {
           arbolIns.setError(
@@ -74,7 +74,7 @@ class castear {
           return new val(
             this.fila,
             this.column,
-            Tipo(tipo.ERROR),
+            Tipo.ERROR,
             "No se puede CASTEAR el tipo de expresion " +
               value.tipo +
               " con valor: " +
@@ -83,10 +83,10 @@ class castear {
         }
       } //? • Char a int
       //? • Char a double
-      else if (value.tipo === Tipo(tipo.CARACTER)) {
-        if (this.tipo.tipo === Tipo(tipo.INT)) {
+      else if (value.tipo === Tipo.CARACTER) {
+        if (this.tipo.tipo === Tipo.INT) {
           return resultado.charCodeAt(0);
-        } else if (this.tipo.tipo === Tipo(tipo.DOUBLE)) {
+        } else if (this.tipo.tipo === Tipo.DOUBLE) {
           return resultado.charCodeAt(0);
         } else {
           arbolIns.setError(
@@ -99,7 +99,7 @@ class castear {
           return new val(
             this.fila,
             this.column,
-            Tipo(tipo.ERROR),
+            Tipo.ERROR,
             "No se puede CASTEAR el tipo de expresion "+value.tipo+ " con valor: "+ value.valor
           );
         }

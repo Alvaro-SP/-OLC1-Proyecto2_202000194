@@ -31,19 +31,19 @@ class llamada {
         var funcion = table.getSimbol(this.variable.id);
         if (funcion == null) {
             arbolIns.setError(instruccionesAPI.errorSemantico("No se ha encontrado la funcion " + this.variable.id, this.fila, this.column));
-            return new val(this.fila, this.column, Tipo(tipo.ERROR), "No se ha encontrado la funcion " + this.variable.id);
+            return new val(this.fila, this.column, Tipo.ERROR, "No se ha encontrado la funcion " + this.variable.id);
         }else{
             //* si la funcion existe debo verificar que el numero de parametros sea el mismo
             if (this.parametros.length != funcion.data.metodo.parametros.length) {
                 arbolIns.setError(instruccionesAPI.errorSemantico("El numero de parametros no es el mismo", this.fila, this.column));
-                return new val(this.fila, this.column, Tipo(tipo.ERROR), "El numero de parametros no es el mismo");
+                return new val(this.fila, this.column, Tipo.ERROR, "El numero de parametros no es el mismo");
             }else{
                 //* si el numero de parametros es el mismo debo verificar que los tipos de los parametros
                 //* sean los mismos
                 for (let i = 0; i < this.parametros.length; i++) {
                     if (this.parametros[i].tipo != funcion.data.metodo.parametros[i].tipo) {
                         arbolIns.setError(instruccionesAPI.errorSemantico("Los tipos de los parametros no son los mismos"+this.parametros[i].tipo +" y "+funcion.parametros[i].tipo, this.fila, this.column));
-                        return new val(this.fila, this.column, Tipo(tipo.ERROR), "Los tipos de los parametros no son los mismos"+this.parametros[i].tipo +" y "+funcion.parametros[i].tipo);
+                        return new val(this.fila, this.column, Tipo.ERROR, "Los tipos de los parametros no son los mismos"+this.parametros[i].tipo +" y "+funcion.parametros[i].tipo);
                     }
                     var parametro = this.parametros[i].ejecutar(arbolIns, table);
                 }
@@ -74,18 +74,18 @@ class llamada {
                                     if(funcion.tipo.tipo===respuesta2.valor.tipo){
                                         return respuesta2.newvalor;
                                     }else{
-                                        if (funcion.tipo.tipo == Tipo.tipos.DOUBLE && (respuesta2.valor.tipo.tipo == Tipo.tipos.INT)) {
+                                        if (funcion.tipo.tipo == Tipo.DOUBLE && (respuesta2.valor.tipo.tipo == Tipo.INT)) {
                                             return respuesta2.newvalor;
                                         }
                                         arbolIns.setError(instruccionesAPI.errorSemantico("El tipo de retorno y el de la funcion no son iguales tipo funcion:"+funcion.tipo.tipo+" y tipo del retorno: "+respuesta2.valor.tipo.tipo ,this.line,this.column));
-                                        return new val(this.line,this.column,Tipo(tipo.ERROR),"(ERROR SEMANTICO) El tipo de retorno y el de la funcion no son iguales tipo funcion:"+funcion.tipo.tipo+" y tipo del retorno: "+respuesta2.valor.tipo.tipo);
+                                        return new val(this.line,this.column,Tipo.ERROR,"(ERROR SEMANTICO) El tipo de retorno y el de la funcion no son iguales tipo funcion:"+funcion.tipo.tipo+" y tipo del retorno: "+respuesta2.valor.tipo.tipo);
                                     }
                                 }
                             }
                             //! falta retornos
                         } catch (error) {
                             arbolIns.setError(instruccionesAPI.errorSemantico("Error semantico dentro del metodo: "+this.variable.id,this.line,this.column));
-                            return new val(this.line,this.column,Tipo(tipo.ERROR),"Error semantico dentro del metodo: "+this.variable.id);
+                            return new val(this.line,this.column,Tipo.ERROR,"Error semantico dentro del metodo: "+this.variable.id);
                             // console.log(error);
                         }
                     }

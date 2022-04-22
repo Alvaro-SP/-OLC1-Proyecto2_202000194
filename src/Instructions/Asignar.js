@@ -28,7 +28,7 @@ ejecutar(arbolIns, table) {
         for (let i = 0; i < this.variable.length; i++) {
             
             //! Primero verifico de que no de ningun tipo de errores la EJECUCION
-            if (value.valor != Tipo(tipo.ERROR)) {
+            if (value.valor != Tipo.ERROR) {
                 //! Busco en mi lista Simbolos el valor para saber el tipo a asignar.
                 var tipoasignar = Tablita.TablaSimbolos().getSimbol(this.variable[i]); // envio el nombre de la variable
 
@@ -37,34 +37,34 @@ ejecutar(arbolIns, table) {
                 //* si lo encontro entonces asigno su tipo correspondiente:
                 if (tipoasignar != null) {
                     //! procedo a agregar valores por defecto.
-                    if (tipoasignar.tipo == Tipo(tipo.INT)) {
-                    this.valor = new val(this.fila, this.column, Tipo(tipo.INT), 0);
-                    } else if (tipoasignar.tipo == Tipo(tipo.DOUBLE)) {
+                    if (tipoasignar.tipo == Tipo.INT) {
+                    this.valor = new val(this.fila, this.column, Tipo.INT, 0);
+                    } else if (tipoasignar.tipo == Tipo.DOUBLE) {
                     this.valor = new val(
                         this.fila,
                         this.column,
-                        Tipo(tipo.DOUBLE),
+                        Tipo.DOUBLE,
                         0.0
                     );
-                    } else if (tipoasignar.tipo == Tipo(tipo.BOOLEAN)) {
+                    } else if (tipoasignar.tipo == Tipo.BOOLEAN) {
                     this.valor = new val(
                         this.fila,
                         this.column,
-                        Tipo(tipo.BOOLEAN),
+                        Tipo.BOOLEAN,
                         true
                     );
-                    } else if (tipoasignar.tipo == Tipo(tipo.CARACTER)) {
+                    } else if (tipoasignar.tipo == Tipo.CARACTER) {
                     this.valor = new val(
                         this.fila,
                         this.column,
-                        Tipo(tipo.CARACTER),
+                        Tipo.CARACTER,
                         ""
                     );
-                    } else if (tipoasignar.tipo == Tipo(tipo.STRING)) {
+                    } else if (tipoasignar.tipo == Tipo.STRING) {
                     this.valor = new val(
                         this.fila,
                         this.column,
-                        Tipo(tipo.STRING),
+                        Tipo.STRING,
                         ""
                     );
                     }
@@ -82,7 +82,7 @@ ejecutar(arbolIns, table) {
                     return new val(
                     this.fila,
                     this.column,
-                    Tipo(tipo.ERROR),
+                    Tipo.ERROR,
                     "(ERROR SEMANTICO) La variable no ha sido declarada " +
                         tipoasignar.tipo
                     );
@@ -115,7 +115,7 @@ ejecutar(arbolIns, table) {
     }//* sino entonces voy a asignar una variable normalmente.
     else{
       //! Primero verifico de que no de ningun tipo de errores la EJECUCION
-        if (value.valor != Tipo(tipo.ERROR)) {
+        if (value.valor != Tipo.ERROR) {
             //! Busco en mi lista Simbolos el valor para saber el tipo a asignar.
             var tipoasignar = Tablita.TablaSimbolos().getSimbol(this.variable); // envio el nombre de la variable
 
@@ -124,34 +124,34 @@ ejecutar(arbolIns, table) {
             //* si lo encontro entonces asigno su tipo correspondiente:
             if (tipoasignar != null) {
                 //! procedo a agregar valores por defecto.
-                if (tipoasignar.tipo == Tipo(tipo.INT)) {
-                this.valor = new val(this.fila, this.column, Tipo(tipo.INT), 0);
-                } else if (tipoasignar.tipo == Tipo(tipo.DOUBLE)) {
+                if (tipoasignar.tipo == Tipo.INT) {
+                this.valor = new val(this.fila, this.column, Tipo.INT, 0);
+                } else if (tipoasignar.tipo == Tipo.DOUBLE) {
                 this.valor = new val(
                     this.fila,
                     this.column,
-                    Tipo(tipo.DOUBLE),
+                    Tipo.DOUBLE,
                     0.0
                 );
-                } else if (tipoasignar.tipo == Tipo(tipo.BOOLEAN)) {
+                } else if (tipoasignar.tipo == Tipo.BOOLEAN) {
                 this.valor = new val(
                     this.fila,
                     this.column,
-                    Tipo(tipo.BOOLEAN),
+                    Tipo.BOOLEAN,
                     true
                 );
-                } else if (tipoasignar.tipo == Tipo(tipo.CARACTER)) {
+                } else if (tipoasignar.tipo == Tipo.CARACTER) {
                 this.valor = new val(
                     this.fila,
                     this.column,
-                    Tipo(tipo.CARACTER),
+                    Tipo.CARACTER,
                     ""
                 );
-                } else if (tipoasignar.tipo == Tipo(tipo.STRING)) {
+                } else if (tipoasignar.tipo == Tipo.STRING) {
                 this.valor = new val(
                     this.fila,
                     this.column,
-                    Tipo(tipo.STRING),
+                    Tipo.STRING,
                     ""
                 );
                 }
@@ -169,7 +169,7 @@ ejecutar(arbolIns, table) {
                 return new val(
                 this.fila,
                 this.column,
-                Tipo(tipo.ERROR),
+                Tipo.ERROR,
                 "(ERROR SEMANTICO) La variable no ha sido declarada " +
                     tipoasignar.tipo
                 );

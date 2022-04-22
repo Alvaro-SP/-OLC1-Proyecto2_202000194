@@ -25,11 +25,11 @@ class logico {
         var value = valortemp;
         if (this.tipo == "NOT") {
           // ? si mi operador es de tipo BOOLEANO entonces si podre operar sino error.
-          if (value.tipo == Tipo(tipo.BOOLEAN)) {
+          if (value.tipo == Tipo.BOOLEAN) {
             return new val(
               this.fila,
               this.column,
-              Tipo(tipo.BOOLEAN),
+              Tipo.BOOLEAN,
               value.valor || value2.valor
             );
           } else {
@@ -43,7 +43,7 @@ class logico {
             return new val(
               this.fila,
               this.column,
-              Tipo(tipo.ERROR),
+              Tipo.ERROR,
               "(ERROR SEMANTICO) No se puede operar ! el tipo de Operador " +
                 value.tipo +
                 " y " +
@@ -61,7 +61,7 @@ class logico {
           return new val(
             this.fila,
             this.column,
-            Tipo(tipo.ERROR),
+            Tipo.ERROR,
             "(ERROR SEMANTICO) No se puede operar ! el tipo de Operador " +
               value.tipo +
               " y " +
@@ -74,12 +74,12 @@ class logico {
         let valortemp2 = this.expIzq.ejecutar(arbolIns, table);
         var value = valortemp;  
         var value2 = valortemp2;
-        if (value.tipo != Tipo(tipo.ERROR) && value2.tipo != Tipo(tipo.ERROR)) {
+        if (value.tipo != Tipo.ERROR && value2.tipo != Tipo.ERROR) {
           //! **********************     SI ES UN AND:  ***********************************
           if (this.tipo == "AND") {
             if (
-              value.tipo == Tipo(tipo.BOOLEAN) &&
-              value2.tipo == Tipo(tipo.BOOLEAN)
+              value.tipo == Tipo.BOOLEAN &&
+              value2.tipo == Tipo.BOOLEAN
             ) {
               return value.valor && value2.valor;
             } else {
@@ -96,7 +96,7 @@ class logico {
               return new val(
                 this.fila,
                 this.column,
-                Tipo(tipo.ERROR),
+                Tipo.ERROR,
                 "&& (ERROR SEMANTICO) No se puede operar los tipos " +
                   value.tipo +
                   " y " +
@@ -107,8 +107,8 @@ class logico {
           //! **********************     SI ES UN OR:  ***********************************
           else if (this.tipo == "OR") {
             if (
-              value.tipo == Tipo(tipo.BOOLEAN) &&
-              value2.tipo == Tipo(tipo.BOOLEAN)
+              value.tipo == Tipo.BOOLEAN &&
+              value2.tipo == Tipo.BOOLEAN
             ) {
               return value.valor || value2.valor;
             } else {
@@ -125,7 +125,7 @@ class logico {
               return new val(
                 this.fila,
                 this.column,
-                Tipo(tipo.ERROR),
+                Tipo.ERROR,
                 " || (ERROR SEMANTICO) No se puede operar los tipos " +
                   value.tipo +
                   " y " +
@@ -146,7 +146,7 @@ class logico {
             return new val(
               this.fila,
               this.column,
-              Tipo(tipo.ERROR),
+              Tipo.ERROR,
               "(ERROR SEMANTICO) Operador Invalido, revise que exista o que los tipos coincidan " +
                 value.tipo +
                 " y " +
@@ -167,7 +167,7 @@ class logico {
           return new val(
             this.fila,
             this.column,
-            Tipo(tipo.ERROR),
+            Tipo.ERROR,
             "(ERROR SEMANTICO) Operadores alguna es nula o invalida para operar, verifique eso. " +
               value.tipo +
               " y " +

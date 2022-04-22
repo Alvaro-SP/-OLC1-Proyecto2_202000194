@@ -27,16 +27,16 @@ class declarar {
             let valortemp = this.valor.ejecutar(arbolIns, table);
             var value = valortemp;
             //! Primero verifico de que no de ningun tipo de errores la EJECUCION
-            if (value.valor != Tipo(tipo.ERROR)) {
+            if (value.valor != Tipo.ERROR) {
               //! si o si el tipo del valor debe ser igual al tipo del la ejecucion.
               if (this.valor.tipo != this.tipo) {
                 //! verifico si el tipo del valor es un double o entero y es del mismo tipo que el tipo de la declaracion
                 if (
-                  this.tipo == Tipo(tipo.DOUBLE) &&
-                  (this.valor.tipo == Tipo(tipo.DOUBLE) ||
-                    this.valor.tipo == Tipo(tipo.INT))
+                  this.tipo == Tipo.DOUBLE &&
+                  (this.valor.tipo == Tipo.DOUBLE ||
+                    this.valor.tipo == Tipo.INT)
                 ) {
-                  this.valor.tipo = Tipo(tipo.DOUBLE); // por defecto asigno el double
+                  this.valor.tipo = Tipo.DOUBLE; // por defecto asigno el double
                 } //! ahora sino, asigno ERROR SEMANTICO
                 else {
                   arbolIns.setError(
@@ -50,7 +50,7 @@ class declarar {
                   return new val(
                     this.fila,
                     this.column,
-                    Tipo(tipo.ERROR),
+                    Tipo.ERROR,
                     "No se puede Declarar la variable (tipo incompatible), de tipo  " +
                       value.tipo
                   );
@@ -73,39 +73,39 @@ class declarar {
             //! si no hay una expresion ENTONCES se DECLARA una variable
             //! sin ningun tipo de valor  (VALORES POR DEFECTO).
             if (this.valor.valor == null) {
-              if (this.tipo == Tipo(tipo.INT)) {
+              if (this.tipo == Tipo.INT) {
                 this.valor.valor = new val(
                   this.fila,
                   this.column,
-                  Tipo(tipo.INT),
+                  Tipo.INT,
                   0
                 );
-              } else if (this.tipo == Tipo(tipo.DOUBLE)) {
+              } else if (this.tipo == Tipo.DOUBLE) {
                 this.valor.valor = new val(
                   this.fila,
                   this.column,
-                  Tipo(tipo.DOUBLE),
+                  Tipo.DOUBLE,
                   0.0
                 );
-              } else if (this.tipo == Tipo(tipo.BOOLEAN)) {
+              } else if (this.tipo == Tipo.BOOLEAN) {
                 this.valor.valor = new val(
                   this.fila,
                   this.column,
-                  Tipo(tipo.BOOLEAN),
+                  Tipo.BOOLEAN,
                   true
                 );
-              } else if (this.tipo == Tipo(tipo.CARACTER)) {
+              } else if (this.tipo == Tipo.CARACTER) {
                 this.valor.valor = new val(
                   this.fila,
                   this.column,
-                  Tipo(tipo.CARACTER),
+                  Tipo.CARACTER,
                   ""
                 );
-              } else if (this.tipo == Tipo(tipo.STRING)) {
+              } else if (this.tipo == Tipo.STRING) {
                 this.valor.valor = new val(
                   this.fila,
                   this.column,
-                  Tipo(tipo.STRING),
+                  Tipo.STRING,
                   ""
                 );
               }
@@ -130,16 +130,16 @@ class declarar {
           let valortemp = this.valor.ejecutar(arbolIns, table);
           var value = valortemp;
           //! Primero verifico de que no de ningun tipo de errores la EJECUCION
-          if (value.valor != Tipo(tipo.ERROR)) {
+          if (value.valor != Tipo.ERROR) {
             //! si o si el tipo del valor debe ser igual al tipo del la ejecucion.
             if (this.valor.tipo != this.tipo) {
               //! verifico si el tipo del valor es un double o entero y es del mismo tipo que el tipo de la declaracion
               if (
-                this.tipo == Tipo(tipo.DOUBLE) &&
-                (this.valor.tipo == Tipo(tipo.DOUBLE) ||
-                  this.valor.tipo == Tipo(tipo.INT))
+                this.tipo == Tipo.DOUBLE &&
+                (this.valor.tipo == Tipo.DOUBLE ||
+                  this.valor.tipo == Tipo.INT)
               ) {
-                this.valor.tipo = Tipo(tipo.DOUBLE); // por defecto asigno el double
+                this.valor.tipo = Tipo.DOUBLE; // por defecto asigno el double
               } //! ahora sino, asigno ERROR SEMANTICO
               else {
                 arbolIns.setError(
@@ -153,7 +153,7 @@ class declarar {
                 return new val(
                   this.fila,
                   this.column,
-                  Tipo(tipo.ERROR),
+                  Tipo.ERROR,
                   "No se puede Declarar la variable (tipo incompatible), de tipo  " +
                     value.tipo
                 );
@@ -176,39 +176,39 @@ class declarar {
           //! si no hay una expresion ENTONCES se DECLARA una variable
           //! sin ningun tipo de valor  (VALORES POR DEFECTO).
           if (this.valor.valor == null) {
-            if (this.tipo == Tipo(tipo.INT)) {
+            if (this.tipo == Tipo.INT) {
               this.valor.valor = new val(
                 this.fila,
                 this.column,
-                Tipo(tipo.INT),
+                Tipo.INT,
                 0
               );
-            } else if (this.tipo == Tipo(tipo.DOUBLE)) {
+            } else if (this.tipo == Tipo.DOUBLE) {
               this.valor.valor = new val(
                 this.fila,
                 this.column,
-                Tipo(tipo.DOUBLE),
+                Tipo.DOUBLE,
                 0.0
               );
-            } else if (this.tipo == Tipo(tipo.BOOLEAN)) {
+            } else if (this.tipo == Tipo.BOOLEAN) {
               this.valor.valor = new val(
                 this.fila,
                 this.column,
-                Tipo(tipo.BOOLEAN),
+                Tipo.BOOLEAN,
                 true
               );
-            } else if (this.tipo == Tipo(tipo.CARACTER)) {
+            } else if (this.tipo == Tipo.CARACTER) {
               this.valor.valor = new val(
                 this.fila,
                 this.column,
-                Tipo(tipo.CARACTER),
+                Tipo.CARACTER,
                 ""
               );
-            } else if (this.tipo == Tipo(tipo.STRING)) {
+            } else if (this.tipo == Tipo.STRING) {
               this.valor.valor = new val(
                 this.fila,
                 this.column,
-                Tipo(tipo.STRING),
+                Tipo.STRING,
                 ""
               );
             }

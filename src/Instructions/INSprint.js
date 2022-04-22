@@ -20,14 +20,14 @@ class print extends nodo.nodo {
         if(this.data != null){
         }
         else{
-            this.data = new val( line, column, Tipo(tipo.VOID),' ')
+            this.data = new val( line, column, Tipo.VOID,' ')
         }
     }
     ejecutar(arbolIns, table){
         // Using recursivity i gonna to execute my methods for to show in console
         let valortemp = this.data.ejecutar(arbolIns, table);
         var value = valortemp;
-        if(value != Tipo(tipo.ERROR)){
+        if(value != Tipo.ERROR){
             if (this.isln) {
                 arbolIns.console.push(value+'\n'); // add value to console
             } else {

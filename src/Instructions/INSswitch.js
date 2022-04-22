@@ -38,13 +38,13 @@ class Switch {
             var otrocase = this.cases[i].ejecutar(arbolIns, addtable);
                                             // new INSRelacional($1, $3, 'IGUAL',  @1.first_line, @1.first_column);
             var respuestacondi = new INSRelacional.relacional(this.condicion, otrocase.condicion, 'IGUAL', this.line, this.column);
-            if (respuestacondi.tipo.tipo == Tipo.tipos.BOOLEANO) {
+            if (respuestacondi.tipo.tipo == Tipo.BOOLEANO) {
                 //* si al ejecutar la condicion relacional se tiene un true entonces se
                 //* debe recorrer cada una de las sentencias dentro de las otras instrucciones del case
                 if (respuestacondi.ejecutar(arbolIns, addtable) || !seejecuto) {
                     for (let i = 0; i < otrocase.ins.length; i++) {
                         const respuestacondi2 = otrocase.ins[i].ejecutar(arbolIns, addtable);
-                        if(respuestacondi2==null || respuestacondi2.tipo.tipo == Tipo.tipos.BREAK || respuestacondi2 instanceof INSBreak.Break){
+                        if(respuestacondi2==null || respuestacondi2.tipo.tipo == Tipo.BREAK || respuestacondi2 instanceof INSBreak.Break){
                             return null;
                         }
                     }
@@ -59,7 +59,7 @@ class Switch {
     if(this.def!= null){
         for(let i = 0; i < this.def.length; i++){
             const respuestacondidef = this.def[i].ejecutar(arbolIns, addtable);
-            if(respuestacondidef==null || respuestacondidef.tipo.tipo == Tipo.tipos.BREAK || respuestacondidef instanceof INSBreak.Break){
+            if(respuestacondidef==null || respuestacondidef.tipo.tipo == Tipo.BREAK || respuestacondidef instanceof INSBreak.Break){
                 return null;
             }
         }
