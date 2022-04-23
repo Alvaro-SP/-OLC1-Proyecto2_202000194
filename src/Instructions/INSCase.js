@@ -9,7 +9,7 @@ const Tablita = require("./TS/TablaSimbolos");
 const instruccionesAPI = require("../Interpreter/interprete").instruccionesAPI; //las instrucciones de la API
 const nodoAST = require("./ASTGlobal/nodoAST");
 
-class Case {
+class INSCase {
     constructor(condicion, ins, line, column) {
         this.condicion = condicion;
         this.ins = ins;
@@ -20,4 +20,4 @@ class Case {
         return this;//simplemente retorno este objeto Case
     }
 }
-exports.Case = Case;
+exports.INSCase = INSCase;

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Dowhile = void 0;
+exports.INSdowhile = void 0;
 const nodo = require("./ASTGlobal/nodo");
 const Tipo = require("./ASTGlobal/tiponodo");
 const tipo = require("./ASTGlobal/tiponodo");
@@ -8,11 +8,11 @@ const val = require("./val");
 const Tablita = require("./TS/TablaSimbolos");
 const instruccionesAPI = require("../Interpreter/interprete").instruccionesAPI; //las instrucciones de la API
 const nodoAST = require("./ASTGlobal/nodoAST");
-const {INSBreak} = require('../Instructions/break');
+const {INSBreak} = require('./Break');
 const {INSContinue} = require('../Instructions/continue');
 //! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬5.17 Sentencias cíclicas▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 // *5.17.3. Do-While
-class Dowhile {
+class INSdowhile {
   constructor(condicion, dentrowhile, fila, column) {
     this.condicion = condicion;
     this.dentrowhile = dentrowhile;
@@ -55,4 +55,4 @@ class Dowhile {
     return null;
   }
 }
-exports.Dowhile = Dowhile;
+exports.INSdowhile = INSdowhile;

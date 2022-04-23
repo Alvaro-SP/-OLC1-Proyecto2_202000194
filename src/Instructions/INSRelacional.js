@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.relacional = void 0;
+exports.INSRelacional = void 0;
 const nodo = require("./ASTGlobal/nodo");
 const Tipo = require("./ASTGlobal/tiponodo");
 const tipo = require("./ASTGlobal/tiponodo");
@@ -10,7 +10,7 @@ const nodoAST = require("./ASTGlobal/nodoAST");
 //! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬5.6 Operadores Relacionales▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 // *Son los símbolos que tienen como finalidad comparar expresiones, dando como resultado
 // *valores booleanos.
-class relacional {
+class INSRelacional {
   constructor(expDer, expIzq, tipo, fila, column) {
     this.expDer = expDer;
     this.expIzq = expIzq;
@@ -1633,4 +1633,4 @@ class relacional {
     }
   }
 }
-exports.relacional = relacional;
+exports.INSRelacional = INSRelacional;

@@ -1,5 +1,12 @@
+
 import React, { Fragment, useEffect, useState } from "react";
+import { Image } from 'semantic-ui-react'
 import "./style2.css";
+// import Graph from "react-graph-vis";
+import "./styles.css";
+// need to import the vis network css in order to show tooltip
+import "./network.css";
+import "./vis-network.min.js";
 const API = "http://localhost:4000";
 
 export const Arbol = (props) => {
@@ -12,7 +19,39 @@ export const Arbol = (props) => {
   //   var svg = Viz(data, "svg");
   //   svg_div.html("<hr>" + svg);
   // }
-  
+  function Graficar(dotgen) {
+    //create a network
+  var container = document.getElementById("mynetwork");
+  var DOTstring = dotgen
+
+  var DOTstring = "{1_Alvaro [label = \"Estructuras\nHola\nPrueba\nsocop2412@gmail.com\"];\n 1_Alvaro--2_Alvaro;2_Alvaro--3_Alvaro;}"
+
+  console.log(DOTstring)
+  var parsedData = vis.parseDOTNetwork(DOTstring);
+  var data = {
+      nodes: parsedData.nodes,
+      edges: parsedData.edges
+  }
+  var options = {
+      nodes: {
+          shape: 'box',
+          borderWidth: 2,
+          color:"yellow",
+      },
+      layout: {
+          hierarchical: {
+              levelSeparation: 150,
+              nodeSpacing: 170,
+              parentCentralization: false,
+              direction: 'UD',        // UD, DU, LR, RL
+              sortMethod: 'directed',  // hubsize, directed
+              shakeTowards: 'roots'  // roots, leaves
+          },
+      },
+  };
+  var network = new vis.Network(container, data, options);
+}
+
   return (
     <Fragment>
       <head>
@@ -36,9 +75,22 @@ export const Arbol = (props) => {
         <div align="center">
           <img src="Graficos_generados\graficoimagen_Arbol_Derivacion1.png" />
         </div>
-        <div style="overflow-x: scroll;" id="graphviz_svg_div"><h1>Reporte de AST</h1></div>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js'></script>
-
+        <div style="overflow-x: scroll;" id="graphviz_svg_div">
+          <h1>Reporte de AST</h1>
+        </div>
+        <div>
+          <div id="mynetwork" style="height: 600px;"></div>
+          {
+            props.AST!=null?(
+              <Image fluid src={props.AST} />
+            ):(
+              <>
+              </>
+            )
+          }
+        </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+        <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
         {/* <!-- partial --> */}
         <script src="./script.js"></script>
       </body>

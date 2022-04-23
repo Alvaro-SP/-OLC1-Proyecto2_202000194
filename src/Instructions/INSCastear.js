@@ -1,7 +1,7 @@
 
 "use strict"
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.castear = void 0;
+exports.INSCastear = void 0;
 const nodo = require("./ASTGlobal/nodo");
 const Tipo = require("./ASTGlobal/tiponodo");
 const tipo = require("./ASTGlobal/tiponodo");
@@ -9,7 +9,7 @@ const val = require("./val");
 const instruccionesAPI = require("../Interpreter/interprete").instruccionesAPI; //las instrucciones de la API
 const nodoAST = require("./ASTGlobal/nodoAST");
 
-class castear {
+class INSCastear {
   constructor(tipo, valor, fila, columna) {
     this.tipo = tipo;
     this.valor = valor; //le envio como padre un nulo de primero.
@@ -108,4 +108,4 @@ class castear {
   }
 }
 
-exports.castear = castear;
+exports.INSCastear = INSCastear;

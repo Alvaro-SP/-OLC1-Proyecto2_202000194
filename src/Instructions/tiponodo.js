@@ -76,3 +76,36 @@ const Tipo = {
   NATIVA: "NATIVA",
 };
 module.exports = Tipo;
+
+// Tipo\(tipo\.CARACTER\)|Tipo\.tipos\.CARACTER
+// Tipo.CARACTER
+
+// Tipo\(tipo\.CONTINUE\)|Tipo\.tipos\.CONTINUE
+// Tipo.CONTINUE
+
+// Tipo\(tipo\.BREAK\)|Tipo\.tipos\.BREAK
+// Tipo.BREAK
+
+// Tipo\(tipo\.ERROR\)|Tipo\.tipos\.ERROR
+// Tipo.ERROR
+
+// Tipo\(tipo\.Error\)|Tipo\.tipos\.Error
+// Tipo.ERROR
+
+// Tipo\(tipo\.DOUBLE\)|Tipo\.tipos\.DOUBLE
+// Tipo.DOUBLE
+
+// Tipo\(tipo\.INT\)|Tipo\.tipos\.INT
+// Tipo.INT
+
+// Tipo\(tipo\.BOOLEAN\)|Tipo\.tipos\.BOOLEAN
+// Tipo.BOOLEAN
+
+// Tipo\(tipo\.VOID\)|Tipo\.tipos\.VOID
+// Tipo.VOID
+
+// Tipo\(tipo\.FUNCION\)|Tipo\.tipos\.FUNCION
+// Tipo.FUNCION
+
+// Tipo\(tipo\.METODO\)|Tipo\.tipos\.METODO
+// Tipo.METODO

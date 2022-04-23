@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.logico = void 0;
+exports.INSLogico = void 0;
 const nodo = require("./ASTGlobal/nodo");
 const Tipo = require("./ASTGlobal/tiponodo");
 const tipo = require("./ASTGlobal/tiponodo");
@@ -10,7 +10,7 @@ const nodoAST = require("./ASTGlobal/nodoAST");
 //! 5.8 Operadores Lógicos
 // *Son los símbolos que tienen como finalidad comparar expresiones a nivel 
 // *lógico (verdadero o falso). 
-class logico {
+class INSLogico {
   constructor(expDer, expIzq, tipo, fila, column) {
     this.expDer = expDer;
     this.expIzq = expIzq;
@@ -177,4 +177,4 @@ class logico {
     }
   }
 }
-exports.logico = logico;
+exports.INSLogico = INSLogico;

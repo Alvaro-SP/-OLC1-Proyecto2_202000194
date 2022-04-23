@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Dowhile = void 0;
+exports.INSfor = void 0;
 const nodo = require("./ASTGlobal/nodo");
 const Tipo = require("./ASTGlobal/tiponodo");
 const tipo = require("./ASTGlobal/tiponodo");
@@ -8,13 +8,13 @@ const val = require("./val");
 const Tablita = require("./TS/TablaSimbolos");
 const instruccionesAPI = require("../Interpreter/interprete").instruccionesAPI; //las instrucciones de la API
 const nodoAST = require("./ASTGlobal/nodoAST");
-const {INSBreak} = require('../Instructions/break');
+const {INSBreak} = require('./Break');
 const {Asignar} = require('../Instructions/Asignar');
 const {Declarar} = require('../Instructions/Declarar');
 const {INSContinue} = require('../Instructions/continue');
 //! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬5.17 Sentencias cíclicas▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 // *5.17.2. For
-class For {
+class INSfor {
     constructor(fordeclarar, expre, actua,ins , fila, column) {
         this.fordeclarar = fordeclarar;
         this.expre = expre;
@@ -38,11 +38,11 @@ class For {
             var iniciofor
             var finfor=this.expre
             //* si es una asignacion:
-            if(this.fordeclarar instanceof Asignar.asignar){
+            if(this.fordeclarar instanceof Asignar){
                  iniciofor= this.fordeclarar.valor.valor
             }
             //* si es una declaracion:
-            if(this.fordeclarar instanceof Declarar.declarar){
+            if(this.fordeclarar instanceof Declarar){
                 iniciofor= this.fordeclarar.valor.valor
             }
             if(iniciofor != null || iniciofor != undefined || iniciofor != NaN || iniciofor != ""){
@@ -90,4 +90,4 @@ class For {
         }
     }
 }
-exports.For = For;
+exports.INSfor = INSfor;

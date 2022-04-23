@@ -11,11 +11,21 @@ class InstructionAST {
         this.error=new Array();
         this.console=new Array();
         this.variables=new Array();
+        this.ast=null;
+    }
+    genDot(){
+        try {
+            if(this.ast!=null){
+                return this.ast.dotGen({num:0});
+            }
+        } catch (error) {
+            console.log(error);
+        }
+        return null
     }
     setError(error){
         // this.error=error;
         this.error.push(error);
-        
     }
     setConsole(console){
         this.console.push(console);

@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Switch = void 0;
+exports.INSswitch = void 0;
 const nodo = require("./ASTGlobal/nodo");
 const Tipo = require("./ASTGlobal/tiponodo");
 const tipo = require("./ASTGlobal/tiponodo");
 const val = require("./val");
 const INSRelacional = require('../Instructions/INSRelacional');
-const INSBreak = require('../Instructions/break');
+const INSBreak = require('./Break');
 const Tablita = require("./TS/TablaSimbolos");
 const instruccionesAPI = require("../Interpreter/interprete").instruccionesAPI; //las instrucciones de la API
 const nodoAST = require("./ASTGlobal/nodoAST");
 //! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬5.16 Sentencias de control▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 // *SENTENCIA SWITCH
-class Switch {
+class INSswitch {
     constructor(condicion, cases, def, fila, column) {
         this.condicion = condicion;
         this.cases = cases;
@@ -37,7 +37,7 @@ class Switch {
         for(var i = 0; i < this.cases.length; i++){
             var otrocase = this.cases[i].ejecutar(arbolIns, addtable);
                                             // new INSRelacional($1, $3, 'IGUAL',  @1.first_line, @1.first_column);
-            var respuestacondi = new INSRelacional.relacional(this.condicion, otrocase.condicion, 'IGUAL', this.line, this.column);
+            var respuestacondi = new INSRelacional.INSRelacional(this.condicion, otrocase.condicion, 'IGUAL', this.line, this.column);
             if (respuestacondi.tipo.tipo == Tipo.BOOLEANO) {
                 //* si al ejecutar la condicion relacional se tiene un true entonces se
                 //* debe recorrer cada una de las sentencias dentro de las otras instrucciones del case
@@ -68,4 +68,4 @@ class Switch {
     return null;
     }
 }
-exports.Switch = Switch;
+exports.INSswitch = INSswitch;

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TablaSimbolos = void 0;
+// exports.TablaSimbolos = void 0;
 const simbolo = require("../simbolo/Simbolo");
 const Tipo = require("../ASTGlobal/tiponodo");
 // ! AMBITOS

@@ -3,21 +3,22 @@
  */
 %{
 	const {MiArbolAST} = require('../Instructions/ASTGlobal/InstructionAST');
-	var InstructionAST = require('../Instructions/ASTGlobal/InstructionAST')
+	var {InstructionAST} = require('../Instructions/ASTGlobal/InstructionAST')
+	var {nodoAST} = require('../Instructions/ASTGlobal/nodoAST')
 	const instruccionesAPI	= require('../Interpreter/interprete').instruccionesAPI; //las instrucciones de la API
-    const {INSPrint} = require('../Instructions/INSprint.js');
+    const {INSprint} = require('../Instructions/INSprint');
     const {INSAritmetico} = require('../Instructions/INSAritmetico');
     const {INSRelacional} = require('../Instructions/INSRelacional');
     const {INSLogico} = require('../Instructions/INSLogico');
     const {Asignar} = require('../Instructions/Asignar');
     const {Declarar} = require('../Instructions/Declarar');
     const {INSCastear} = require('../Instructions/INSCastear');
-    const {INSPrimitivo} = require('../Instructions/INSPrimitivos');
-    const {INSid} = require('../Instructions/id');
+    const {INSPrimitivos} = require('../Instructions/INSPrimitivos');
+    const {id} = require('../Instructions/id');
     const {INSincredecre} = require('../Instructions/INSincredecre');
-    const {INSreturn} = require('../Instructions/return');
-    const {INSllamada} = require('../Instructions/llamar');
-    const {INSMetodo} = require('../Instructions/metodos');
+    const {INSreturn} = require('../Instructions/INSreturn');
+    const {llamar} = require('../Instructions/llamar');
+    const {metodos} = require('../Instructions/metodos');
 
 	//SENTENCIAS
     const {INSif} = require('../Instructions/INSif');
@@ -27,13 +28,15 @@
     const {INSswitch} = require('../Instructions/INSswitch');
 	const {INSCase} = require('../Instructions/INSCase');
 	//pauses
-	const {INSBreak} = require('../Instructions/break');
-	const {INSContinue} = require('../Instructions/break');
+	const {Break} = require('../Instructions/Break');
+	const {Continue} = require('../Instructions/Continue');
 	const Tipo = require("../Instructions/ASTGlobal/tiponodo");
 	const tipos = require("../Instructions/ASTGlobal/tiponodo");
 	var sintacticerror = "";
 	var acumoftext="";
-	var arbolINSERRORES = new InstructionAST.InstructionAST();//por si hay errores
+	var arbolINSERRORES = new InstructionAST();//por si hay errores
+	//PARA MI AST
+	// var arbol = new MiArbolAST();
 	// var MiArbolAST = new InstructionAST();
 %}
 
@@ -44,7 +47,7 @@
 %x CADENA
 %%
 /*Consider the following example of a scanner that simply scans all double-quote 
-delimited strings in a text file but disallows newlines inside quotations:*/
+delimited strings in a text file but disallows newlines ide quotations:*/
 
 /* Comentarios */
 /* El lenguaje
@@ -218,7 +221,7 @@ relacionales. */
 %%
  /* ======================Definición de la gramatica==================== */
 ini
-	: instrucciones EOF		{  $$ = new InstructionAST($1); return $$;  }//here i gonna to save my AST 
+	: instrucciones EOF		{  $$ = [new InstructionAST($1[0]), new nodoAST('ARBOL SINTACTICO',[$1[1]])]; return $$;  }//here i gonna to save my AST 
 	| error  			{ 	var sintacticerror="Detectado error Sintactico se esperaba otro valor y se recibio: "+$$+" reparelo.";
 							console.log('Este es un error sintactico: ' +$$ + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column);
 							// instruccionesAPI.getAST.error.push(instruccionesAPI.errorsintactico(sintacticerror,this._$.first_line,this._$.first_column));
@@ -229,8 +232,8 @@ ini
 ;
 
 instrucciones
-	: instrucciones instruccion 	{ $$ = $1; instruccionesAPI.getAST.ins($2);  }
-	| instruccion					{ $$ = [$1];}
+	: instrucciones instruccion 	{ $$ = [$1[0], new nodoAST('INSTRUCCIONES',[$1[1],$2[1]])]; $1[0].push($2[0]);  }//instruccionesAPI.getAST.ins($2)
+	| instruccion					{ $$ = [ [$1[0]] , new nodoAST('INSTRUCCIONES',[$1[1]]) ];}
 ;
 /* ================================================================*/
 /* ===================		INSTRUCCIONES      ===================*/
@@ -245,13 +248,13 @@ instruccion
 	| instruccionwhile				{ $$ = $1; } /* 5.17 SenTencias cíclicas*/
 	| instruccionfor				{ $$ = $1; } /* 5.17 SenTencias cíclicas*/
 	| instrucciondowhile			{ $$ = $1; } /* 5.17 SenTencias cíclicas*/
-	| instruccionprint PTCOMA		{ $$ = $1; } /* Print*/
+	| instruccionprint PTCOMA		{ $$ = [$1[0], new nodoAST('INSTRUCCION',[$1[1]])]; } /* Print*/
 	| instruccionprintln PTCOMA		{ $$ = $1; } /* Println*/
 	| VARIABLE INC PTCOMA 			{ $$ = new INSincredecre($1, "INCREMENT", @1.first_line, @1.first_column); } /* anio++*/
 	| VARIABLE DEC PTCOMA 			{ $$ = new INSincredecre($1, "DECREMENT", @1.first_line, @1.first_column); } /* anio++*/
 	// | llamadas PTCOMA				{ $$ = $1; } /* 5.21 Llamadas*/
-	| CONTINUE PTCOMA              	{ $$ = new INSContinue("CONTINUE",@1.first_line, @1.first_column); } /* CONTINUE */
-    | BREAK PTCOMA                 	{ $$ = new INSBreak("BREAK",@1.first_line, @1.first_column); } /* BREAK */
+	| CONTINUE PTCOMA              	{ $$ = new Continue("CONTINUE",@1.first_line, @1.first_column); } /* CONTINUE */
+    | BREAK PTCOMA                 	{ $$ = new Break("BREAK",@1.first_line, @1.first_column); } /* BREAK */
 	| returns PTCOMA      			{ $$ = $1; }
     | RUN call				        { $$ = $1; }
 	// | VARIABLE MAS MAS PTCOMA 		{ $$ = $1; } /* anio++*/
@@ -264,15 +267,15 @@ instruccion
 
 /*--------------------------------------  5.19 Funciones  ----------------------------------*/
 funciones
-    : VARIABLE PARIZQ parametros PARDER DOSPUNTOS tipo LLAIZQ instrucciones LLADER { $$ = new INSMetodo($1 ,$3, $6, $8, @1.first_line, @1.first_column); } /* <ID>(<PARAMETROS>):<TIPO>{ <INSTRUCCIONES>} */
-    | VARIABLE PARIZQ PARDER DOSPUNTOS tipo LLAIZQ instrucciones LLADER            { $$ = new INSMetodo($1 ,null, $5, $7, @1.first_line, @1.first_column); }
+    : VARIABLE PARIZQ parametros PARDER DOSPUNTOS tipo LLAIZQ instrucciones LLADER { $$ = new metodos($1 ,$3, $6, $8, @1.first_line, @1.first_column); } /* <ID>(<PARAMETROS>):<TIPO>{ <INSTRUCCIONES>} */
+    | VARIABLE PARIZQ PARDER DOSPUNTOS tipo LLAIZQ instrucciones LLADER            { $$ = new metodos($1 ,null, $5, $7, @1.first_line, @1.first_column); }
 ;
 /*--------------------------------------  5.20 Meodos  ----------------------------------*/
 metodos																										//*variable,param,tipo,ins, line, column
-    : VARIABLE PARIZQ parametros PARDER DOSPUNTOS VOID LLAIZQ instrucciones LLADER { $$ = new INSMetodo($1 ,$3, null, $8, @1.first_line, @1.first_column); } /* <ID>(<PARAMETROS>):<TIPO>{ <INSTRUCCIONES>} */
-    | VARIABLE PARIZQ parametros PARDER LLAIZQ instrucciones LLADER				   { $$ = new INSMetodo($1 ,$3, null, $6, @1.first_line, @1.first_column); } /* <ID>(<PARAMETROS>){ <INSTRUCCIONES>} */
-    | VARIABLE PARIZQ PARDER DOSPUNTOS VOID LLAIZQ instrucciones LLADER 		   { $$ = new INSMetodo($1 ,null, null, $7, @1.first_line, @1.first_column); } /* <ID>():<TIPO>{ <INSTRUCCIONES>} */
-    | VARIABLE PARIZQ PARDER LLAIZQ instrucciones LLADER 						   { $$ = new INSMetodo($1 ,null, null, $5, @1.first_line, @1.first_column); } /* <ID>(){ <INSTRUCCIONES>} */
+    : VARIABLE PARIZQ parametros PARDER DOSPUNTOS VOID LLAIZQ instrucciones LLADER { $$ = new metodos($1 ,$3, null, $8, @1.first_line, @1.first_column); } /* <ID>(<PARAMETROS>):<TIPO>{ <INSTRUCCIONES>} */
+    | VARIABLE PARIZQ parametros PARDER LLAIZQ instrucciones LLADER				   { $$ = new metodos($1 ,$3, null, $6, @1.first_line, @1.first_column); } /* <ID>(<PARAMETROS>){ <INSTRUCCIONES>} */
+    | VARIABLE PARIZQ PARDER DOSPUNTOS VOID LLAIZQ instrucciones LLADER 		   { $$ = new metodos($1 ,null, null, $7, @1.first_line, @1.first_column); } /* <ID>():<TIPO>{ <INSTRUCCIONES>} */
+    | VARIABLE PARIZQ PARDER LLAIZQ instrucciones LLADER 						   { $$ = new metodos($1 ,null, null, $5, @1.first_line, @1.first_column); } /* <ID>(){ <INSTRUCCIONES>} */
 ;
 
 /*--------------------------------------  5.21 Llamadas  ----------------------------------*/
@@ -281,8 +284,8 @@ call
 ;
 
 llamadas
-    :VARIABLE PARIZQ paramllamada PARDER    {$$ = new INSllamada($1, $3, @1.first_line, @1.first_column);}
-    |VARIABLE PARIZQ PARDER                 {$$ = new INSllamada($1, null, @1.first_line, @1.first_column);   }
+    :VARIABLE PARIZQ paramllamada PARDER    {$$ = new llamar($1, $3, @1.first_line, @1.first_column);}
+    |VARIABLE PARIZQ PARDER                 {$$ = new llamar($1, null, @1.first_line, @1.first_column);   }
 ;
 /*LLAMADA -> [<ID>] ( [<PARAMETROS_LLAMADA>] )
 | [<ID>] ( )*/
@@ -344,11 +347,11 @@ actualizacion
 ;
 /*--------------------------------------  5.22 Función Print  ----------------------------------*/
 instruccionprint /* valores únicamente de tipo entero, doble, booleano, cadena y carácter. */
-    :PRINT PARIZQ expresion PARDER   	{  $$ = new INSPrint($3, @1.first_line, @1.first_column, false);   }/* Print  (  <EXPRESION>  );*/
+    :PRINT PARIZQ expresion PARDER   	{  $$ = [new INSprint($3[0], @1.first_line, @1.first_column, false),new nodoAST('PRINT',[new nodoAST($1),new nodoAST($2),$3[1],new nodoAST($4,null)])];   }/* Print  (  <EXPRESION>  );*/
 ;
 /*--------------------------------------  5.23 Función Println  ----------------------------------*/
 instruccionprintln/*entero,doble, booleano, cadena y carácter.*/
-    :PRINTLN PARIZQ expresion PARDER    { $$ = new INSPrint($3, @1.first_line, @1.first_column, true); }/* Println  (  <EXPRESION>  );*/
+    :PRINTLN PARIZQ expresion PARDER    { $$ = new INSprint($3, @1.first_line, @1.first_column, true); }/* Println  (  <EXPRESION>  );*/
 ;
 
 /*--------------------------------------  RUN  ----------------------------------*/
@@ -373,7 +376,7 @@ declaracion
 	| tipo VARIABLE IGUAL expresion PTCOMA																{ $$ = new Declarar($1, $2, $4,  @1.first_line, @1.first_column);} /*TIPO> identificador = <EXPRESION>;*/
 	| tipo notacioncomas PTCOMA																			{ $$ = new Declarar($1, $2, null,  @1.first_line, @1.first_column); } /*<TIPO> id1, id2, id3, id4;*/
 	| tipo notacioncomas IGUAL expresion PTCOMA 														{ $$ = new Declarar($1, $2, $4,  @1.first_line, @1.first_column); } /*<TIPO> id1, id2, id3, id4 = <EXPRESION>;*/
-	| tipo VARIABLE CORIZQ CORDER IGUAL NEW tipo CORIZQ expresion CORDER PTCOMA							{  } /*<TIPO> <ID>[ ] = new <TIPO>[ <EXPRESION> ] ;						 DECLARACION TIPO 1 */
+	| tipo VARIABLE CORIZQ CORDER IGUAL NEW tipo CORIZQ expresion CORDER PTCOMA							{  } /*<TIPO> <ID>[ ] = new <TIPO>[ <EXPRESION> 3.2 ] ;						 DECLARACION TIPO 1 */
 	| tipo VARIABLE CORIZQ CORDER IGUAL NEW tipo CORIZQ expresion CORDER CORIZQ expresion CORDER PTCOMA	{  } /*<TIPO> <ID>[ ][ ]= new <TIPO>[ <EXPRESION> ][ <EXPRESION> ] ;*/
 	| tipo VARIABLE CORIZQ CORDER IGUAL CORIZQ listavalores CORDER PTCOMA								{  }  /*<TIPO> <ID>[ ] = [ <LISTAVALORES> ] ;							 DECLARACION TIPO 2 */
 	| tipo VARIABLE IGUAL VARIABLE CORIZQ expresion CORDER PTCOMA										{  } /*<TIPO> <ID>[ ] = new <TIPO>[ <EXPRESION> ] ;	 */
@@ -414,13 +417,13 @@ expresion																				/*aqui es UNARIA XD*/
     | expresion AND expresion			                	{ $$ = new INSLogico($1, $3, 'NOT', @1.first_line, @1.first_column); }
 	
 	| PARA tipo PARC expresion								{ $$ = new INSCastear($2, $4, @1.first_line, @1.first_column); } /* (int) 18.6*//*(<TIPO>) <EXPRESION>*/
-	| VARIABLE                      						{ $$ = new INSid($1, @1.first_line, @1.first_column); }
-	| VENTERO                      							{ $$ = new INSPrimitivo(Tipo.INT, Number($1), @1.first_line, @1.first_column); }
-	| VDOUBLE                       						{ $$ = new INSPrimitivo(Tipo.DOUBLE, Number($1), @1.first_line, @1.first_column); }
-	| CADENA												{ $$ = new INSPrimitivo(Tipo.STRING, $1, @1.first_line, @1.first_column); }
-	| VCARACTER		 										{ $$ = new INSPrimitivo(Tipo.CARACTER, $1, @1.first_line, @1.first_column); }
-	| TRUE                       							{ $$ = new INSPrimitivo(Tipo.BOOLEAN, true, @1.first_line, @1.first_column); }
-	| FALSE                       							{ $$ = new INSPrimitivo(Tipo.BOOLEAN, false, @1.first_line, @1.first_column); }
+	| VARIABLE                      						{ $$ = new id($1, @1.first_line, @1.first_column); }
+	| VENTERO                      							{ $$ = new INSPrimitivos(Tipo.INT, Number($1), @1.first_line, @1.first_column); }
+	| VDOUBLE                       						{ $$ = new INSPrimitivos(Tipo.DOUBLE, Number($1), @1.first_line, @1.first_column); }
+	| CADENA												{ $$ = [new INSPrimitivos(Tipo.STRING, $1, @1.first_line, @1.first_column), new nodoAST('EXPRESION', new nodoAST($1,null))]; }
+	| VCARACTER		 										{ $$ = new INSPrimitivos(Tipo.CARACTER, $1, @1.first_line, @1.first_column); }
+	| TRUE                       							{ $$ = new INSPrimitivos(Tipo.BOOLEAN, true, @1.first_line, @1.first_column); }
+	| FALSE                       							{ $$ = new INSPrimitivos(Tipo.BOOLEAN, false, @1.first_line, @1.first_column); }
 	| PARIZQ expresion PARDER       						{ $$ = $2; }
 	// | VARIABLE MAS MAS 										{  } /* anio-- */
 	// | VARIABLE MENOS MENOS 									{  } /* edad-- */
@@ -451,7 +454,7 @@ tipo
 	|DOUBLE       	{ $$ = Tipo.DOUBLE; }
 	|BOOLEANO     	{ $$ = Tipo.BOOLEAN; }
 	|CARACTER    	{ $$ = Tipo.CARACTER; }
-	|STRING        	{ $$ = Tipo.STRING; }
+	|STRING        	{ $$ = [Tipo.STRING, new nodoAST($1,null)]; }
 	|VOID           { $$ = Tipo.VOID; }
 ;
 

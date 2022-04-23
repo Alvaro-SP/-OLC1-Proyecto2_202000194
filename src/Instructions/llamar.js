@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.llamada = void 0;
+exports.llamar = void 0;
 const nodo = require("./ASTGlobal/nodo");
 const Tipo = require("./ASTGlobal/tiponodo");
 const tipo = require("./ASTGlobal/tiponodo");
@@ -8,11 +8,11 @@ const Tablita = require("./TS/TablaSimbolos");
 const val = require("./val");
 const instruccionesAPI = require("../Interpreter/interprete").instruccionesAPI; //las instrucciones de la API
 const nodoAST = require("./ASTGlobal/nodoAST");
-const INSreturn = require('../Instructions/return');
+const INSreturn = require('./INSreturn');
 const INSRelacional = require('../Instructions/INSRelacional');
-const INSBreak = require('../Instructions/break');
+const INSBreak = require('./Break');
 //! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬  5.21 Llamadas  ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
-class llamada {
+class llamar {
     constructor(variable, parametros, fila, column) {
         this.variable = variable;
         this.parametros = parametros;
@@ -62,7 +62,7 @@ class llamada {
                             if(respuesta2.kind=="CONTINUE"){
                                 break ;
                             }
-                            if(respuesta2 instanceof INSreturn.Return){
+                            if(respuesta2 instanceof INSreturn.INSreturn){
                                 //si la respuesta2 valor es nulo voy y comparo el tipo de la funcion 
                                 //que esta retornando
                                 if(respuesta2.valor==null && funcion.tipo==Tipo.tipos.NULL){
@@ -96,4 +96,4 @@ class llamada {
     }
 }
 
-exports.llamada = llamada
+exports.llamar = llamar

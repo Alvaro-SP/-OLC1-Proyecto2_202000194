@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.metodo = void 0;
+exports.metodos = void 0;
 const nodo = require("./ASTGlobal/nodo");
 const Tipo = require("./ASTGlobal/tiponodo");
 const tipo = require("./ASTGlobal/tiponodo");
@@ -10,9 +10,9 @@ const val = require("./val");
 const instruccionesAPI = require("../Interpreter/interprete").instruccionesAPI; //las instrucciones de la API
 const nodoAST = require("./ASTGlobal/nodoAST");
 const INSRelacional = require('../Instructions/INSRelacional');
-const INSBreak = require('../Instructions/break');
-const objMetodos = require('../Instructions/objMetodo');
-class metodo{
+const INSBreak = require('./Break');
+const objMetodo = require('../Instructions/objMetodo');
+class metodos{
     constructor(variable,param,tipo,ins, line, column) {
         this.tipo = tipo;
         this.variable = variable;
@@ -36,7 +36,7 @@ class metodo{
                 return new val(this.line,this.column,Tipo.ERROR,"No se ha encontrado el metodo " + this.variable + " se obtuvo null");
             }else{
                 //* ahora que ya se que no existe procedo a crear mi objeto parametro-instrucciones
-                var metodo=new objMetodos.objmetodo(this.param,this.ins);
+                var metodo=new objMetodo.objMetodo(this.param,this.ins);
                 //* si el tipo del metodo es null no se debe retornar nada
                 if(this.tipo == null){
                     //*es unn metodo         (id, data, tipo,  fila, column)
@@ -53,4 +53,4 @@ class metodo{
         }
     }
 }
-exports.metodo = metodo;
+exports.metodos = metodos;

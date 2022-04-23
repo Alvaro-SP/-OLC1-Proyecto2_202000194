@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.aritmetico = void 0;
+exports.INSAritmetico = void 0;
 const nodo = require("./ASTGlobal/nodo");
 const Tipo = require("./ASTGlobal/tiponodo");
-const tipo = require("./ASTGlobal/tiponodo");
+// const tipo = require("./ASTGlobal/tiponodo");
 const val = require("./val");
 const instruccionesAPI = require("../Interpreter/interprete").instruccionesAPI; //las instrucciones de la API
 const nodoAST = require("./ASTGlobal/nodoAST");
 //! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬5.5 Operadores Aritméticos▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 // *SUMA RESTA MULTIPLICACION DIVISION POTENCIA MODULO ENTRE OTROS...
-class aritmetico{
+class INSAritmetico{
     constructor(expDer, expIzq, tipo, fila, column){
         this.expDer = expDer;
         this.expIzq = expIzq;
@@ -579,6 +579,6 @@ class aritmetico{
         }
     }
 }
-exports.aritmetico = aritmetico;
+exports.INSAritmetico = INSAritmetico;
 
 

@@ -84,7 +84,7 @@ performAction: function anonymous(yytext, yyleng, yylineno, yy, yystate /* actio
 var $0 = $$.length - 1;
 switch (yystate) {
 case 1:
-  this.$ = new InstructionAST($$[$0-1]); return this.$;  
+  this.$ = [new InstructionAST($$[$0-1][0]), new nodoAST('ARBOL SINTACTICO',[$$[$0-1][1]])]; return this.$;  
 break;
 case 2:
  	var sintacticerror="Detectado error Sintactico se esperaba otro valor y se recibio: "+this.$+" reparelo.";
@@ -96,15 +96,18 @@ case 2:
 						
 break;
 case 3:
- this.$ = $$[$0-1]; instruccionesAPI.getAST.ins($$[$0]);  
+ this.$ = [$$[$0-1][0], new nodoAST('INSTRUCCIONES',[$$[$0-1][1],$$[$0][1]])]; $$[$0-1][0].push($$[$0][0]);  
 break;
 case 4:
- this.$ = [$$[$0]];
+ this.$ = [ [$$[$0][0]] , new nodoAST('INSTRUCCIONES',[$$[$0][1]]) ];
 break;
 case 5: case 6: case 7: case 8: case 9: case 10: case 11: case 12: case 13:
  this.$ = $$[$0]; 
 break;
-case 14: case 15: case 20: case 21: case 28: case 96:
+case 14:
+ this.$ = [$$[$0-1][0], new nodoAST('INSTRUCCION',[$$[$0-1][1]])]; 
+break;
+case 15: case 20: case 21: case 28: case 96:
  this.$ = $$[$0-1]; 
 break;
 case 16:
@@ -114,34 +117,34 @@ case 17:
  this.$ = new INSincredecre($$[$0-2], "DECREMENT", _$[$0-2].first_line, _$[$0-2].first_column); 
 break;
 case 18:
- this.$ = new INSContinue("CONTINUE",_$[$0-1].first_line, _$[$0-1].first_column); 
+ this.$ = new Continue("CONTINUE",_$[$0-1].first_line, _$[$0-1].first_column); 
 break;
 case 19:
- this.$ = new INSBreak("BREAK",_$[$0-1].first_line, _$[$0-1].first_column); 
+ this.$ = new Break("BREAK",_$[$0-1].first_line, _$[$0-1].first_column); 
 break;
 case 22:
- this.$ = new INSMetodo($$[$0-8] ,$$[$0-6], $$[$0-3], $$[$0-1], _$[$0-8].first_line, _$[$0-8].first_column); 
+ this.$ = new metodos($$[$0-8] ,$$[$0-6], $$[$0-3], $$[$0-1], _$[$0-8].first_line, _$[$0-8].first_column); 
 break;
 case 23:
- this.$ = new INSMetodo($$[$0-7] ,null, $$[$0-3], $$[$0-1], _$[$0-7].first_line, _$[$0-7].first_column); 
+ this.$ = new metodos($$[$0-7] ,null, $$[$0-3], $$[$0-1], _$[$0-7].first_line, _$[$0-7].first_column); 
 break;
 case 24:
- this.$ = new INSMetodo($$[$0-8] ,$$[$0-6], null, $$[$0-1], _$[$0-8].first_line, _$[$0-8].first_column); 
+ this.$ = new metodos($$[$0-8] ,$$[$0-6], null, $$[$0-1], _$[$0-8].first_line, _$[$0-8].first_column); 
 break;
 case 25:
- this.$ = new INSMetodo($$[$0-6] ,$$[$0-4], null, $$[$0-1], _$[$0-6].first_line, _$[$0-6].first_column); 
+ this.$ = new metodos($$[$0-6] ,$$[$0-4], null, $$[$0-1], _$[$0-6].first_line, _$[$0-6].first_column); 
 break;
 case 26:
- this.$ = new INSMetodo($$[$0-7] ,null, null, $$[$0-1], _$[$0-7].first_line, _$[$0-7].first_column); 
+ this.$ = new metodos($$[$0-7] ,null, null, $$[$0-1], _$[$0-7].first_line, _$[$0-7].first_column); 
 break;
 case 27:
- this.$ = new INSMetodo($$[$0-5] ,null, null, $$[$0-1], _$[$0-5].first_line, _$[$0-5].first_column); 
+ this.$ = new metodos($$[$0-5] ,null, null, $$[$0-1], _$[$0-5].first_line, _$[$0-5].first_column); 
 break;
 case 29:
-this.$ = new INSllamada($$[$0-3], $$[$0-1], _$[$0-3].first_line, _$[$0-3].first_column);
+this.$ = new llamar($$[$0-3], $$[$0-1], _$[$0-3].first_line, _$[$0-3].first_column);
 break;
 case 30:
-this.$ = new INSllamada($$[$0-2], null, _$[$0-2].first_line, _$[$0-2].first_column);   
+this.$ = new llamar($$[$0-2], null, _$[$0-2].first_line, _$[$0-2].first_column);   
 break;
 case 31:
  this.$ = $$[$0-2]; this.$.push($$[$0]); 
@@ -204,10 +207,10 @@ case 51:
  this.$ = new INSincredecre($$[$0-1], "DECREMENT", _$[$0-1].first_line, _$[$0-1].first_column); 
 break;
 case 53:
-  this.$ = new INSPrint($$[$0-1], _$[$0-3].first_line, _$[$0-3].first_column, false);   
+  this.$ = [new INSprint($$[$0-1][0], _$[$0-3].first_line, _$[$0-3].first_column, false),new nodoAST('PRINT',[new nodoAST($$[$0-3]),new nodoAST($$[$0-2]),$$[$0-1][1],new nodoAST($$[$0],null)])];   
 break;
 case 54:
- this.$ = new INSPrint($$[$0-1], _$[$0-3].first_line, _$[$0-3].first_column, true); 
+ this.$ = new INSprint($$[$0-1], _$[$0-3].first_line, _$[$0-3].first_column, true); 
 break;
 case 55:
  this.$ = new INSreturn($$[$0],_$[$0-1].first_line, _$[$0-1].first_column); 
@@ -285,25 +288,25 @@ case 88:
  this.$ = new INSCastear($$[$0-2], $$[$0], _$[$0-3].first_line, _$[$0-3].first_column); 
 break;
 case 89:
- this.$ = new INSid($$[$0], _$[$0].first_line, _$[$0].first_column); 
+ this.$ = new id($$[$0], _$[$0].first_line, _$[$0].first_column); 
 break;
 case 90:
- this.$ = new INSPrimitivo(new Tipo(tipos.INT), Number($$[$0]), _$[$0].first_line, _$[$0].first_column); 
+ this.$ = new INSPrimitivos(Tipo.INT, Number($$[$0]), _$[$0].first_line, _$[$0].first_column); 
 break;
 case 91:
- this.$ = new INSPrimitivo(new Tipo(tipos.DOUBLE), Number($$[$0]), _$[$0].first_line, _$[$0].first_column); 
+ this.$ = new INSPrimitivos(Tipo.DOUBLE, Number($$[$0]), _$[$0].first_line, _$[$0].first_column); 
 break;
 case 92:
- this.$ = new INSPrimitivo(new Tipo(tipos.STRING), $$[$0], _$[$0].first_line, _$[$0].first_column); 
+ this.$ = [new INSPrimitivos(Tipo.STRING, $$[$0], _$[$0].first_line, _$[$0].first_column), new nodoAST('EXPRESION', new nodoAST($$[$0],null))]; 
 break;
 case 93:
- this.$ = new INSPrimitivo(new Tipo(tipos.CARACTER), $$[$0], _$[$0].first_line, _$[$0].first_column); 
+ this.$ = new INSPrimitivos(Tipo.CARACTER, $$[$0], _$[$0].first_line, _$[$0].first_column); 
 break;
 case 94:
- this.$ = new INSPrimitivo(new Tipo(tipos.BOOLEAN), true, _$[$0].first_line, _$[$0].first_column); 
+ this.$ = new INSPrimitivos(Tipo.BOOLEAN, true, _$[$0].first_line, _$[$0].first_column); 
 break;
 case 95:
- this.$ = new INSPrimitivo(new Tipo(tipos.BOOLEAN), false, _$[$0].first_line, _$[$0].first_column); 
+ this.$ = new INSPrimitivos(Tipo.BOOLEAN, false, _$[$0].first_line, _$[$0].first_column); 
 break;
 case 99:
   this.$ = new INSTernario($$[$0-4], $$[$0-2], $$[$0], _$[$0-4].first_line, _$[$0-4].first_column); 
@@ -318,22 +321,22 @@ case 111:
  this.$ = []; this.$.push($$[$0]);
 break;
 case 112:
- this.$ = new Tipo(tipos.INT); 
+ this.$ = Tipo.INT; 
 break;
 case 113:
- this.$ = new Tipo(tipos.DOUBLE); 
+ this.$ = Tipo.DOUBLE; 
 break;
 case 114:
- this.$ = new Tipo(tipos.BOOLEAN); 
+ this.$ = Tipo.BOOLEAN; 
 break;
 case 115:
- this.$ = new Tipo(tipos.CARACTER); 
+ this.$ = Tipo.CARACTER; 
 break;
 case 116:
- this.$ = new Tipo(tipos.STRING); 
+ this.$ = [Tipo.STRING, new nodoAST($$[$0],null)]; 
 break;
 case 117:
- this.$ = new Tipo(tipos.VOID); 
+ this.$ = Tipo.VOID; 
 break;
 }
 },
@@ -588,21 +591,22 @@ _handle_error:
 }};
 
 	const {MiArbolAST} = require('../Instructions/ASTGlobal/InstructionAST');
-	var InstructionAST = require('../Instructions/ASTGlobal/InstructionAST')
+	var {InstructionAST} = require('../Instructions/ASTGlobal/InstructionAST')
+	var {nodoAST} = require('../Instructions/ASTGlobal/nodoAST')
 	const instruccionesAPI	= require('../Interpreter/interprete').instruccionesAPI; //las instrucciones de la API
-    const {INSPrint} = require('../Instructions/INSprint.js');
+    const {INSprint} = require('../Instructions/INSprint');
     const {INSAritmetico} = require('../Instructions/INSAritmetico');
     const {INSRelacional} = require('../Instructions/INSRelacional');
     const {INSLogico} = require('../Instructions/INSLogico');
     const {Asignar} = require('../Instructions/Asignar');
     const {Declarar} = require('../Instructions/Declarar');
     const {INSCastear} = require('../Instructions/INSCastear');
-    const {INSPrimitivo} = require('../Instructions/INSPrimitivos');
-    const {INSid} = require('../Instructions/id');
+    const {INSPrimitivos} = require('../Instructions/INSPrimitivos');
+    const {id} = require('../Instructions/id');
     const {INSincredecre} = require('../Instructions/INSincredecre');
-    const {INSreturn} = require('../Instructions/return');
-    const {INSllamada} = require('../Instructions/llamar');
-    const {INSMetodo} = require('../Instructions/metodos');
+    const {INSreturn} = require('../Instructions/INSreturn');
+    const {llamar} = require('../Instructions/llamar');
+    const {metodos} = require('../Instructions/metodos');
 
 	//SENTENCIAS
     const {INSif} = require('../Instructions/INSif');
@@ -612,13 +616,15 @@ _handle_error:
     const {INSswitch} = require('../Instructions/INSswitch');
 	const {INSCase} = require('../Instructions/INSCase');
 	//pauses
-	const {INSBreak} = require('../Instructions/break');
-	const {INSContinue} = require('../Instructions/break');
+	const {Break} = require('../Instructions/Break');
+	const {Continue} = require('../Instructions/Continue');
 	const Tipo = require("../Instructions/ASTGlobal/tiponodo");
 	const tipos = require("../Instructions/ASTGlobal/tiponodo");
 	var sintacticerror = "";
 	var acumoftext="";
-	var arbolINSERRORES = new InstructionAST.InstructionAST();//por si hay errores
+	var arbolINSERRORES = new InstructionAST();//por si hay errores
+	//PARA MI AST
+	// var arbol = new MiArbolAST();
 	// var MiArbolAST = new InstructionAST();
 /* generated by jison-lex 0.3.4 */
 var lexer = (function(){

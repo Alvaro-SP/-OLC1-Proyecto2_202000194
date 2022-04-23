@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ternario = void 0;
+exports.INSTernario = void 0;
 const nodo = require("./ASTGlobal/nodo");
 const Tipo = require("./ASTGlobal/tiponodo");
 const tipo = require("./ASTGlobal/tiponodo");
@@ -8,7 +8,7 @@ const val = require("./val");
 const instruccionesAPI = require("../Interpreter/interprete").instruccionesAPI; //las instrucciones de la API
 const nodoAST = require("./ASTGlobal/nodoAST");
 //! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬  5.7 Operador Ternario  ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
-class ternario {
+class INSTernario {
     //!<CONDICION> ‘?’ <EXPRESION> ‘:’ <EXPRESION>
     constructor(condicion, secumple, nosecumple, line, column) {
         //* El operador ternario es un operador que hace uso de 3 operandos para simplificar la
@@ -44,4 +44,4 @@ class ternario {
     }
 }
 
-exports.ternario = ternario;
+exports.INSTernario = INSTernario;

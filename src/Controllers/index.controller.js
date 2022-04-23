@@ -1,4 +1,5 @@
 var fs = require('fs'); 
+const {exec} = require('child_process')
 //! Mi Gramatica 
 var parser = require('../Interpreter/myGrammar');
 var interprete = require('../Interpreter/interprete')
@@ -25,24 +26,64 @@ exports.analizar= async(req, res) => {
     console.log("▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬REQUEST▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
     console.log(req.body.codigo);
     // cadena = JSON.stringify(req.body.codigo);  //vere cual de los dos funcio
-    cadena = req.body.codigo.toString()  //este jalo xdxd
+    const cadena = req.body.codigo.toString()  //este jalo xdxd
     // const texto = req.body.text;
     // console.log("1. Cadena de Entrada (el codigo): " + texto);
     console.log("2. Cadena de Entrada (el codigo): " + cadena);
     const arbolIns =  interprete.instruccionesAPI.setInsAST(cadena);
+    //*GENERO LA IMAGEN LA CUAL SE VA A MOSTRAR EN EL FRONTEND DEL AST
+    var imagenast= arbolIns.genDot();
+    //* GENERO EL ARCHIVO DOT
+    var datos = imagenast.node+"\n"+imagenast.enlace;
+    var relleno="\nlayout=dot     \nfontcolor=\"black\"   \nlabel=\"ARBOL DE DERIVACI�N\"      \nlabelloc = \"t\"  \nbgcolor=\"orange:red\"      \nedge [weight=1000 style=radial color=black ]  \nnode [shape=ellipse style=\"filled\"  color=\"green:lightblue\" gradientangle=\"315\"]   "
+    var data= "digraph G {\n"+ relleno + datos + "\n}";
+    console.log("********************************************************");
+    console.log(data)
+
+    fs.writeFile('ast.dot', data, function (err) {
+        if (err) throw err;
+    })
+    exec('dot -Tpng ast.dot -o ast.png', (error, stdout,stderr)=>{
+        if (error) {
+            console.log(`error: ${error.message}`)
+            return
+        }
+        if (stderr) {
+            console.log(`error: ${stderr}`)
+            return
+        }
+        console.log(stdout)
+    })
+    let base;
+    try {
+        var bitmap = fs.readFileSync('ast.png');
+        // paso a bin la imagen :v
+        base =  new Buffer.from(bitmap).toString('base64'); 
+        // arbolIns.ast= base
+    } catch (error) {
+        console.log(error);
+    }
+
     //* necesito retornar
     if(arbolIns ){
-        res.send({  Salida: "COMPILADO",
-            AST: arbolIns.variables ,
-            ListaErrores: arbolIns.error,
-            Consola: arbolIns.console
+        res.send({
+            cadena,
+            Salida: "COMPILADO",
+            VARIABLES: arbolIns.variables ,
+            ERRORES: arbolIns.error,
+            Consola: arbolIns.console,
+            SIMBOLOS: arbolIns.symbolTable,
+            AST: base
         });
     }else{
         res.send({
-          Salida: "COMPILADO",
-          AST: [],
-          ListaErrores: [arbolIns],
-          Consola: ['Existen errores es por eso de que no se pudo continuar, Revise el listado de errores para conocer a detalle donde se ubica su error y su tipo.'],
+            cadena,
+            Salida: "COMPILADO",
+            VARIABLES: arbolIns.variables ,
+            ERRORES: arbolIns.error,
+            Consola: ['Existen errores es por eso de que no se pudo continuar, Revise el listado de errores para conocer a detalle donde se ubica su error y su tipo.'],
+            SIMBOLOS: [],
+            AST: [],
         });
     }
     

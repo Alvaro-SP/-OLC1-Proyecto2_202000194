@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.declarar = void 0;
+exports.Declarar = void 0;
 const nodo = require("./ASTGlobal/nodo");
 const Tipo = require("./ASTGlobal/tiponodo");
 const tipo = require("./ASTGlobal/tiponodo");
 const val = require("./val");
-const Simbolos = require("./simbolo/Simbolo");
+const Simbolo = require("./simbolo/Simbolo");
 const Tablita = require("./TS/TablaSimbolos");
 const instruccionesAPI = require("../Interpreter/interprete").instruccionesAPI; //las instrucciones de la API
 const nodoAST = require("./ASTGlobal/nodoAST");
 //! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬5.12 Declaración y asignación de variables▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
-class declarar {
+class Declarar {
     constructor(tipo, variable, valor, fila, column) {
         this.tipo = tipo;
         this.variable = variable;
@@ -58,14 +58,15 @@ class declarar {
               }
               //! como tengo una variable por declarar me compete agregarla a la tabla de simbolos
               //! la agrego como un objeto simbolo
-              var simbolo = new Simbolos.Simbolo(
-                this.variable[i],
+              var simbolo = new Simbolo(
+                this.variable,
                 value,
                 this.tipo,
-                this.line,
+                this.fila,
                 this.column
               );
-              var respuesta = Tablita.symbolTable.insertar(simbolo);
+              console.log("variable declarada: " + simbolo.nombre);
+              var respuesta = table.insertar(simbolo);
               arbolIns.setVariables(simbolo);
             }
           }
@@ -112,14 +113,14 @@ class declarar {
             }
             //! como tengo una variable por declarar me compete agregarla a la tabla de simbolos
             //! la agrego como un objeto simbolo
-            var simbolo = new Simbolos.Simbolo(
+            var simbolo = new Simbolo(
               this.variable,
               value,
               this.tipo,
-              this.line,
+              this.fila,
               this.column
             );
-            var respuesta = Tablita.symbolTable.insertar(simbolo);
+            var respuesta = table.insertar(simbolo);
             arbolIns.setVariables(simbolo);
           }
         }
@@ -161,14 +162,14 @@ class declarar {
             }
             //! como tengo una variable por declarar me compete agregarla a la tabla de simbolos
             //! la agrego como un objeto simbolo
-            var simbolo = new Simbolos.Simbolo(
-              this.variable[i],
+            var simbolo = new Simbolo(
+              this.variable,
               value,
               this.tipo,
-              this.line,
+              this.fila,
               this.column
             );
-            var respuesta = Tablita.symbolTable.insertar(simbolo);
+            var respuesta = table.insertar(simbolo);
             arbolIns.setVariables(simbolo);
           }
         }
@@ -215,17 +216,17 @@ class declarar {
           }
           //! como tengo una variable por declarar me compete agregarla a la tabla de simbolos
           //! la agrego como un objeto simbolo
-          var simbolo = new Simbolos.Simbolo(
-            this.variable[i],
+          var simbolo = new Simbolo(
+            this.variable,
             value,
             this.tipo,
-            this.line,
+            this.fila,
             this.column
           );
-          var respuesta = Tablita.symbolTable.insertar(simbolo);
+          var respuesta = table.insertar(simbolo);
           arbolIns.setVariables(simbolo);
         }
       }
     }
 }
-exports.declarar = declarar;
+exports.Declarar = Declarar;

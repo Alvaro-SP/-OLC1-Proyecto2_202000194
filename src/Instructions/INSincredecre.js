@@ -8,7 +8,7 @@ const val = require("./val");
 const instruccionesAPI = require("../Interpreter/interprete").instruccionesAPI; //las instrucciones de la API
 const nodoAST = require("./ASTGlobal/nodoAST");
 
-class IncreoDecre {
+class INSincredecre {
     constructor(id, op, line, column) {
         this.id = id;
         this.op = op;
@@ -110,4 +110,4 @@ class IncreoDecre {
         }
     }
 }
-exports.IncreoDecre = IncreoDecre;
+exports.INSincredecre = INSincredecre;

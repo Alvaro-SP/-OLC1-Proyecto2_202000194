@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.If = void 0;
+exports.INSif = void 0;
 const nodo = require("./ASTGlobal/nodo");
 const Tipo = require("./ASTGlobal/tiponodo");
 const tipo = require("./ASTGlobal/tiponodo");
@@ -10,7 +10,7 @@ const instruccionesAPI = require("../Interpreter/interprete").instruccionesAPI; 
 const nodoAST = require("./ASTGlobal/nodoAST");
 //! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬5.16 Sentencias de control▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 // *SENTENCIA IF
-class If {
+class INSif {
   constructor(condicion, dentroif, dentroelse, fila, column) {
     this.condicion = condicion;
     this.dentroif = dentroif;
@@ -72,4 +72,4 @@ class If {
     }
   }
 }
-exports.If = If;
+exports.INSif = INSif;
