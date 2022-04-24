@@ -3,9 +3,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.nodo = void 0;
 
 class nodo{
-    constructor(tipo, line, column) {
+    constructor(tipo, fila, column) {
         this.tipo = tipo;
-        this.line = line;
+        this.fila = fila;
         this.column = column;
     }
 }

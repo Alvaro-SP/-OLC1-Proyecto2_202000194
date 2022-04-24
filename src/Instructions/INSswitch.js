@@ -36,8 +36,8 @@ class INSswitch {
         
         for(var i = 0; i < this.cases.length; i++){
             var otrocase = this.cases[i].ejecutar(arbolIns, addtable);
-                                            // new INSRelacional($1, $3, 'IGUAL',  @1.first_line, @1.first_column);
-            var respuestacondi = new INSRelacional.INSRelacional(this.condicion, otrocase.condicion, 'IGUAL', this.line, this.column);
+                                            // new INSRelacional($1, $3, 'IGUAL',  @1.first_fila, @1.first_column);
+            var respuestacondi = new INSRelacional.INSRelacional(this.condicion, otrocase.condicion, 'IGUAL', this.fila, this.column);
             if (respuestacondi.tipo.tipo == Tipo.BOOLEANO) {
                 //* si al ejecutar la condicion relacional se tiene un true entonces se
                 //* debe recorrer cada una de las sentencias dentro de las otras instrucciones del case

@@ -8,9 +8,9 @@ const instruccionesAPI = require("../Interpreter/interprete").instruccionesAPI; 
 const nodoAST = require("./ASTGlobal/nodoAST");
 
 class id {
-  constructor(id, line, column) {
+  constructor(id, fila, column) {
     this.id = id;
-    this.line = line;
+    this.fila = fila;
     this.column = column;
   }
   ejecutar(arbolIns, table) {
@@ -20,12 +20,12 @@ class id {
       arbolIns.setError(
         instruccionesAPI.errorSemantico(
           "No se ha encontrado la variable " + this.id + " se obtuvo null",
-          this.line,
+          this.fila,
           this.column
         )
       );
       return new val(
-        this.line,
+        this.fila,
         this.column,
         Tipo.ERROR,
         "No se ha encontrado la variable " + this.id + " se obtuvo null"

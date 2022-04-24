@@ -9,10 +9,10 @@ const instruccionesAPI = require("../Interpreter/interprete").instruccionesAPI; 
 const nodoAST = require("./ASTGlobal/nodoAST");
 
 class INSincredecre {
-    constructor(id, op, line, column) {
+    constructor(id, op, fila, column) {
         this.id = id;
         this.op = op;
-        this.line = line;
+        this.fila = fila;
         this.column = column;
     }
     ejecutar(arbolIns, table) {
@@ -66,7 +66,7 @@ class INSincredecre {
                   )
                 );
                 return new val(
-                  this.line,
+                  this.fila,
                   this.column,
                   Tipo.ERROR,
                   "(ERROR SEMANTICO) No se puede aumentar/disminuir a una variable de tipo " +
@@ -83,7 +83,7 @@ class INSincredecre {
                 )
               );
               return new val(
-                this.line,
+                this.fila,
                 this.column,
                 Tipo.ERROR,
                 "(ERROR SEMANTICO) No se puede aumentar/disminuir a una variable de tipo " +
@@ -96,12 +96,12 @@ class INSincredecre {
               instruccionesAPI.errorSemantico(
                 "La variable no existe osea no ha sido declarada " +
                   this.id,
-                this.line,
+                this.fila,
                 this.column
               )
             );
             return new val(
-              this.line,
+              this.fila,
               this.column,
               Tipo.ERROR,
               "(ERROR SEMANTICO) La variable no existe osea no ha sido declarada " +

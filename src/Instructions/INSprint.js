@@ -13,32 +13,33 @@ const nodoAST = require("./ASTGlobal/nodoAST")
 //*************************************************************************** 
 //!------------------------------- INSTRUCCION PRINT----------------------------
 class INSprint  {
-    constructor(data, line, column, isln){
+    constructor(data, fila, column, isln){
         this.data=data;
-        this.line=line;
+        this.fila=fila;
         this.column=column;
         this.isln = isln;
         if(this.data != null){
         }
         else{
                                 //fila, column, tipo, valor
-            this.data = new val( line, column, Tipo.VOID,' ')
+            this.data = new val( fila, column, Tipo.VOID,' ')
         }
     }
     ejecutar(arbolIns, table){
         var value
+        var valortemp
         // console.log(this.data)
         if(this.data instanceof id){
-            console.log(arbolIns.symbolTable)
-            var valorvariable = table.getSimbol(this.data.id);
-            value = valorvariable.data;
+            // console.log(arbolIns.symbolTable)
+            // var valorvariable = table.getSimbol(this.data.id);
+            valortemp = this.data.ejecutar(arbolIns, table);
+            value = valortemp;
         }else{
-            let valortemp = this.data.ejecutar(arbolIns, table);
+            valortemp = this.data.ejecutar(arbolIns, table);
             value = valortemp;
         }
         // Using recursivity i gonna to execute my methods for to show in console
-        
-        console.log(value)
+
         if(value != Tipo.ERROR){
             if (this.isln) {
                 arbolIns.console.push(value+'\n'); // add value to console
@@ -46,8 +47,9 @@ class INSprint  {
                 arbolIns.console.push(value); // add value to console
             }
         }else{
-            arbolIns.setError(instruccionesAPI.errorSemantico("Sin ejecucion, NULO ",this.line,this.column));
-            arbolIns.console.push("(ERROR SEMANTICO) NULO  "+this.line+' : '+this.column);
+            arbolIns.setError(instruccionesAPI.errorSemantico("Sin ejecucion, NULO ",this.fila,this.column));
+            arbolIns.console.push(value);
+            arbolIns.console.push("(ERROR SEMANTICO) NULO  "+this.fila+' : '+this.column);
         }
         return null;
     }

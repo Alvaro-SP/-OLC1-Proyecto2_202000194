@@ -1,4 +1,6 @@
 var InstructionAST = require('../Instructions/ASTGlobal/InstructionAST')
+var INSContinue = require('../Instructions/Continue')
+var INSbreak = require('../Instructions/Break')
 var aErrores = require('../Instructions/Errores/Errorlist')
 var parser = require('../Interpreter/myGrammar');
 var Tablita = require("../Instructions/TS/TablaSimbolos");
@@ -34,28 +36,28 @@ const instruccionesAPI = {
 				console.log(arbolIns)
 				// si mi tetorno JISON es un arbol entonces prosigo
 
-				//Ahora necesito correr cada una de mis lineas y mandarlas a ejecutar
+				//Ahora necesito correr cada una de mis filaas y mandarlas a ejecutar
 				//esto se me ocurre colocar a cada clase (AMBITO E INSTRUCCION) una funcion ejecucion
 				// el cual empezara con la ejecucion del mismo y se tenga un orden por cada ambito y lugar el cual corresponda realizarlo
 				// Map...
 				if (arbolIns.ins != null){
 					arbolIns.ins.map((instruccion) => {
 						try {
-							console.log(instruccion)
-							console.log("---------------------------------")
+							// console.log(instruccion)
+							// console.log("---------------------------------")
 							var retornado = instruccion.ejecutar(arbolIns, table);
+							if(retornado instanceof INSContinue.Continue){
+								arbolIns.setError(instruccionesAPI.errorSemantico("No se puede tener el continue fuera de un ciclo ",retornado.fila,retornado.column));
+								arbolIns.console.push("(ERROR SEMANTICO) No se puede tener el continue fuera de un ciclo  "+retornado.fila+' : '+retornado.column);
+							}else if(retornado instanceof INSbreak.Break){
+								arbolIns.setError(instruccionesAPI.errorSemantico("No se puede tener el break fuera de un ciclo ",retornado.fila,retornado.column));
+								arbolIns.console.push("(ERROR SEMANTICO) No se puede tener el continue fuera de un ciclo  "+retornado.fila+' : '+retornado.column);
+							}
 						} catch (error) {
 						//* si no se pudo ejecutar una instruccion simplemente se agregara al error sintactico
 						//* y luego seguira recorriendo las demas instrucciones para que no se quede trabado :v
 						console.log(error);
 						var sintacticerror ="Detectado error Sintactico para la instruccion actual NO se puede recuperar. Salto a la siguiente.";
-						console.error(
-							"Este es un error sintactico: " +
-							"Irrecuperable" +
-							", en la linea: " +
-							"a" +
-							", en la columna: " +
-							"a");
 						arbolIns.setError(this.errorsintactico(sintacticerror, 0, 0));
 						arbolIns.console.push(error + "\n" + sintacticerror + " ");
 						}
@@ -77,29 +79,29 @@ const instruccionesAPI = {
             return;
         }
     },
-	errorLexico:function(error,line, column){
+	errorLexico:function(error,fila, column){
 		return{
 			tipo: "LEXICO",
 			error: error,
-			line: line,
+			fila: fila,
 			column: column
 		};
 	},
-	errorsintactico: function(error,line,column){
+	errorsintactico: function(error,fila,column){
 		console.log("ERROR SINTACTICO");
 		return{
 			tipo: "SINTACTICO",
 			error: error,
-			line: line,
+			fila: fila,
 			column: column
 		};
 	},
-	errorSemantico: function(error,line,column){
+	errorSemantico: function(error,fila,column){
 		console.log("ERROR SEMANTICO");
 		return{
 			tipo: "SEMANTICO",
 			error: error,
-			line: line,
+			fila: fila,
 			column: column
 		};
 	},

@@ -13,27 +13,27 @@ const INSRelacional = require('../Instructions/INSRelacional');
 const INSBreak = require('./Break');
 const objMetodo = require('../Instructions/objMetodo');
 class metodos{
-    constructor(variable,param,tipo,ins, line, column) {
+    constructor(variable,param,tipo,ins, fila, column) {
         this.tipo = tipo;
         this.variable = variable;
         this.param = param;
         this.ins = ins;
-        this.line = line;
+        this.fila = fila;
         this.column = column;
     }
     ejecutar(arbolIns,table) {
         var value;
         value=this.variable.toString()
         if(value==null){
-            arbolIns.setError(instruccionesAPI.errorSemantico("No se ha encontrado la variable " + this.variable + " se obtuvo null",this.line,this.column));
-            return new val(this.line,this.column,Tipo.ERROR,"No se ha encontrado la variable " + this.variable + " se obtuvo null");
+            arbolIns.setError(instruccionesAPI.errorSemantico("No se ha encontrado la variable " + this.variable + " se obtuvo null",this.fila,this.column));
+            return new val(this.fila,this.column,Tipo.ERROR,"No se ha encontrado la variable " + this.variable + " se obtuvo null");
         }else{
             value+="_M2412"// mi id que se le asigna a todos los metodos :)
             //* verifico que el metodo no exista en la tabla de simbolos
             var metodo=table.getSimbol(value);
             if(metodo!=null){
-                arbolIns.setError(instruccionesAPI.errorSemantico("No se ha encontrado el metodo " + this.variable + " se obtuvo null",this.line,this.column));
-                return new val(this.line,this.column,Tipo.ERROR,"No se ha encontrado el metodo " + this.variable + " se obtuvo null");
+                arbolIns.setError(instruccionesAPI.errorSemantico("No se ha encontrado el metodo " + this.variable + " se obtuvo null",this.fila,this.column));
+                return new val(this.fila,this.column,Tipo.ERROR,"No se ha encontrado el metodo " + this.variable + " se obtuvo null");
             }else{
                 //* ahora que ya se que no existe procedo a crear mi objeto parametro-instrucciones
                 var metodo=new objMetodo.objMetodo(this.param,this.ins);
@@ -41,13 +41,13 @@ class metodos{
                 if(this.tipo == null){
                     //*es unn metodo         (id, data, tipo,  fila, column)
                     //! la agrego como un objeto simbolo
-                    var simbolo = new Simbolos.Simbolo(value,metodo,Tipo.METODO,this.line,this.column);
+                    var simbolo = new Simbolos.Simbolo(value,metodo,Tipo.METODO,this.fila,this.column);
                     table.insertar(simbolo);
                 }else{
                     //! la agrego como un objeto simbolo
-                    var simbolo = new Simbolos.Simbolo(value,metodo,Tipo(tipo.FUNCION),this.line,this.column);
+                    var simbolo = new Simbolos.Simbolo(value,metodo,Tipo.FUNCION,this.fila,this.column);
                     //*es una funcion
-                    table.insertar(value,metodo,Tipo(tipo.FUNCION),this.line,this.column);
+                    table.insertar(value,metodo,Tipo.FUNCION,this.fila,this.column);
                 }
             }
         }

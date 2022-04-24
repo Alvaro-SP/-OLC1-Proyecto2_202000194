@@ -26,11 +26,10 @@ ejecutar(arbolIns, table) {
     //* si la variable es un array eso significa de que son varias asignaciones.
     if(this.variable instanceof Array){
         for (let i = 0; i < this.variable.length; i++) {
-            
             //! Primero verifico de que no de ningun tipo de errores la EJECUCION
             if (value.valor != Tipo.ERROR) {
                 //! Busco en mi lista Simbolos el valor para saber el tipo a asignar.
-                var tipoasignar = Tablita.TablaSimbolos().getSimbol(this.variable[i]); // envio el nombre de la variable
+                var tipoasignar = table.getSimbol(this.variable[i]); // envio el nombre de la variable
 
                 if (this.valor == null) {
                 //! si el valor es nulo es porque no hay nada que asignar
@@ -100,29 +99,18 @@ ejecutar(arbolIns, table) {
                 }
             }
 
-
-
-
-
-
-
-
-
-
-
-
         }
     }//* sino entonces voy a asignar una variable normalmente.
     else{
       //! Primero verifico de que no de ningun tipo de errores la EJECUCION
         if (value.valor != Tipo.ERROR) {
             //! Busco en mi lista Simbolos el valor para saber el tipo a asignar.
-            var tipoasignar = Tablita.TablaSimbolos().getSimbol(this.variable); // envio el nombre de la variable
+            var tipoasignar = table.getSimbol(this.variable); // envio el nombre de la variable
 
             if (this.valor == null) {
             //! si el valor es nulo es porque no hay nada que asignar
             //* si lo encontro entonces asigno su tipo correspondiente:
-            if (tipoasignar != null) {
+            if (tipoasignar != null || tipoasignar!=undefined) {
                 //! procedo a agregar valores por defecto.
                 if (tipoasignar.tipo == Tipo.INT) {
                 this.valor = new val(this.fila, this.column, Tipo.INT, 0);

@@ -10,10 +10,10 @@ const instruccionesAPI = require("../Interpreter/interprete").instruccionesAPI; 
 const nodoAST = require("./ASTGlobal/nodoAST");
 
 class INSCase {
-    constructor(condicion, ins, line, column) {
+    constructor(condicion, ins, fila, column) {
         this.condicion = condicion;
         this.ins = ins;
-        this.line = line;
+        this.fila = fila;
         this.column = column;
     }
     execute(arbolIns, table) {

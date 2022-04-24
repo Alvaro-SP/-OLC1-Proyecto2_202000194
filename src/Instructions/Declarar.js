@@ -31,11 +31,7 @@ class Declarar {
               //! si o si el tipo del valor debe ser igual al tipo del la ejecucion.
               if (this.valor.tipo != this.tipo) {
                 //! verifico si el tipo del valor es un double o entero y es del mismo tipo que el tipo de la declaracion
-                if (
-                  this.tipo == Tipo.DOUBLE &&
-                  (this.valor.tipo == Tipo.DOUBLE ||
-                    this.valor.tipo == Tipo.INT)
-                ) {
+                if (this.tipo == Tipo.DOUBLE &&(this.valor.tipo == Tipo.DOUBLE ||this.valor.tipo == Tipo.INT)) {
                   this.valor.tipo = Tipo.DOUBLE; // por defecto asigno el double
                 } //! ahora sino, asigno ERROR SEMANTICO
                 else {
@@ -131,22 +127,19 @@ class Declarar {
           let valortemp = this.valor.ejecutar(arbolIns, table);
           var value = valortemp;
           //! Primero verifico de que no de ningun tipo de errores la EJECUCION
-          if (value.valor != Tipo.ERROR) {
+          if (value != Tipo.ERROR) {
             //! si o si el tipo del valor debe ser igual al tipo del la ejecucion.
-            if (this.valor.tipo != this.tipo) {
+            if (this.valor.tipo.tipo != this.tipo.tipo) {
               //! verifico si el tipo del valor es un double o entero y es del mismo tipo que el tipo de la declaracion
-              if (
-                this.tipo == Tipo.DOUBLE &&
-                (this.valor.tipo == Tipo.DOUBLE ||
-                  this.valor.tipo == Tipo.INT)
-              ) {
-                this.valor.tipo = Tipo.DOUBLE; // por defecto asigno el double
+              if (this.tipo == Tipo.DOUBLE &&(this.valor.tipo.tipo == Tipo.DOUBLE ||
+                  this.valor.tipo.tipo == Tipo.INT)) {
+                this.valor.tipo.tipo = Tipo.DOUBLE; // por defecto asigno el double
               } //! ahora sino, asigno ERROR SEMANTICO
               else {
                 arbolIns.setError(
                   instruccionesAPI.errorSemantico(
                     "No se puede Declarar la variable (tipo incompatible), de tipo " +
-                      value.tipo,
+                      value.tipo.tipo,
                     this.fila,
                     this.column
                   )
@@ -156,19 +149,13 @@ class Declarar {
                   this.column,
                   Tipo.ERROR,
                   "No se puede Declarar la variable (tipo incompatible), de tipo  " +
-                    value.tipo
+                    value.tipo.tipo
                 );
               }
             }
             //! como tengo una variable por declarar me compete agregarla a la tabla de simbolos
             //! la agrego como un objeto simbolo
-            var simbolo = new Simbolo(
-              this.variable,
-              value,
-              this.tipo,
-              this.fila,
-              this.column
-            );
+            var simbolo = new Simbolo(this.variable,value,Tipo.VARIABLE,this.fila,this.column);
             var respuesta = table.insertar(simbolo);
             arbolIns.setVariables(simbolo);
           }

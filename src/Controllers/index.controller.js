@@ -7,6 +7,7 @@ var InstructionsAST = require('../Instructions/ASTGlobal/InstructionAST')
 var arbolIns//= new InstructionsAST.InstructionAST();
 var cadena=""
 var base = "";
+var ac=0;
 // ? ████████████████████████████████ INDEX GET ████████████████████████████████    
 exports.index = async(req, res) => {
     //! SI LA CONSOLA NO ES VACIA, ENTONCES DEVUELVO LA CONSOLA
@@ -53,7 +54,7 @@ exports.analizar= async(req, res) => {
     cadena = req.body.codigo.toString()  //este jalo xdxd
     // const texto = req.body.text;
     // console.log("1. Cadena de Entrada (el codigo): " + texto);
-    console.log("2. Cadena de Entrada (el codigo): " + cadena);
+    console.log("2. Cadena de Entrada (el codigo): \n" + cadena);
     arbolIns =  interprete.instruccionesAPI.setInsAST(cadena);
     //*GENERO LA IMAGEN LA CUAL SE VA A MOSTRAR EN EL FRONTEND DEL AST
     var imagenast= arbolIns.genDot();
@@ -61,31 +62,32 @@ exports.analizar= async(req, res) => {
     var datos = imagenast.node+"\n"+imagenast.enlace;
     var relleno="\nlayout=dot     \nfontcolor=\"black\"   \nlabel=\"ARBOL DE DERIVACI�N\"      \nlabelloc = \"t\"  \nbgcolor=\"orange:red\"      \nedge [weight=1000 style=radial color=black ]  \nnode [shape=ellipse style=\"filled\"  color=\"green:lightblue\" gradientangle=\"315\"]   "
     var data= "digraph G {\n"+ relleno + datos + "\n}";
-    console.log("********************************************************");
-    console.log(data)
+    // console.log("********************************************************");
+    // console.log(data)
 
-    fs.writeFile('ast.dot', data, function (err) {
-        if (err) throw err;
-    })
-    exec('dot -Tpng ast.dot -o ast.png', (error, stdout,stderr)=>{
-        if (error) {
-            console.log(`error: ${error.message}`)
-            return
-        }
-        if (stderr) {
-            console.log(`error: ${stderr}`)
-            return
-        }
-        console.log(stdout)
-    })
-    
+    // fs.writeFile('AST_'+ac+'.dot', data, function (err) {
+    //     if (err) throw err;
+    // })
+    // exec('dot -Tpng AST_'+ac+'.dot -o AST_'+ac+'.png', (error, stdout,stderr)=>{
+    //     if (error) {
+    //         console.log("error: "+error.message)
+    //         return
+    //     }
+    //     if (stderr) {
+    //         console.log("error: "+stderr)
+    //         return
+    //     }
+    //     console.log(stdout)
+    // })
+
     try {
-        var bitmap = fs.readFileSync('ast.png');
+        ac++;
+        var bitmap = fs.readFileSync('AST_'+ac+'.png');
         // paso a bin la imagen :v
         base =  new Buffer.from(bitmap).toString('base64'); 
         // arbolIns.ast= base
     } catch (error) {
-        console.log(error);
+        // console.log(error);
     }
 
     //* necesito retornar

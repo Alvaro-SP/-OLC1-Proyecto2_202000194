@@ -10,14 +10,14 @@ const nodoAST = require("./ASTGlobal/nodoAST");
 //! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬  5.7 Operador Ternario  ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 class INSTernario {
     //!<CONDICION> ‘?’ <EXPRESION> ‘:’ <EXPRESION>
-    constructor(condicion, secumple, nosecumple, line, column) {
+    constructor(condicion, secumple, nosecumple, fila, column) {
         //* El operador ternario es un operador que hace uso de 3 operandos para simplificar la
         //*  instrucción ‘if’ por lo que a menudo este operador se le considera como un atajo para
         //*  la instrucción ‘if’.
         this.condicion = condicion;
         this.secumple = secumple;
         this.nosecumple = nosecumple;
-        this.line = line;
+        this.fila = fila;
         this.column = column;
     }
     ejecutar(arbolIns,table){

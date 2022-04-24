@@ -77,15 +77,15 @@ class llamar {
                                         if (funcion.tipo.tipo == Tipo.DOUBLE && (respuesta2.valor.tipo.tipo == Tipo.INT)) {
                                             return respuesta2.newvalor;
                                         }
-                                        arbolIns.setError(instruccionesAPI.errorSemantico("El tipo de retorno y el de la funcion no son iguales tipo funcion:"+funcion.tipo.tipo+" y tipo del retorno: "+respuesta2.valor.tipo.tipo ,this.line,this.column));
-                                        return new val(this.line,this.column,Tipo.ERROR,"(ERROR SEMANTICO) El tipo de retorno y el de la funcion no son iguales tipo funcion:"+funcion.tipo.tipo+" y tipo del retorno: "+respuesta2.valor.tipo.tipo);
+                                        arbolIns.setError(instruccionesAPI.errorSemantico("El tipo de retorno y el de la funcion no son iguales tipo funcion:"+funcion.tipo.tipo+" y tipo del retorno: "+respuesta2.valor.tipo.tipo ,this.fila,this.column));
+                                        return new val(this.fila,this.column,Tipo.ERROR,"(ERROR SEMANTICO) El tipo de retorno y el de la funcion no son iguales tipo funcion:"+funcion.tipo.tipo+" y tipo del retorno: "+respuesta2.valor.tipo.tipo);
                                     }
                                 }
                             }
                             //! falta retornos
                         } catch (error) {
-                            arbolIns.setError(instruccionesAPI.errorSemantico("Error semantico dentro del metodo: "+this.variable.id,this.line,this.column));
-                            return new val(this.line,this.column,Tipo.ERROR,"Error semantico dentro del metodo: "+this.variable.id);
+                            arbolIns.setError(instruccionesAPI.errorSemantico("Error semantico dentro del metodo: "+this.variable.id,this.fila,this.column));
+                            return new val(this.fila,this.column,Tipo.ERROR,"Error semantico dentro del metodo: "+this.variable.id);
                             // console.log(error);
                         }
                     }

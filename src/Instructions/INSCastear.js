@@ -20,7 +20,6 @@ class INSCastear {
     if(this.valor!= null){
       let valortemp = this.valor.ejecutar(arbolIns, table);
       var value = valortemp;
-
       //* El lenguaje aceptará los siguientes casteos:
         //? • Int a double
         //? • Int a String
