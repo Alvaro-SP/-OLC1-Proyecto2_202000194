@@ -1,0 +1,56 @@
+digraph G {
+
+layout=dot     
+fontcolor="black"   
+label="ARBOL DE DERIVACI�N"      
+labelloc = "t"  
+bgcolor="orange:red"      
+edge [weight=1000 style=radial color=black ]  
+node [shape=ellipse style="filled"  color="green:lightblue" gradientangle="315"]   node_0[label="ARBOL SINTACTICO"]
+node_1[label="INSTRUCCIONES"]
+node_2[label="INSTRUCCIONES"]
+node_3[label="INSTRUCCIONES"]
+node_4[label="INSTRUCCION"]
+node_5[label="PRINT"]
+node_6[label="print"]
+node_7[label="("]
+node_8[label="EXPRESION"]
+node_9[label=")"]
+node_10[label="INSTRUCCION"]
+node_11[label="PRINT"]
+node_12[label="print"]
+node_13[label="("]
+node_14[label="EXPRESION"]
+node_15[label=")"]
+node_16[label="INSTRUCCION"]
+node_17[label="DECLARACION"]
+node_18[label="int"]
+node_19[label="comando"]
+node_20[label="="]
+node_21[label="EXPRESION"]
+node_22[label=";"]
+
+node_0->node_1
+node_1->node_2
+node_2->node_3
+node_3->node_4
+node_4->node_5
+node_5->node_6
+node_5->node_7
+node_5->node_8
+node_5->node_9
+node_2->node_10
+node_10->node_11
+node_11->node_12
+node_11->node_13
+node_11->node_14
+node_11->node_15
+node_1->node_16
+node_16->node_17
+node_17->node_18
+node_17->node_19
+node_17->node_20
+node_17->node_21
+node_17->node_22
+
+}
