@@ -1,10 +1,19 @@
 import React, {Fragment, useEffect, useState} from 'react'
 import {Table } from 'semantic-ui-react'
 import './style.css';
-const API = 'http://localhost:4000';
+const API = "http://localhost:4000/";
 
 export const Symbols = (props)=>{
-    
+    const getMetodo = async () => {
+        const res = await fetch(`${API}`);
+        const data = await res.json();
+        props=data;
+        // setParameter(String(props.match.params.id))
+      };
+    useEffect(() => {
+        getMetodo();
+        // eslint-disable-next-line
+      }, []);
     return (
         <Fragment>
     <head>
@@ -31,7 +40,7 @@ export const Symbols = (props)=>{
                 </tr>
             </thead>
         <tbody>
-            <tr>
+            {/* <tr>
                     <td>1</td>
                     <td>Primero</td>
                     <td>comentariomultilinea</td>
@@ -45,9 +54,9 @@ export const Symbols = (props)=>{
                     <td>4</td>
                     <td>9</td>
                     </tr> <tr>
-            </tr>
+            </tr> */}
             {
-            props.SIMBOLOS.length>0?(
+            props.SIMBOLOS!=null?(
                 props.SIMBOLOS.map((atributos,index)=>
                     <Table.Row>
                         <Table.Cell>{index+1}</Table.Cell>
@@ -60,7 +69,16 @@ export const Symbols = (props)=>{
                     </Table.Row>
                     )
             ):(
-                <div><h1>No se encontro ningun simbolo que sirva durante la ejecucion.</h1></div>
+                // <div><h1>No se encontro ningun simbolo que sirva durante la ejecucion.</h1></div>
+                <Table.Row>
+                    <Table.Cell>{0}</Table.Cell>
+                    <Table.Cell>No se encontro ningun simbolo que sirva durante la ejecucion.</Table.Cell>
+                    <Table.Cell>0</Table.Cell>
+                    <Table.Cell>0</Table.Cell>
+                    <Table.Cell>0</Table.Cell>
+                    <Table.Cell>0</Table.Cell>
+                    <Table.Cell>0</Table.Cell>
+                </Table.Row>
             )
         }
         </tbody>

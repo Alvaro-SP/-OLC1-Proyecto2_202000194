@@ -4,16 +4,40 @@ const {exec} = require('child_process')
 var parser = require('../Interpreter/myGrammar');
 var interprete = require('../Interpreter/interprete')
 var InstructionsAST = require('../Instructions/ASTGlobal/InstructionAST')
-
+var arbolIns//= new InstructionsAST.InstructionAST();
+var cadena=""
+var base = "";
 // ? ████████████████████████████████ INDEX GET ████████████████████████████████    
 exports.index = async(req, res) => {
     //! SI LA CONSOLA NO ES VACIA, ENTONCES DEVUELVO LA CONSOLA
-
-    if(interprete.instruccionesAPI.getAST().getConsole()== []){
-        res.send({"Salida2":interprete.instruccionesAPI.getConsole().toString(), "interprete": interprete.instruccionesAPI.getAST().getConsole()});
+    console.log("INDEX");
+    console.log(arbolIns)
+    console.log()
+    if(arbolIns){
+        res.send({
+            CADENA:cadena,
+            Salida: "COMPILADO",
+            VARIABLES: arbolIns.variables ,
+            ERRORES: arbolIns.error,
+            Consola: arbolIns.console,
+            SIMBOLOS: arbolIns.symbolTable,
+            AST: base
+        });
+        // res.send({"Salida2":interprete.instruccionesAPI.getConsole().toString(), "arbol": interprete.instruccionesAPI.getAST()});
     }else{
-        res.send({"Salida2": "Server Active: aun no se ha ejecutado nada"});
+        res.send({
+            CADENA:cadena,
+            Salida: "COMPILADO",
+            VARIABLES: [] ,
+            ERRORES: [],
+            Consola: ['Aun no se ejecuta NADA el BACKEND is READY !!!.'],
+            SIMBOLOS: [],
+            AST: "",
+        });
+        // res.send({"Salida2": "Server Active: aun no se ha ejecutado nada", "arbol": interprete.instruccionesAPI.getAST()});
     }
+    
+    
     // res.send({Estado: interprete.instruccionesAPI.getActive(), Message: 'Server On Port todo fresh...'});
     // fs.readFile('./Public/entrada.txt', (err, data) => {
     //     if (err) res.send({state: false, err: err});
@@ -26,11 +50,11 @@ exports.analizar= async(req, res) => {
     console.log("▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬REQUEST▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
     console.log(req.body.codigo);
     // cadena = JSON.stringify(req.body.codigo);  //vere cual de los dos funcio
-    const cadena = req.body.codigo.toString()  //este jalo xdxd
+    cadena = req.body.codigo.toString()  //este jalo xdxd
     // const texto = req.body.text;
     // console.log("1. Cadena de Entrada (el codigo): " + texto);
     console.log("2. Cadena de Entrada (el codigo): " + cadena);
-    const arbolIns =  interprete.instruccionesAPI.setInsAST(cadena);
+    arbolIns =  interprete.instruccionesAPI.setInsAST(cadena);
     //*GENERO LA IMAGEN LA CUAL SE VA A MOSTRAR EN EL FRONTEND DEL AST
     var imagenast= arbolIns.genDot();
     //* GENERO EL ARCHIVO DOT
@@ -54,7 +78,7 @@ exports.analizar= async(req, res) => {
         }
         console.log(stdout)
     })
-    let base;
+    
     try {
         var bitmap = fs.readFileSync('ast.png');
         // paso a bin la imagen :v
@@ -67,7 +91,7 @@ exports.analizar= async(req, res) => {
     //* necesito retornar
     if(arbolIns ){
         res.send({
-            cadena,
+            CADENA:cadena,
             Salida: "COMPILADO",
             VARIABLES: arbolIns.variables ,
             ERRORES: arbolIns.error,
@@ -77,7 +101,7 @@ exports.analizar= async(req, res) => {
         });
     }else{
         res.send({
-            cadena,
+            CADENA:cadena,
             Salida: "COMPILADO",
             VARIABLES: arbolIns.variables ,
             ERRORES: arbolIns.error,

@@ -16,21 +16,22 @@ export const Home = (props) => {
   var compilar = (e) => {
     alert(currentText);
     e.preventDefault();
-    fetch(`${API}` + '/analizar', {
+    fetch(`${API}` + 'analizar', {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        Entrada: currentText,
+        codigo: currentText,
       }),
     })
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        setConsola(data["Salida"]);
-        setErrores(data["Errores"]);
-        setSymbols(data["Simbolos"]);
+        setCurrentText(data["CADENA"]);
+        setSalida2(data["Consola"]);
+        setErrores(data["ERRORES"]);
+        setSymbols(data["SIMBOLOS"]);
         setAst(data["AST"]);
       });
   };
@@ -39,8 +40,11 @@ export const Home = (props) => {
     const res = await fetch(`${API}`);
     const data = await res.json();
     console.log(data);
-    setSalida(data["Salida"]);
-    setSalida2(data["Salida2"]);
+    setCurrentText(data["CADENA"]);
+    setSalida2(data["Consola"]);
+    setErrores(data["ERRORES"]);
+    setSymbols(data["SIMBOLOS"]);
+    setAst(data["AST"]);
     // setParameter(String(props.match.params.id))
   };
   const handleChange = (e) => {

@@ -47,7 +47,7 @@ class Declarar {
                       this.column
                     )
                   );
-                  return new val(
+                  return new val.val(
                     this.fila,
                     this.column,
                     Tipo.ERROR,
@@ -75,35 +75,35 @@ class Declarar {
             //! sin ningun tipo de valor  (VALORES POR DEFECTO).
             if (this.valor.valor == null) {
               if (this.tipo == Tipo.INT) {
-                this.valor.valor = new val(
+                this.valor.valor = new val.val(
                   this.fila,
                   this.column,
                   Tipo.INT,
                   0
                 );
               } else if (this.tipo == Tipo.DOUBLE) {
-                this.valor.valor = new val(
+                this.valor.valor = new val.val(
                   this.fila,
                   this.column,
                   Tipo.DOUBLE,
                   0.0
                 );
               } else if (this.tipo == Tipo.BOOLEAN) {
-                this.valor.valor = new val(
+                this.valor.valor = new val.val(
                   this.fila,
                   this.column,
                   Tipo.BOOLEAN,
                   true
                 );
               } else if (this.tipo == Tipo.CARACTER) {
-                this.valor.valor = new val(
+                this.valor.valor = new val.val(
                   this.fila,
                   this.column,
                   Tipo.CARACTER,
                   ""
                 );
               } else if (this.tipo == Tipo.STRING) {
-                this.valor.valor = new val(
+                this.valor.valor = new val.val(
                   this.fila,
                   this.column,
                   Tipo.STRING,
@@ -151,7 +151,7 @@ class Declarar {
                     this.column
                   )
                 );
-                return new val(
+                return new val.val(
                   this.fila,
                   this.column,
                   Tipo.ERROR,
@@ -178,35 +178,35 @@ class Declarar {
           //! sin ningun tipo de valor  (VALORES POR DEFECTO).
           if (this.valor.valor == null) {
             if (this.tipo == Tipo.INT) {
-              this.valor.valor = new val(
+              this.valor.valor = new val.val(
                 this.fila,
                 this.column,
                 Tipo.INT,
                 0
               );
             } else if (this.tipo == Tipo.DOUBLE) {
-              this.valor.valor = new val(
+              this.valor.valor = new val.val(
                 this.fila,
                 this.column,
                 Tipo.DOUBLE,
                 0.0
               );
             } else if (this.tipo == Tipo.BOOLEAN) {
-              this.valor.valor = new val(
+              this.valor.valor = new val.val(
                 this.fila,
                 this.column,
                 Tipo.BOOLEAN,
                 true
               );
             } else if (this.tipo == Tipo.CARACTER) {
-              this.valor.valor = new val(
+              this.valor.valor = new val.val(
                 this.fila,
                 this.column,
                 Tipo.CARACTER,
                 ""
               );
             } else if (this.tipo == Tipo.STRING) {
-              this.valor.valor = new val(
+              this.valor.valor = new val.val(
                 this.fila,
                 this.column,
                 Tipo.STRING,

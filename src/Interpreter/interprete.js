@@ -17,12 +17,16 @@ const instruccionesAPI = {
 			//! en este caso genero mi arbol AST el cual contiene todos los datos de 
 			//! las acciones que voy a ejecutar y asi poder generar mis reportes
             var respuestaJISON=parser.parse(data.toString()); //retorna algo asi: [arbolIns, nodoAST]
-			arbolIns=respuestaJISON[0];
-			NodosAST=respuestaJISON[1];
-			console.log("respuestaJISON[0]")
-			console.log(respuestaJISON[0])
-			console.log("respuestaJISON[1]")
-			console.log(respuestaJISON[1])
+			if(respuestaJISON instanceof Array){
+				arbolIns=respuestaJISON[0];
+				NodosAST=respuestaJISON[1];
+				console.log("respuestaJISON[0]")
+				console.log(respuestaJISON[0])
+				console.log("respuestaJISON[1]")
+				console.log(respuestaJISON[1])
+			}else{
+				arbolIns=respuestaJISON;
+			}
 
 			//! Creo mi tabla de simbolos la cual me servira para mi patron interprete
 			table = new Tablita.TablaSimbolos(null);
@@ -63,13 +67,11 @@ const instruccionesAPI = {
 			}// sino entonces voy a ver los errores sintacticos
 			else{
 				console.log("problema")
-				// if(arbolIns != null){
-					
-				// 	arbolInsSIHAYERRORES.setError(arbolIns);
-				// 	return arbolInsSIHAYERRORES
-				// }
+				if(arbolIns != null){
+					arbolInsSIHAYERRORES.setError(arbolIns);
+					return arbolInsSIHAYERRORES
+				}
 			}
-			
         } catch (error) {
             console.log(error);
             return;

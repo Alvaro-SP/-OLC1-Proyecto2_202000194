@@ -425,7 +425,7 @@ expresion																				/*aqui es UNARIA XD*/
     // | expresion NOT IGUAL expresion	   	                { $$ = [new INSRelacional($1, $3, 'NEGACION',  @1.first_line, @1.first_column)]; }
     | expresion OR expresion	  			                { $$ = [new INSLogico($1[0], $3[0], 'NOT', @1.first_line, @1.first_column), new nodoAST('EXPRESION', [$1[1],new nodoAST($2,null),$3[1]])]; }
     | expresion AND expresion			                	{ $$ = [new INSLogico($1[0], $3[0], 'NOT', @1.first_line, @1.first_column), new nodoAST('EXPRESION', [$1[1],new nodoAST($2,null),$3[1]])]; }
-	| PARA tipo PARC expresion								{ $$ = [new INSCastear($2[0], $4[0], @1.first_line, @1.first_column), new nodoAST('EXPRESION', [new nodoAST($1,null),$2[1],new nodoAST($3,null),$4[1]])]; } /* (int) 18.6*//*(<TIPO>) <EXPRESION>*/
+	| PARIZQ tipo PARDER expresion								{ $$ = [new INSCastear($2[0], $4[0], @1.first_line, @1.first_column), new nodoAST('EXPRESION', [new nodoAST($1,null),$2[1],new nodoAST($3,null),$4[1]])]; } /* (int) 18.6*//*(<TIPO>) <EXPRESION>*/
 	| VARIABLE                      						{ $$ = [new id($1, @1.first_line, @1.first_column), new nodoAST('EXPRESION', new nodoAST($1,null))]; }
 	| VENTERO                      							{ $$ = [new INSPrimitivos(Tipo.INT, Number($1), @1.first_line, @1.first_column), new nodoAST('EXPRESION', new nodoAST($1,null))]; }
 	| VDOUBLE                       						{ $$ = [new INSPrimitivos(Tipo.DOUBLE, Number($1), @1.first_line, @1.first_column), new nodoAST('EXPRESION', new nodoAST($1,null))]; }
