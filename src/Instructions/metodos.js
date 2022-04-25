@@ -26,14 +26,14 @@ class metodos{
         value=this.variable.toString()
         if(value==null){
             arbolIns.setError(instruccionesAPI.errorSemantico("No se ha encontrado la variable " + this.variable + " se obtuvo null",this.fila,this.column));
-            return new val(this.fila,this.column,Tipo.ERROR,"No se ha encontrado la variable " + this.variable + " se obtuvo null");
+            return new val.val(this.fila,this.column,Tipo.ERROR,"No se ha encontrado la variable " + this.variable + " se obtuvo null");
         }else{
             value+="_M2412"// mi id que se le asigna a todos los metodos :)
             //* verifico que el metodo no exista en la tabla de simbolos
             var metodo=table.getSimbol(value);
             if(metodo!=null){
                 arbolIns.setError(instruccionesAPI.errorSemantico("No se ha encontrado el metodo " + this.variable + " se obtuvo null",this.fila,this.column));
-                return new val(this.fila,this.column,Tipo.ERROR,"No se ha encontrado el metodo " + this.variable + " se obtuvo null");
+                return new val.val(this.fila,this.column,Tipo.ERROR,"No se ha encontrado el metodo " + this.variable + " se obtuvo null");
             }else{
                 //* ahora que ya se que no existe procedo a crear mi objeto parametro-instrucciones
                 var metodo=new objMetodo.objMetodo(this.param,this.ins);

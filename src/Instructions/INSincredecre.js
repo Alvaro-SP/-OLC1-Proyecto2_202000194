@@ -37,7 +37,7 @@ class INSincredecre {
                     this.column
                   )
                 );
-                return new val(
+                return new val.val(
                   this.fila,
                   this.column,
                   Tipo.ERROR,
@@ -65,7 +65,7 @@ class INSincredecre {
                     this.column
                   )
                 );
-                return new val(
+                return new val.val(
                   this.fila,
                   this.column,
                   Tipo.ERROR,
@@ -82,7 +82,7 @@ class INSincredecre {
                   this.column
                 )
               );
-              return new val(
+              return new val.val(
                 this.fila,
                 this.column,
                 Tipo.ERROR,
@@ -100,7 +100,7 @@ class INSincredecre {
                 this.column
               )
             );
-            return new val(
+            return new val.val(
               this.fila,
               this.column,
               Tipo.ERROR,

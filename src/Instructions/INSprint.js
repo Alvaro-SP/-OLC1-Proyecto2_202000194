@@ -22,13 +22,13 @@ class INSprint  {
         }
         else{
                                 //fila, column, tipo, valor
-            this.data = new val( fila, column, Tipo.VOID,' ')
+            this.data = new val.val( fila, column, Tipo.VOID,' ')
         }
     }
     ejecutar(arbolIns, table){
         var value
         var valortemp
-        // console.log(this.data)
+        console.log(this.data)
         if(this.data instanceof id){
             // console.log(arbolIns.symbolTable)
             // var valorvariable = table.getSimbol(this.data.id);
@@ -38,6 +38,8 @@ class INSprint  {
             valortemp = this.data.ejecutar(arbolIns, table);
             value = valortemp;
         }
+        console.log("Este es el valor ejecutado de PRINT: ")
+        console.log(value)
         // Using recursivity i gonna to execute my methods for to show in console
 
         if(value != Tipo.ERROR){

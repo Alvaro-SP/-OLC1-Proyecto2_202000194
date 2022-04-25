@@ -10,6 +10,7 @@ class INSPrimitivos {
         this.column = column;
     }
     ejecutar(arbolIns, table) {
+        console.log("Este es el valor PRIMITIVO: ")
         console.log(this.valor)
         return this.valor;
     }

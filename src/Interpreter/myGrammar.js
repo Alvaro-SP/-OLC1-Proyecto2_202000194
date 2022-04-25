@@ -162,13 +162,13 @@ case 36:
  this.$= [[new Declarar($$[$0-1][0], $$[$0], null,  _$[$0-1].first_line, _$[$0-1].first_column)] , new nodoAST('PARAMETROS',[$$[$0-1][1], new nodoAST($$[$0],null)])]; 
 break;
 case 37:
-this.$ = [new INSif($$[$0-4], $$[$0-1], null, _$[$0-6].first_line, _$[$0-6].first_column), new nodoAST('INS IF',[new nodoAST($$[$0-6],null), new nodoAST($$[$0-5],null), $$[$0-4][1], new nodoAST($$[$0-3],null), new nodoAST($$[$0-2],null), $$[$0-1][1], new nodoAST($$[$0],null) ])]; 
+this.$ = [new INSif($$[$0-4][0], $$[$0-1][0], null, _$[$0-6].first_line, _$[$0-6].first_column), new nodoAST('INS IF',[new nodoAST($$[$0-6],null), new nodoAST($$[$0-5],null), $$[$0-4][1], new nodoAST($$[$0-3],null), new nodoAST($$[$0-2],null), $$[$0-1][1], new nodoAST($$[$0],null) ])]; 
 break;
 case 38:
-this.$ = [new INSif($$[$0-8], $$[$0-5], $$[$0-1], _$[$0-10].first_line, _$[$0-10].first_column) , new nodoAST('INS IF',[new nodoAST($$[$0-10],null), new nodoAST($$[$0-9],null), $$[$0-8][1], new nodoAST($$[$0-7],null), new nodoAST($$[$0-6],null), $$[$0-5][1], new nodoAST($$[$0-4],null), new nodoAST($$[$0-3],null), new nodoAST($$[$0-2],null), $$[$0-1][1], new nodoAST($$[$0],null)])];  
+this.$ = [new INSif($$[$0-8][0], $$[$0-5][0], $$[$0-1][0], _$[$0-10].first_line, _$[$0-10].first_column) , new nodoAST('INS IF',[new nodoAST($$[$0-10],null), new nodoAST($$[$0-9],null), $$[$0-8][1], new nodoAST($$[$0-7],null), new nodoAST($$[$0-6],null), $$[$0-5][1], new nodoAST($$[$0-4],null), new nodoAST($$[$0-3],null), new nodoAST($$[$0-2],null), $$[$0-1][1], new nodoAST($$[$0],null)])];  
 break;
 case 39:
-this.$ = [new INSif($$[$0-6], $$[$0-3], [$$[$0]], _$[$0-8].first_line, _$[$0-8].first_column), new nodoAST('INS IF',[new nodoAST($$[$0-8],null), new nodoAST($$[$0-7],null), $$[$0-6][1], new nodoAST($$[$0-5],null), new nodoAST($$[$0-4],null), $$[$0-3][1], new nodoAST($$[$0-2],null), new nodoAST($$[$0-1],null), $$[$0][1]])]; 
+this.$ = [new INSif($$[$0-6][0], $$[$0-3][0], [$$[$0]], _$[$0-8].first_line, _$[$0-8].first_column), new nodoAST('INS IF',[new nodoAST($$[$0-8],null), new nodoAST($$[$0-7],null), $$[$0-6][1], new nodoAST($$[$0-5],null), new nodoAST($$[$0-4],null), $$[$0-3][1], new nodoAST($$[$0-2],null), new nodoAST($$[$0-1],null), $$[$0][1]])]; 
 break;
 case 41:
  this.$ = [new INSswitch($$[$0-5][0], $$[$0-2][0], $$[$0-1][0], _$[$0-7].first_line, _$[$0-7].first_column)  ,new nodoAST('INS SWITCH',[new nodoAST($$[$0-7],null), new nodoAST($$[$0-6],null), $$[$0-5][1], new nodoAST($$[$0-4],null), new nodoAST($$[$0-3],null), $$[$0-2][1], $$[$0-1][1], new nodoAST($$[$0],null) ])]; 
@@ -228,13 +228,13 @@ case 59:
  this.$ = [new Declarar($$[$0-2][0], $$[$0-1], null,  _$[$0-2].first_line, _$[$0-2].first_column), new nodoAST('DECLARACION',[$$[$0-2][1], new nodoAST($$[$0-1],null), new nodoAST($$[$0],null),])] ; 
 break;
 case 60:
- this.$ = [new Declarar($$[$0-4][0], $$[$0-3], $$[$0-1],  _$[$0-4].first_line, _$[$0-4].first_column)  , new nodoAST('DECLARACION',[$$[$0-4][1], new nodoAST($$[$0-3],null), new nodoAST($$[$0-2],null), $$[$0-1][1], new nodoAST($$[$0],null),])] ;
+ this.$ = [new Declarar($$[$0-4][0], $$[$0-3], $$[$0-1][0],  _$[$0-4].first_line, _$[$0-4].first_column)  , new nodoAST('DECLARACION',[$$[$0-4][1], new nodoAST($$[$0-3],null), new nodoAST($$[$0-2],null), $$[$0-1][1], new nodoAST($$[$0],null),])] ;
 break;
 case 61:
- this.$ = [new Declarar($$[$0-2][0], $$[$0-1], null,  _$[$0-2].first_line, _$[$0-2].first_column), new nodoAST('DECLARACION',[$$[$0-2][1], $$[$0-1][1], new nodoAST($$[$0],null),])] ; 
+ this.$ = [new Declarar($$[$0-2][0], $$[$0-1][0], null,  _$[$0-2].first_line, _$[$0-2].first_column), new nodoAST('DECLARACION',[$$[$0-2][1], $$[$0-1][1], new nodoAST($$[$0],null),])] ; 
 break;
 case 62:
- this.$ = [new Declarar($$[$0-4][0], $$[$0-3], $$[$0-1],  _$[$0-4].first_line, _$[$0-4].first_column)  , new nodoAST('DECLARACION',[$$[$0-4][1], $$[$0-3][1], new nodoAST($$[$0-2],null), $$[$0-1][1], new nodoAST($$[$0],null),])] ; 
+ this.$ = [new Declarar($$[$0-4][0], $$[$0-3][0], $$[$0-1][0],  _$[$0-4].first_line, _$[$0-4].first_column)  , new nodoAST('DECLARACION',[$$[$0-4][1], $$[$0-3][1], new nodoAST($$[$0-2],null), $$[$0-1][1], new nodoAST($$[$0],null),])] ; 
 break;
 case 63: case 64: case 65: case 66: case 67: case 70: case 71: case 103: case 104: case 106: case 107: case 108: case 109: case 110: case 111: case 112: case 113: case 114:
   
@@ -243,25 +243,28 @@ case 68:
  this.$ = [new Asignar($$[$0-3][0], $$[$0-1][0], _$[$0-3].first_line, _$[$0-3].first_column),new nodoAST('DECLARACION',[$$[$0-3][1], new nodoAST($$[$0-2],null), $$[$0-1][1], new nodoAST($$[$0],null)])];  
 break;
 case 69:
- this.$ = [new Asignar($$[$0-3][0], $$[$0-1][0], _$[$0-3].first_line, _$[$0-3].first_column),new nodoAST('DECLARACION',[new nodoAST($$[$0-3],null), new nodoAST($$[$0-2],null), $$[$0-1][1] ,new nodoAST($$[$0],null)])];  
+ this.$ = [new Asignar($$[$0-3], $$[$0-1][0], _$[$0-3].first_line, _$[$0-3].first_column),new nodoAST('DECLARACION',[new nodoAST($$[$0-3],null), new nodoAST($$[$0-2],null), $$[$0-1][1] ,new nodoAST($$[$0],null)])];  
 break;
-case 72: case 74:
- this.$ = [$$[$0-2][0],new nodoAST('LIST VALORES',[$$[$0-2][1],new nodoAST($$[$0-1],null),$$[$0-1][1]])] ; $$[$0-2][0].push($$[$0][0]);
+case 72:
+ this.$ = [$$[$0-2][0],new nodoAST('LIST VALORES',[$$[$0-2][1],new nodoAST($$[$0-1],null),$$[$0][1]])] ; $$[$0-2][0].push($$[$0][0]);
 break;
 case 73: case 75:
  this.$ = [ [$$[$0][0]] , new nodoAST('LIST VALORES',[$$[$0][1]]) ];
 break;
+case 74:
+ this.$ = [$$[$0-2][0],new nodoAST('LIST VALORES',[$$[$0-2][1],new nodoAST($$[$0-1],null),$$[$0-1][1]])] ; $$[$0-2][0].push($$[$0][0]);
+break;
 case 76:
- this.$=$$[$0-2]; this.$.push($$[$0]) 
+ this.$=[$$[$0-2][0], new nodoAST('NOT COMAS',[$$[$0-2][1],new nodoAST($$[$0-1],null),new nodoAST($$[$0],null)])] ; $$[$0-2][0].push($$[$0]); 
 break;
 case 77:
- this.$=[]; this.$.push($$[$0]) 
+ this.$=[[$$[$0]], new nodoAST('NOT COMAS',[$$[$0]])];  
 break;
 case 78:
  this.$ = [new INSAritmetico(null, $$[$0][0], 'UNITARIA',  _$[$0-1].first_line, _$[$0-1].first_column), new nodoAST('EXPRESION', [new nodoAST($$[$0-1],null),$$[$0][1]])]; 
 break;
 case 79:
- this.$ = [new INSLogico(null, $$[$0], 'NOT', _$[$0-1].first_line, _$[$0-1].first_column), new nodoAST('EXPRESION', [new nodoAST($$[$0-1],null),$$[$0][1]])];
+ this.$ = [new INSLogico(null, $$[$0][0], 'NOT', _$[$0-1].first_line, _$[$0-1].first_column), new nodoAST('EXPRESION', [new nodoAST($$[$0-1],null),$$[$0][1]])];
 break;
 case 80:
  this.$ = [new INSAritmetico($$[$0-2][0], $$[$0][0], 'SUMA',  _$[$0-2].first_line, _$[$0-2].first_column), new nodoAST('EXPRESION', [$$[$0-2][1],new nodoAST($$[$0-1],null),$$[$0][1]])]; 
@@ -299,8 +302,11 @@ break;
 case 91:
  this.$ = [new INSRelacional($$[$0-2][0], $$[$0][0], 'NEGACION',  _$[$0-2].first_line, _$[$0-2].first_column), new nodoAST('EXPRESION', [$$[$0-2][1],new nodoAST($$[$0-1],null),$$[$0][1]])]; 
 break;
-case 92: case 93:
- this.$ = [new INSLogico($$[$0-2][0], $$[$0][0], 'NOT', _$[$0-2].first_line, _$[$0-2].first_column), new nodoAST('EXPRESION', [$$[$0-2][1],new nodoAST($$[$0-1],null),$$[$0][1]])]; 
+case 92:
+ this.$ = [new INSLogico($$[$0-2][0], $$[$0][0], 'OR', _$[$0-2].first_line, _$[$0-2].first_column), new nodoAST('EXPRESION', [$$[$0-2][1],new nodoAST($$[$0-1],null),$$[$0][1]])]; 
+break;
+case 93:
+ this.$ = [new INSLogico($$[$0-2][0], $$[$0][0], 'AND', _$[$0-2].first_line, _$[$0-2].first_column), new nodoAST('EXPRESION', [$$[$0-2][1],new nodoAST($$[$0-1],null),$$[$0][1]])]; 
 break;
 case 94:
  this.$ = [new INSCastear($$[$0-2][0], $$[$0][0], _$[$0-3].first_line, _$[$0-3].first_column), new nodoAST('EXPRESION', [new nodoAST($$[$0-3],null),$$[$0-2][1],new nodoAST($$[$0-1],null),$$[$0][1]])]; 
@@ -622,6 +628,7 @@ _handle_error:
     const {INSreturn} = require('../Instructions/INSreturn');
     const {llamar} = require('../Instructions/llamar');
     const {metodos} = require('../Instructions/metodos');
+    const {INSTernario} = require('../Instructions/INSTernario');
 
 	//SENTENCIAS
     const {INSif} = require('../Instructions/INSif');

@@ -62,12 +62,12 @@ class INSif {
             }else{
                 //error
                 arbolIns.setError(instruccionesAPI.errorSemantico("En el if debe existir una condicion BOOLEANA no de tipo: " +respuesta.tipo ,this.fila,this.column));
-                return new val(this.fila,this.column,Tipo.ERROR,"(ERROR SEMANTICO) En el if debe existir una condicion BOOLEANA no de tipo: " +respuesta.tipo );
+                return new val.val(this.fila,this.column,Tipo.ERROR,"(ERROR SEMANTICO) En el if debe existir una condicion BOOLEANA no de tipo: " +respuesta.tipo );
             }
         }else{
             //error
             arbolIns.setError(instruccionesAPI.errorSemantico("Error al obtener la condicion " +respuesta,this.fila,this.column));
-            return new val(this.fila,this.column,Tipo.ERROR,"(ERROR SEMANTICO) Error al obtener la condicion" +respuesta) ;
+            return new val.val(this.fila,this.column,Tipo.ERROR,"(ERROR SEMANTICO) Error al obtener la condicion" +respuesta) ;
         }
     }
   }

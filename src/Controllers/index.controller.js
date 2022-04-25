@@ -57,11 +57,11 @@ exports.analizar= async(req, res) => {
     console.log("2. Cadena de Entrada (el codigo): \n" + cadena);
     arbolIns =  interprete.instruccionesAPI.setInsAST(cadena);
     //*GENERO LA IMAGEN LA CUAL SE VA A MOSTRAR EN EL FRONTEND DEL AST
-    var imagenast= arbolIns.genDot();
-    //* GENERO EL ARCHIVO DOT
-    var datos = imagenast.node+"\n"+imagenast.enlace;
-    var relleno="\nlayout=dot     \nfontcolor=\"black\"   \nlabel=\"ARBOL DE DERIVACI�N\"      \nlabelloc = \"t\"  \nbgcolor=\"orange:red\"      \nedge [weight=1000 style=radial color=black ]  \nnode [shape=ellipse style=\"filled\"  color=\"green:lightblue\" gradientangle=\"315\"]   "
-    var data= "digraph G {\n"+ relleno + datos + "\n}";
+    // var imagenast= arbolIns.genDot();
+    // //* GENERO EL ARCHIVO DOT
+    // var datos = imagenast.node+"\n"+imagenast.enlace;
+    // var relleno="\nlayout=dot     \nfontcolor=\"black\"   \nlabel=\"ARBOL DE DERIVACI�N\"      \nlabelloc = \"t\"  \nbgcolor=\"orange:red\"      \nedge [weight=1000 style=radial color=black ]  \nnode [shape=ellipse style=\"filled\"  color=\"green:lightblue\" gradientangle=\"315\"]   "
+    // var data= "digraph G {\n"+ relleno + datos + "\n}";
     // console.log("********************************************************");
     // console.log(data)
 

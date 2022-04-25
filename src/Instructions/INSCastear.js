@@ -10,98 +10,118 @@ const instruccionesAPI = require("../Interpreter/interprete").instruccionesAPI; 
 const nodoAST = require("./ASTGlobal/nodoAST");
 
 class INSCastear {
-  constructor(tipo, valor, fila, columna) {
+  constructor(tipo, valor, fila, column) {
     this.tipo = tipo;
     this.valor = valor; //le envio como padre un nulo de primero.
     this.fila = fila;
-    this.columna = columna;
+    this.column = column;
   }
   ejecutar(arbolIns, table){
     if(this.valor!= null){
       let valortemp = this.valor.ejecutar(arbolIns, table);
       var value = valortemp;
+      console.log("Este es el valor ejecutado de CASTEAR: ")
+      console.log(value)
+      console.log("y este es el valor a castear: ")
+      console.log(this.valor)
+
       //* El lenguaje aceptará los siguientes casteos:
         //? • Int a double
         //? • Int a String
         //? • Int a Char
-      if (value.tipo === Tipo.INT) {
+      if (this.valor.tipo === Tipo.INT) {
         if (this.tipo.tipo === Tipo.DOUBLE) {
-          return value.valor;
-        } else if (this.tipo === Tipo.STRING) {
-          return value.valor.toString();
-        } else if (this.tipo === Tipo.CARACTER) {
-          return String.fromCharCode(value.valor);
+          return value;
+        } else if (this.tipo.tipo === Tipo.STRING) {
+          return value.toString();
+        } else if (this.tipo.tipo === Tipo.CARACTER) {
+          return String.fromCharCode(value);
         } else {
           arbolIns.setError(
             instruccionesAPI.errorSemantico(
               "No se puede CASTEAR el tipo de expresion " +
-                value.tipo +
+                this.valor.tipo +
                 " con valor: " +
-                value.valor,
+                value,
               this.fila,
               this.column
             )
           );
-          return new val(
+          arbolIns.console.push("No se puede CASTEAR el tipo de expresion " +
+          this.valor.tipo +
+          " con valor: " +
+          value);
+          return new val.val(
             this.fila,
             this.column,
             Tipo.ERROR,
             "No se puede CASTEAR el tipo de expresion " +
-              value.tipo +
+            this.valor.tipo +
               " con valor: " +
-              value.valor
+              value
           );
         }
       } //? • Double a Int
         //? • Double a String
-      else if (value.tipo === Tipo.DOUBLE) {
+      else if (this.valor.tipo === Tipo.DOUBLE) {
         if (this.tipo.tipo === Tipo.INT) {
-          return Math.trunc(value.valor);
+          return Math.trunc(value);
         } else if (this.tipo.tipo === Tipo.STRING) {
-          return value.valor.toString();
+          return value.toString();
         } else {
           arbolIns.setError(
             instruccionesAPI.errorSemantico(
               "No se puede CASTEAR el tipo de expresion " +
-                value.tipo +
+                this.valor.tipo +
                 " con valor: " +
-                value.valor,
+                value,
               this.fila,
               this.column
             )
           );
-          return new val(
+          arbolIns.console.push("No se puede CASTEAR el tipo de expresion " +
+          this.valor.tipo +
+          " con valor: " +
+          value);
+          return new val.val(
             this.fila,
             this.column,
             Tipo.ERROR,
             "No se puede CASTEAR el tipo de expresion " +
-              value.tipo +
+              this.valor.tipo +
               " con valor: " +
-              value.valor
+              value
           );
         }
       } //? • Char a int
       //? • Char a double
-      else if (value.tipo === Tipo.CARACTER) {
+      else if (this.valor.tipo === Tipo.CARACTER) {
         if (this.tipo.tipo === Tipo.INT) {
-          return resultado.charCodeAt(0);
+          return value.charCodeAt(0);
         } else if (this.tipo.tipo === Tipo.DOUBLE) {
-          return resultado.charCodeAt(0);
+          return value.charCodeAt(0);
         } else {
           arbolIns.setError(
             instruccionesAPI.errorSemantico(
-              "No se puede CASTEAR el tipo de expresion " +value.tipo+ " con valor: " + value.valor,
+              "No se puede CASTEAR el tipo de expresion " +this.valor.tipo+ " con valor: " + value,
               this.fila,
               this.column
             )
           );
-          return new val(
+          arbolIns.console.push("No se puede CASTEAR el tipo de expresion "+this.valor.tipo+ " con valor: "+ value);
+          return new val.val(
             this.fila,
             this.column,
             Tipo.ERROR,
-            "No se puede CASTEAR el tipo de expresion "+value.tipo+ " con valor: "+ value.valor
+            "No se puede CASTEAR el tipo de expresion "+this.valor.tipo+ " con valor: "+ value
           );
         }
+      }else{
+        arbolIns.setError(instruccionesAPI.errorSemantico("No se puede CASTEAR los tipos (tipo incompatible)" +
+        this.valor.tipo+ " con valor: " + value,this.fila,this.column));
+        arbolIns.console.push("No se puede CASTEAR los tipos (tipo incompatible)" +this.valor.tipo+ " con valor: " + value);
+        return new val.val(this.fila,this.column,Tipo.ERROR,
+        "No se puede CASTEAR los tipos (tipo incompatible)" +this.valor.tipo+ " con valor: " + value);
       }
     }
   }

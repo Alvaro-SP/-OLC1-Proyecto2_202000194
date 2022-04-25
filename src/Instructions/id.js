@@ -15,25 +15,28 @@ class id {
   }
   ejecutar(arbolIns, table) {
     var value;
+
     value = table.getSimbol(this.id);
-    if (value == null) {
+    console.log("Este es el Simbolo encontrado de ID: "+this.id)
+    console.log(value)
+    if (value == null || value == undefined) {
       arbolIns.setError(
         instruccionesAPI.errorSemantico(
-          "No se ha encontrado la variable " + this.id + " se obtuvo null",
+          "No se ha encontrado la variable (" + this.id + ") se obtuvo null",
           this.fila,
           this.column
         )
       );
-      return new val(
+      return new val.val(
         this.fila,
         this.column,
         Tipo.ERROR,
-        "No se ha encontrado la variable " + this.id + " se obtuvo null"
+        "No se ha encontrado la variable **" + this.id + "** se obtuvo null"
       );
     }
     this.tipo = value.tipo;
-    this.valor = value.valor;
-    return value.valor;
+    this.valor = value.data;
+    return value.data;
   }
 }
 exports.id = id;

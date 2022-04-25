@@ -22,10 +22,12 @@ const instruccionesAPI = {
 			if(respuestaJISON instanceof Array){
 				arbolIns=respuestaJISON[0];
 				NodosAST=respuestaJISON[1];
+				console.log("☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻INICIO☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻")
 				console.log("respuestaJISON[0]")
 				console.log(respuestaJISON[0])
-				console.log("respuestaJISON[1]")
-				console.log(respuestaJISON[1])
+				console.log("☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻FIN☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻")
+				// console.log("respuestaJISON[1]")
+				// console.log(respuestaJISON[1])
 			}else{
 				arbolIns=respuestaJISON;
 			}
@@ -33,7 +35,7 @@ const instruccionesAPI = {
 			//! Creo mi tabla de simbolos la cual me servira para mi patron interprete
 			table = new Tablita.TablaSimbolos(null);
 			if (arbolIns){
-				console.log(arbolIns)
+				// console.log(arbolIns)
 				// si mi tetorno JISON es un arbol entonces prosigo
 
 				//Ahora necesito correr cada una de mis filaas y mandarlas a ejecutar

@@ -21,23 +21,43 @@ class INSTernario {
         this.column = column;
     }
     ejecutar(arbolIns,table){
+        console.log("************** TERNARIO ***************");
         var respuesta = this.condicion.ejecutar(arbolIns,table)
         var value= respuesta;
-        if(respuesta==null|| value==Tipo.VOID|| value==Tipo.ERROR || value==Tipo.BOOLEAN){
+        var tempresponse= this.secumple.ejecutar(arbolIns,table);
+        if(tempresponse==Tipo.ERROR){
+            return Tipo.ERROR;
+        }
+        var tempresponse2 = this.nosecumple.ejecutar(arbolIns, table);
+        if (tempresponse2 == Tipo.ERROR) {
+            return Tipo.ERROR;
+        }
+        console.log(value)
+        console.log(tempresponse)
+        console.log(tempresponse2)
+        if(respuesta==null|| value==Tipo.VOID|| value==Tipo.ERROR ){
             return Tipo.ERROR;
         }else{
-            if(value.valor){
-                var tempresponse= this.secumple.ejecutar(arbolIns,table);
-                if(tempresponse==Tipo.ERROR){
-                    return Tipo.ERROR;
-                }
-                return tempresponse;
+            if(value){
+                this.tipo = this.secumple.tipo;
+                console.log("value ? tempresponse : tempresponse2 == ");
+                console.log(value ? tempresponse : tempresponse2)
+                console.log("************** FIN TERNARIO ***************");
+                return value ? tempresponse : tempresponse2;
             }else{
-                var tempresponse = this.nosecumple.ejecutar(arbolIns, table);
-                if (tempresponse == Tipo.ERROR) {
-                    return Tipo.ERROR;
-                }
-                return tempresponse;
+                this.tipo = this.nosecumple.tipo;
+                // var tempresponse= this.secumple.ejecutar(arbolIns,table);
+                // if(tempresponse==Tipo.ERROR){
+                //     return Tipo.ERROR;
+                // }
+                // var tempresponse2 = this.nosecumple.ejecutar(arbolIns, table);
+                // if (tempresponse2 == Tipo.ERROR) {
+                //     return Tipo.ERROR;
+                // }
+                console.log("value ? tempresponse : tempresponse2 == ");
+                console.log(value ? tempresponse : tempresponse2)
+                console.log("************** FIN TERNARIO ***************");
+                return value ? tempresponse : tempresponse2;
             }
 
         }
