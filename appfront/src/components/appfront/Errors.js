@@ -4,14 +4,16 @@ import './style2.css';
 const API = 'http://localhost:4000';
 
 export const ErrorT = (props)=>{
-    const getMetodo = async () => {
+    var [currentText2, setCurrentText2] = useState("");
+    const getMetodo2 = async () => {
         const res = await fetch(`${API}`);
         const data = await res.json();
-        props=data;
+        // props=data;
+        setCurrentText2(data["ERRORES"]);
         // setParameter(String(props.match.params.id))
       };
     useEffect(() => {
-        getMetodo();
+        getMetodo2();
         // eslint-disable-next-line
       }, []);
     return (
@@ -39,13 +41,13 @@ export const ErrorT = (props)=>{
                 </thead>
                 <tbody>
                 {
-                   props.ERRORES!=null?(
-                    props.ERRORES.map((atributos,index)=>
+                   currentText2?(
+                    currentText2.map((atributos,index)=>
                         <Table.Row>
                             <Table.Cell>{index+1}</Table.Cell>
                             <Table.Cell>{atributos.tipo}</Table.Cell>
                             <Table.Cell>{atributos.error}</Table.Cell>
-                            <Table.Cell>{atributos.line}</Table.Cell>
+                            <Table.Cell>{atributos.fila}</Table.Cell>
                             <Table.Cell>{atributos.column}</Table.Cell>
                         </Table.Row>
                         )
@@ -53,10 +55,10 @@ export const ErrorT = (props)=>{
                     // <div><h1>No se encontro ningun simbolo que sirva durante la ejecucion.</h1></div>
                     <Table.Row>
                         <Table.Cell>{0}</Table.Cell>
-                        <Table.Cell>0</Table.Cell>
+                        <Table.Cell>{0}</Table.Cell>
                         <Table.Cell>No se encontraron ningun tipo de ERRRORES.</Table.Cell>
-                        <Table.Cell>0</Table.Cell>
-                        <Table.Cell>0</Table.Cell>
+                        <Table.Cell>{0}</Table.Cell>
+                        <Table.Cell>{0}</Table.Cell>
                     </Table.Row>
                 )
                 }

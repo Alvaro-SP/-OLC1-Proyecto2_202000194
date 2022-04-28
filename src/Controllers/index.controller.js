@@ -3,11 +3,14 @@ const {exec} = require('child_process')
 //! Mi Gramatica 
 var parser = require('../Interpreter/myGrammar');
 var interprete = require('../Interpreter/interprete')
-var InstructionsAST = require('../Instructions/ASTGlobal/InstructionAST')
+var InstructionsAST = require('../Instructions/ASTGlobal/InstructionAST');
+const { syncBuiltinESMExports } = require('module');
 var arbolIns//= new InstructionsAST.InstructionAST();
 var cadena=""
 let base = "";
+let basetemp = "";
 var ac=0;
+var erroreslexicos=0;
 // ? ████████████████████████████████ INDEX GET ████████████████████████████████    
 exports.index = async(req, res) => {
     //! SI LA CONSOLA NO ES VACIA, ENTONCES DEVUELVO LA CONSOLA
@@ -15,18 +18,35 @@ exports.index = async(req, res) => {
     console.log(arbolIns)
     console.log()
     var textonuevo
-    for(var i=0;i<arbolIns.console.length;i++){
-        textonuevo+=arbolIns.console[i].toString()+"";
-    }
+    
     if(arbolIns){
+        for(var i=0;i<arbolIns.console.length;i++){
+            textonuevo+=arbolIns.console[i].toString()+"";
+        }//console.log(arbolIns)
+        console.log(arbolIns.error.length)
+        console.log(parser.erroreslexicos.length)
+        if(arbolIns.error.length<1 && parser.erroreslexicos.length>0){
+            for (var i = 0; i < parser.erroreslexicos.length; i++) {
+                arbolIns.setError(parser.erroreslexicos[i]);
+            }
+        }
+        try {
+            var bitmap = fs.readFileSync('AST_ULTIMO.png');
+        // paso a bin la imagen :v
+        basetemp =  new Buffer.from(bitmap).toString('base64');
+        } catch (error) {
+            
+        }
+         
         res.send({
             CADENA:cadena,
             Salida: "COMPILADO",
             VARIABLES: arbolIns.variables ,
             ERRORES: arbolIns.error,
             Consola: textonuevo,
+            
             SIMBOLOS: arbolIns.symbolTable,
-            AST: base
+            AST: basetemp
         });
         // res.send({"Salida2":interprete.instruccionesAPI.getConsole().toString(), "arbol": interprete.instruccionesAPI.getAST()});
     }else{
@@ -37,7 +57,7 @@ exports.index = async(req, res) => {
             ERRORES: [],
             Consola: ['Aun no se ejecuta NADA el BACKEND is READY !!!.'],
             SIMBOLOS: [],
-            AST: "",
+            AST: basetemp,
         });
         // res.send({"Salida2": "Server Active: aun no se ha ejecutado nada", "arbol": interprete.instruccionesAPI.getAST()});
     }
@@ -52,7 +72,7 @@ exports.index = async(req, res) => {
 }
 // ? ████████████████████████████████ ANALIZAR POST ████████████████████████████████
 exports.analizar= async(req, res) => {
-    let basetemp=""
+    // let basetemp=""
     console.log("▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬REQUEST▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
     console.log(req.body.codigo);
     // cadena = JSON.stringify(req.body.codigo);  //vere cual de los dos funcio
@@ -70,9 +90,23 @@ exports.analizar= async(req, res) => {
         var data= "digraph G {\n"+ relleno + datos + "\n}";
         console.log("********************************************************");
         console.log(data)
-
         fs.writeFile('AST_ULTIMO.dot', data, function (err) {
             if (err) throw err;
+        })
+        fs.writeFile('AST_ULTIMO.dot', data, function (err) {
+            if (err) throw err;
+        })
+        // ultimonombre= "AST_ULTIMO"+acc+".dot"
+        exec('dot -Tpng AST_ULTIMO.dot -o AST_ULTIMO.png', (error, stdout,stderr)=>{
+            if (error) {
+                console.log("error: "+error.message)
+                return
+            }
+            if (stderr) {
+                console.log("error: "+stderr)
+                return
+            }
+            console.log(stdout)
         })
         exec('dot -Tpng AST_ULTIMO.dot -o AST_ULTIMO.png', (error, stdout,stderr)=>{
             if (error) {
@@ -98,9 +132,9 @@ exports.analizar= async(req, res) => {
         })
         ac++;
         try {
+            await sleep(5000)
             var bitmap = fs.readFileSync('AST_ULTIMO.png');
             // paso a bin la imagen :v
-            
             basetemp =  new Buffer.from(bitmap).toString('base64'); 
             base="";
             base=basetemp;
@@ -131,6 +165,7 @@ exports.analizar= async(req, res) => {
             AST: arbolIns.ast
         });
     }else{
+        
         res.send({
             CADENA:cadena,
             Salida: "COMPILADO",

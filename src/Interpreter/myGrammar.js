@@ -154,7 +154,7 @@ case 35:
 this.$ = [new INSif($$[$0-8][0], $$[$0-5][0], $$[$0-1][0], _$[$0-10].first_line, _$[$0-10].first_column) , new nodoAST('INS IF',[new nodoAST($$[$0-10],null), new nodoAST($$[$0-9],null), $$[$0-8][1], new nodoAST($$[$0-7],null), new nodoAST($$[$0-6],null), $$[$0-5][1], new nodoAST($$[$0-4],null), new nodoAST($$[$0-3],null), new nodoAST($$[$0-2],null), $$[$0-1][1], new nodoAST($$[$0],null)])];  
 break;
 case 36:
-this.$ = [new INSif($$[$0-6][0], $$[$0-3][0], [$$[$0]], _$[$0-8].first_line, _$[$0-8].first_column), new nodoAST('INS IF',[new nodoAST($$[$0-8],null), new nodoAST($$[$0-7],null), $$[$0-6][1], new nodoAST($$[$0-5],null), new nodoAST($$[$0-4],null), $$[$0-3][1], new nodoAST($$[$0-2],null), new nodoAST($$[$0-1],null), $$[$0][1]])]; 
+this.$ = [new INSif($$[$0-6][0], $$[$0-3][0], $$[$0], _$[$0-8].first_line, _$[$0-8].first_column), new nodoAST('INS IF',[new nodoAST($$[$0-8],null), new nodoAST($$[$0-7],null), $$[$0-6][1], new nodoAST($$[$0-5],null), new nodoAST($$[$0-4],null), $$[$0-3][1], new nodoAST($$[$0-2],null), new nodoAST($$[$0-1],null), $$[$0][1]])]; 
 break;
 case 38:
  this.$ = [new INSswitch($$[$0-5][0], $$[$0-2][0], $$[$0-1][0], _$[$0-7].first_line, _$[$0-7].first_column)  ,new nodoAST('INS SWITCH',[new nodoAST($$[$0-7],null), new nodoAST($$[$0-6],null), $$[$0-5][1], new nodoAST($$[$0-4],null), new nodoAST($$[$0-3],null), $$[$0-2][1], $$[$0-1][1], new nodoAST($$[$0],null) ])]; 
@@ -582,7 +582,7 @@ parse: function parse(input) {
 	var sintacticerror = "";
 	var acumoftext="";
 	var arbolINSERRORES = new InstructionAST();//por si hay errores
-	var erroreslexicos=[];
+	
 	//PARA MI AST
 	// var arbol = new MiArbolAST();
 	// var MiArbolAST = new InstructionAST();

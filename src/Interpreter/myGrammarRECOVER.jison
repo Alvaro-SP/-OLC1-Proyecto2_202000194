@@ -175,6 +175,7 @@ relacionales. */
 %start ini
 
 %%
+// ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬ GRAMATICA COMENTARIOS▬▬▬▬▬▬▬▬▬▬▬▬▬
  /* ======================Definición de la gramatica==================== */
 ini
 	: instrucciones EOF		

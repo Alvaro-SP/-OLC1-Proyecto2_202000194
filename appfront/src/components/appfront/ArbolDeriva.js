@@ -51,15 +51,15 @@ export const Arbol = (props) => {
 //   };
 //   var network = new vis.Network(container, data, options);
 // }
-var [currentText, setCurrentText] = useState("");
-const getMetodo = async () => {
+var [currentText3, setCurrentText3] = useState("");
+const getMetodo3 = async () => {
   const res = await fetch(`${API}`);
   const data = await res.json();
-  setCurrentText(data["AST"]);
+  setCurrentText3(data["AST"]);
   // setParameter(String(props.match.params.id))
 };
 useEffect(() => {
-  getMetodo();
+  getMetodo3();
   // eslint-disable-next-line
 }, []);
 
@@ -91,8 +91,8 @@ useEffect(() => {
           {/* <p>{currentText}</p> */}
           {/* <img fluid src={props.AST}></img> */}
           {
-            currentText!=null?(
-              <Image fluid src={"data:image/png;base64,"+currentText} />
+            currentText3!=null?(
+              <Image fluid src={"data:image/png;base64,"+currentText3} />
             ):(
               <Image fluid src="https://media.giphy.com/media/hStvd5LiWCFzYNyxR4/giphy.gif" />
             )

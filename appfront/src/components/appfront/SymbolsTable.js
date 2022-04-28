@@ -4,10 +4,13 @@ import './style.css';
 const API = "http://localhost:4000/";
 
 export const Symbols = (props)=>{
+    var [currentText2, setCurrentText2] = useState(""); 
     const getMetodo = async () => {
         const res = await fetch(`${API}`);
         const data = await res.json();
-        props=data;
+        // props=data;
+        console.log(data["SIMBOLOS"])
+        setCurrentText2(data["SIMBOLOS"]);
         // setParameter(String(props.match.params.id))
       };
     useEffect(() => {
@@ -56,16 +59,16 @@ export const Symbols = (props)=>{
                     </tr> <tr>
             </tr> */}
             {
-            props.SIMBOLOS!=null?(
-                props.SIMBOLOS.map((atributos,index)=>
+            currentText2.simbolos?(
+                currentText2.simbolos.map((atributos,index)=>
                     <Table.Row>
                         <Table.Cell>{index+1}</Table.Cell>
                         <Table.Cell>{atributos.id}</Table.Cell>
-                        <Table.Cell>{atributos.type}</Table.Cell>
-                        <Table.Cell>{atributos.typeExp}</Table.Cell>
-                        <Table.Cell>{atributos.entorno}</Table.Cell>
-                        <Table.Cell>{atributos.fila}</Table.Cell>
-                        <Table.Cell>{atributos.columna}</Table.Cell>
+                        <Table.Cell>{atributos.data+''}</Table.Cell>
+                        <Table.Cell>{atributos.tipo+''}</Table.Cell>
+                        <Table.Cell>{atributos.t2+''}</Table.Cell>
+                        <Table.Cell>{atributos.fila+''}</Table.Cell>
+                        <Table.Cell>{atributos.columna+''}</Table.Cell>
                     </Table.Row>
                     )
             ):(

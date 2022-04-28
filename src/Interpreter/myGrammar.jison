@@ -46,7 +46,7 @@
 	var sintacticerror = "";
 	var acumoftext="";
 	var arbolINSERRORES = new InstructionAST();//por si hay errores
-	var erroreslexicos=[];
+	// var erroreslexicos=[];
 	//PARA MI AST
 	// var arbol = new MiArbolAST();
 	// var MiArbolAST = new InstructionAST();
@@ -321,7 +321,7 @@ parametros
 instruccionif
     :IF PARIZQ expresion PARDER LLAIZQ instrucciones LLADER 									{$$ = [new INSif($3[0], $6[0], null, @1.first_line, @1.first_column), new nodoAST('INS IF',[new nodoAST($1,null), new nodoAST($2,null), $3[1], new nodoAST($4,null), new nodoAST($5,null), $6[1], new nodoAST($7,null) ])]; }/*if   (  <EXPRESION>  )   { 	<INSTRUCCIONES>	} */
     |IF PARIZQ expresion PARDER LLAIZQ instrucciones LLADER ELSE LLAIZQ instrucciones LLADER	{$$ = [new INSif($3[0], $6[0], $10[0], @1.first_line, @1.first_column) , new nodoAST('INS IF',[new nodoAST($1,null), new nodoAST($2,null), $3[1], new nodoAST($4,null), new nodoAST($5,null), $6[1], new nodoAST($7,null), new nodoAST($8,null), new nodoAST($9,null), $10[1], new nodoAST($11,null)])];  }	/*if   (  <EXPRESION>  )   { 	<INSTRUCCIONES>	}   else   { 	<INSTRUCCIONES>	} */
-    |IF PARIZQ expresion PARDER LLAIZQ instrucciones LLADER ELSE instruccionif 					{$$ = [new INSif($3[0], $6[0], [$9], @1.first_line, @1.first_column), new nodoAST('INS IF',[new nodoAST($1,null), new nodoAST($2,null), $3[1], new nodoAST($4,null), new nodoAST($5,null), $6[1], new nodoAST($7,null), new nodoAST($8,null), $9[1]])]; }	/* if   (  <EXPRESION>  )   { 	<INSTRUCCIONES>	} else <IF>*/
+    |IF PARIZQ expresion PARDER LLAIZQ instrucciones LLADER ELSE instruccionif 					{$$ = [new INSif($3[0], $6[0], $9, @1.first_line, @1.first_column), new nodoAST('INS IF',[new nodoAST($1,null), new nodoAST($2,null), $3[1], new nodoAST($4,null), new nodoAST($5,null), $6[1], new nodoAST($7,null), new nodoAST($8,null), $9[1]])]; }	/* if   (  <EXPRESION>  )   { 	<INSTRUCCIONES>	} else <IF>*/
 	|IF PARIZQ expresion PARDER LLAIZQ LLADER 													{}
 ;
 /* ------------------------------------  SWITCH  ------------------------------------ */
