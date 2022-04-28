@@ -7,8 +7,9 @@ const val = require("./val");
 const instruccionesAPI = require("../Interpreter/interprete").instruccionesAPI; //las instrucciones de la API
 const nodoAST = require("./ASTGlobal/nodoAST");
 
-class id {
+class id extends nodo.nodo{
   constructor(id, fila, column) {
+    super(null)
     this.id = id;
     this.fila = fila;
     this.column = column;

@@ -12,8 +12,9 @@ const instruccionesAPI = require("../Interpreter/interprete").instruccionesAPI; 
 const nodoAST = require("./ASTGlobal/nodoAST");
 //! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬5.16 Sentencias de control▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 // *SENTENCIA SWITCH
-class INSswitch {
+class INSswitch extends nodo.nodo{
     constructor(condicion, cases, def, fila, column) {
+        super(null)
         this.condicion = condicion;
         this.cases = cases;
         this.def = def;
@@ -30,7 +31,7 @@ class INSswitch {
     //* cada uno de las instrucciones dentro del switch e igualmente esto se hara para las demas
     //* estructuras donde no se dependa o no se utilice las variables globalmente ccomo las 
     //* venia manejando con anterioridad.
-
+        var ya=true;
     //? si hay instrucciones dentro de cases entonces se ejecutan las instrucciones
     if(this.cases!= null){
         
@@ -38,10 +39,10 @@ class INSswitch {
             var otrocase = this.cases[i].ejecutar(arbolIns, addtable);
                                             // new INSRelacional($1, $3, 'IGUAL',  @1.first_fila, @1.first_column);
             var respuestacondi = new INSRelacional.INSRelacional(this.condicion, otrocase.condicion, 'IGUAL', this.fila, this.column);
-            if (respuestacondi.tipo.tipo == Tipo.BOOLEANO) {
+            if (respuestacondi.tipo == Tipo.BOOLEAN) {
                 //* si al ejecutar la condicion relacional se tiene un true entonces se
                 //* debe recorrer cada una de las sentencias dentro de las otras instrucciones del case
-                if (respuestacondi.ejecutar(arbolIns, addtable) || !seejecuto) {
+                if (respuestacondi.ejecutar(arbolIns, addtable) || ya) {
                     for (let i = 0; i < otrocase.ins.length; i++) {
                         const respuestacondi2 = otrocase.ins[i].ejecutar(arbolIns, addtable);
                         if(respuestacondi2==null || respuestacondi2.tipo.tipo == Tipo.BREAK || respuestacondi2 instanceof INSBreak.Break){
@@ -56,7 +57,7 @@ class INSswitch {
         }
     }
     //? si hay instrucciones dentro del default entonces se ejecutan
-    if(this.def!= null){
+    if(this.def && ya){
         for(let i = 0; i < this.def.length; i++){
             const respuestacondidef = this.def[i].ejecutar(arbolIns, addtable);
             if(respuestacondidef==null || respuestacondidef.tipo.tipo == Tipo.BREAK || respuestacondidef instanceof INSBreak.Break){

@@ -23,6 +23,8 @@ const instruccionesAPI = {
 				arbolIns=respuestaJISON[0];
 				NodosAST=respuestaJISON[1];
 				console.log("☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻INICIO☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻")
+				console.log("lexicos")
+				console.log(parser.erroreslexicos)
 				console.log("respuestaJISON[0]")
 				console.log(respuestaJISON[0])
 				console.log("☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻FIN☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻")
@@ -67,19 +69,43 @@ const instruccionesAPI = {
 				}
 				arbolIns.ast = NodosAST;
 				arbolIns.symbolTable=table;
+				for (var i = 0; i < parser.erroreslexicos.length; i++) {
+					console.log(parser.erroreslexicos)
+					arbolIns.setError(parser.erroreslexicos[i]);
+				}
 				return arbolIns;
 			}// sino entonces voy a ver los errores sintacticos
 			else{
 				console.log("problema")
 				if(arbolIns != null){
-					arbolInsSIHAYERRORES.setError(arbolIns);
+					// arbolInsSIHAYERRORES.setError("ERROR CRITICO");
+					for (var i = 0; i < parser.erroreslexicos.length; i++) {
+						console.log(parser.erroreslexicos[i])
+						arbolInsSIHAYERRORES.setError(parser.erroreslexicos[i]);
+					}
 					return arbolInsSIHAYERRORES
 				}
 			}
-        } catch (error) {
-            console.log(error);
-            return;
-        }
+		}catch(error){
+			     console.log(error);
+			// console.log(error.hash)
+			console.log('Ha ocurrido un error SINTACTICO, se esperaba '+error.hash.expected+' en la linea '+error.hash.line+' columna '+error.hash.loc.first_column);
+			arbolInsSIHAYERRORES.console.push('Ha ocurrido un error SINTACTICO, se esperaba '+error.hash.expected+ ' y se recibio: '+error.hash.text+ ' de tipo '+error.hash.token+' en la linea '+error.hash.line+' columna '+error.hash.loc.first_column);
+			// arbolInsSIHAYERRORES.error.push('Ha ocurrido un error SINTACTICO, se esperaba'+error.hash.expected+' en la linea '+error.hash.line+' columna '+error.hash.loc.first_column);
+            console.log(error.hash)
+			arbolInsSIHAYERRORES.setError(
+				instruccionesAPI.errorsintactico(
+					'Ha ocurrido un error SINTACTICO, se esperaba '+error.hash.expected+ ' y se recibio: '+error.hash.text+ ' de tipo '+error.hash.token,error.hash.line,error.hash.loc.first_column));
+			console.log("si se ha retornado.....................................")
+			for (var i = 0; i < parser.erroreslexicos.length; i++) {
+				console.log(parser.erroreslexicos)
+				arbolInsSIHAYERRORES.setError(parser.erroreslexicos[i]);
+			}
+			return arbolInsSIHAYERRORES;
+		}
+        // } catch (error) {
+       
+        // }
     },
 	errorLexico:function(error,fila, column){
 		return{

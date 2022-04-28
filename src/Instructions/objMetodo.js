@@ -11,7 +11,7 @@ const nodoAST = require("./ASTGlobal/nodoAST");
 const INSRelacional = require('../Instructions/INSRelacional');
 const INSBreak = require('./Break');
 
-class objMetodo{
+class objMetodo {
     constructor(parametros, ins) {
         this.parametros = parametros;
         this.ins = ins;

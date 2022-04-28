@@ -9,8 +9,9 @@ const val = require("./val");
 const instruccionesAPI = require("../Interpreter/interprete").instruccionesAPI; //las instrucciones de la API
 const nodoAST = require("./ASTGlobal/nodoAST");
 //! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬5.12 Declaración y asignación de variables▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
-class Asignar {
+class Asignar extends nodo.nodo{
 constructor(variable, valor, fila, column) {
+    super(null)
     // this.tipo = tipo;
     this.variable = variable;
     this.valor = valor;

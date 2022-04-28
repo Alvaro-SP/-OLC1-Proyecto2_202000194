@@ -1,7 +1,7 @@
 // const nodoAST = require("./nodoAST")
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.InstructionAST = void 0;
-
+const nodo = require("./ASTGlobal/nodo");
 //*************************************************************************** */
 //!---------------------- ARBOLES DE AST CON LAS INSTRUCCIONES----------------------
 class InstructionAST {

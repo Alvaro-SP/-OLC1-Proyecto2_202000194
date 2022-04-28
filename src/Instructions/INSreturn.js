@@ -11,23 +11,24 @@ const nodoAST = require("./ASTGlobal/nodoAST");
 const INSRelacional = require('./INSRelacional');
 const INSBreak = require('./Break');
 //! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬  5.21 Llamadas  ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
-class INSreturn {
-    constructor(valor,  fila, column) {
+class INSreturn extends nodo.nodo{
+    constructor(expre,  fila, column) {
+        super(null)
         // this.variable = variable;
-        this.valor = valor;
+        this.expre = expre;
         this.fila = fila;
         this.column = column;
         // this.ambito = ambito;
     }
     ejecutar(arbolIns, table) {
         //* si no hay valor a retornar se manda el objeto como tal :v
-        if (this.valor == null) {
-            return this
-        }else{
+        if (this.expre != null) {
             //* si hay valor a retornar se manda el valor de la variable
-            this.newvalor=this.valor.ejecutar(arbolIns, table);
-            return this
+            this.exp=this.expre.ejecutar(arbolIns, table);
         }
+        console.log('SE ESTA RETORNANDO ESTO: ')
+        console.log(this)
+        return this
     }
 }
 

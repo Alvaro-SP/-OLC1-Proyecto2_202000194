@@ -5,14 +5,16 @@ const nodo = require("./ASTGlobal/nodo");
 const Tipo = require("./ASTGlobal/tiponodo");
 const tipo = require("./ASTGlobal/tiponodo");
 const val = require("./val");
+const INSPrimitivos = require("./INSPrimitivos");
 const Simbolo = require("./simbolo/Simbolo");
 const Tablita = require("./TS/TablaSimbolos");
 const instruccionesAPI = require("../Interpreter/interprete").instruccionesAPI; //las instrucciones de la API
 const nodoAST = require("./ASTGlobal/nodoAST");
 //! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬5.12 Declaración y asignación de variables▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
-class Declarar {
+class Declarar extends nodo.nodo{
     constructor(tipo, variable, valor, fila, column) {
-        this.tipo = tipo;
+      super(tipo)
+        // this.tipo = tipo;
         this.variable = variable;
         this.valor = valor;
         this.fila = fila;
@@ -26,7 +28,7 @@ class Declarar {
         //si es una lista de variables voy a asignarlas normalmente recorriendolas:
         for (let i = 0; i < this.variable.length; i++) {
           console.log("El this.valor.valor= " + this.valor.valor);
-          if (this.valor.valor != null) {
+          if (this.valor != null) {
             let valortemp = this.valor.ejecutar(arbolIns, table);
             var value = valortemp;
             console.log("Este es el Simbolo encontrado de DECLARAR:")
@@ -64,7 +66,7 @@ class Declarar {
                 value,
                 this.tipo,
                 this.fila,
-                this.column
+                this.column,Tipo.VARIABLE
               );
               console.log("variable declarada: " + simbolo.id+" con valor "+simbolo.data);
               var respuesta = table.insertar(simbolo);
@@ -74,42 +76,47 @@ class Declarar {
           else {
             //! si no hay una expresion ENTONCES se DECLARA una variable
             //! sin ningun tipo de valor  (VALORES POR DEFECTO).
-            if (this.valor.valor == null) {
+            if (this.valor == null) {
               if (this.tipo == Tipo.INT) {
-                this.valor = new val.val(
-                  this.fila,
-                  this.column,
-                  Tipo.INT,
-                  0
-                );
+                // new val.val(
+                //   this.fila,
+                //   this.column,
+                //   Tipo.INT,
+                //   0
+                // );
+                this.valor = new INSPrimitivos.INSPrimitivos(Tipo.INT, 0, this.fila,this.column)
               } else if (this.tipo == Tipo.DOUBLE) {
-                this.valor = new val.val(
-                  this.fila,
-                  this.column,
-                  Tipo.DOUBLE,
-                  0.0
-                );
+                // this.valor = new val.val(
+                //   this.fila,
+                //   this.column,
+                //   Tipo.DOUBLE,
+                //   0.0
+                // );
+                this.valor = new INSPrimitivos.INSPrimitivos(Tipo.DOUBLE, 0.00, this.fila,this.column)
               } else if (this.tipo == Tipo.BOOLEAN) {
-                this.valor = new val.val(
-                  this.fila,
-                  this.column,
-                  Tipo.BOOLEAN,
-                  true
-                );
+                // this.valor = new val.val(
+                //   this.fila,
+                //   this.column,
+                //   Tipo.BOOLEAN,
+                //   true
+                // );
+                this.valor = new INSPrimitivos.INSPrimitivos(Tipo.BOOLEAN, true, this.fila,this.column)
               } else if (this.tipo == Tipo.CARACTER) {
-                this.valor = new val.val(
-                  this.fila,
-                  this.column,
-                  Tipo.CARACTER,
-                  ""
-                );
+                // this.valor = new val.val(
+                //   this.fila,
+                //   this.column,
+                //   Tipo.CARACTER,
+                //   ""
+                // );
+                this.valor = new INSPrimitivos.INSPrimitivos(Tipo.CARACTER, " ", this.fila,this.column)
               } else if (this.tipo == Tipo.STRING) {
-                this.valor = new val.val(
-                  this.fila,
-                  this.column,
-                  Tipo.STRING,
-                  ""
-                );
+                // this.valor = new val.val(
+                //   this.fila,
+                //   this.column,
+                //   Tipo.STRING,
+                //   ""
+                // );
+                this.valor = new INSPrimitivos.INSPrimitivos(Tipo.STRING, 0, this.fila,this.column)
               }
             }
             //! como tengo una variable por declarar me compete agregarla a la tabla de simbolos
@@ -119,7 +126,7 @@ class Declarar {
               this.valor.valor,
               this.tipo,
               this.fila,
-              this.column
+              this.column,Tipo.VARIABLE
             );
             console.log("variable declarada: " + simbolo.id+" con valor "+simbolo.data);
             var respuesta = table.insertar(simbolo);
@@ -129,8 +136,8 @@ class Declarar {
       }
       else{
         //! sino entonces voy a agregar variables normales.
-        console.log(this.valor.valor)
-        if(this.valor.valor != null){
+        console.log(this.valor)
+        if(this.valor != null){
           let valortemp = this.valor.ejecutar(arbolIns, table);
           var value = valortemp;
           console.log("Este es el valor ejecutado de DECLARAR SIMPLE: "+this.variable)
@@ -165,7 +172,7 @@ class Declarar {
             }
             //! como tengo una variable por declarar me compete agregarla a la tabla de simbolos
             //! la agrego como un objeto simbolo
-            var simbolo = new Simbolo(this.variable,value,this.tipo,this.fila,this.column);
+            var simbolo = new Simbolo(this.variable,value,this.tipo,this.fila,this.column,Tipo.VARIABLE);
             var respuesta = table.insertar(simbolo);
             console.log("variable declarada: " + simbolo.id+" con valor "+simbolo.data);
             arbolIns.setVariables(simbolo);
@@ -174,47 +181,52 @@ class Declarar {
         else{
           //! si no hay una expresion ENTONCES se DECLARA una variable
           //! sin ningun tipo de valor  (VALORES POR DEFECTO).
-          if (this.valor.valor == null) {
+          if (this.valor == null) {
             if (this.tipo == Tipo.INT) {
-              this.valor = new val.val(
-                this.fila,
-                this.column,
-                Tipo.INT,
-                0
-              );
+              // new val.val(
+              //   this.fila,
+              //   this.column,
+              //   Tipo.INT,
+              //   0
+              // );
+              this.valor = new INSPrimitivos.INSPrimitivos(Tipo.INT, 0, this.fila,this.column)
             } else if (this.tipo == Tipo.DOUBLE) {
-              this.valor = new val.val(
-                this.fila,
-                this.column,
-                Tipo.DOUBLE,
-                0.0
-              );
+              // this.valor = new val.val(
+              //   this.fila,
+              //   this.column,
+              //   Tipo.DOUBLE,
+              //   0.0
+              // );
+              this.valor = new INSPrimitivos.INSPrimitivos(Tipo.DOUBLE, 0.00, this.fila,this.column)
             } else if (this.tipo == Tipo.BOOLEAN) {
-              this.valor = new val.val(
-                this.fila,
-                this.column,
-                Tipo.BOOLEAN,
-                true
-              );
+              // this.valor = new val.val(
+              //   this.fila,
+              //   this.column,
+              //   Tipo.BOOLEAN,
+              //   true
+              // );
+              this.valor = new INSPrimitivos.INSPrimitivos(Tipo.BOOLEAN, true, this.fila,this.column)
             } else if (this.tipo == Tipo.CARACTER) {
-              this.valor = new val.val(
-                this.fila,
-                this.column,
-                Tipo.CARACTER,
-                ""
-              );
+              // this.valor = new val.val(
+              //   this.fila,
+              //   this.column,
+              //   Tipo.CARACTER,
+              //   ""
+              // );
+              this.valor = new INSPrimitivos.INSPrimitivos(Tipo.CARACTER, " ", this.fila,this.column)
             } else if (this.tipo == Tipo.STRING) {
-              this.valor = new val.val(
-                this.fila,
-                this.column,
-                Tipo.STRING,
-                ""
-              );
+              // this.valor = new val.val(
+              //   this.fila,
+              //   this.column,
+              //   Tipo.STRING,
+              //   ""
+              // );
+              this.valor = new INSPrimitivos.INSPrimitivos(Tipo.STRING, 0, this.fila,this.column)
             }
           }
           //! como tengo una variable por declarar me compete agregarla a la tabla de simbolos
           //! la agrego como un objeto simbolo
-          var simbolo = new Simbolo(this.variable,this.valor.valor,this.tipo,this.fila,this.column);
+          var simbolo = new Simbolo(this.variable,this.valor.valor,this.tipo,this.fila,this.column,Tipo.VARIABLE);
           console.log("variable declarada: " + simbolo.id+" con valor "+simbolo.data);
           var respuesta = table.insertar(simbolo);
           arbolIns.setVariables(simbolo);

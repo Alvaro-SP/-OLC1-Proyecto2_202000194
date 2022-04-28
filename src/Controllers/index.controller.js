@@ -6,7 +6,7 @@ var interprete = require('../Interpreter/interprete')
 var InstructionsAST = require('../Instructions/ASTGlobal/InstructionAST')
 var arbolIns//= new InstructionsAST.InstructionAST();
 var cadena=""
-var base = "";
+let base = "";
 var ac=0;
 // ? ████████████████████████████████ INDEX GET ████████████████████████████████    
 exports.index = async(req, res) => {
@@ -14,13 +14,17 @@ exports.index = async(req, res) => {
     console.log("INDEX");
     console.log(arbolIns)
     console.log()
+    var textonuevo
+    for(var i=0;i<arbolIns.console.length;i++){
+        textonuevo+=arbolIns.console[i].toString()+"";
+    }
     if(arbolIns){
         res.send({
             CADENA:cadena,
             Salida: "COMPILADO",
             VARIABLES: arbolIns.variables ,
             ERRORES: arbolIns.error,
-            Consola: arbolIns.console,
+            Consola: textonuevo,
             SIMBOLOS: arbolIns.symbolTable,
             AST: base
         });
@@ -48,6 +52,7 @@ exports.index = async(req, res) => {
 }
 // ? ████████████████████████████████ ANALIZAR POST ████████████████████████████████
 exports.analizar= async(req, res) => {
+    let basetemp=""
     console.log("▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬REQUEST▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
     console.log(req.body.codigo);
     // cadena = JSON.stringify(req.body.codigo);  //vere cual de los dos funcio
@@ -55,51 +60,75 @@ exports.analizar= async(req, res) => {
     // const texto = req.body.text;
     // console.log("1. Cadena de Entrada (el codigo): " + texto);
     console.log("2. Cadena de Entrada (el codigo): \n" + cadena);
-    arbolIns =  interprete.instruccionesAPI.setInsAST(cadena);
-    //*GENERO LA IMAGEN LA CUAL SE VA A MOSTRAR EN EL FRONTEND DEL AST
-    // var imagenast= arbolIns.genDot();
-    // //* GENERO EL ARCHIVO DOT
-    // var datos = imagenast.node+"\n"+imagenast.enlace;
-    // var relleno="\nlayout=dot     \nfontcolor=\"black\"   \nlabel=\"ARBOL DE DERIVACI�N\"      \nlabelloc = \"t\"  \nbgcolor=\"orange:red\"      \nedge [weight=1000 style=radial color=black ]  \nnode [shape=ellipse style=\"filled\"  color=\"green:lightblue\" gradientangle=\"315\"]   "
-    // var data= "digraph G {\n"+ relleno + datos + "\n}";
-    // console.log("********************************************************");
-    // console.log(data)
-
-    // fs.writeFile('AST_'+ac+'.dot', data, function (err) {
-    //     if (err) throw err;
-    // })
-    // exec('dot -Tpng AST_'+ac+'.dot -o AST_'+ac+'.png', (error, stdout,stderr)=>{
-    //     if (error) {
-    //         console.log("error: "+error.message)
-    //         return
-    //     }
-    //     if (stderr) {
-    //         console.log("error: "+stderr)
-    //         return
-    //     }
-    //     console.log(stdout)
-    // })
-
     try {
-        ac++;
-        var bitmap = fs.readFileSync('AST_'+ac+'.png');
-        // paso a bin la imagen :v
-        base =  new Buffer.from(bitmap).toString('base64'); 
-        // arbolIns.ast= base
-    } catch (error) {
-        // console.log(error);
-    }
+        arbolIns =  interprete.instruccionesAPI.setInsAST(cadena);
+        //*GENERO LA IMAGEN LA CUAL SE VA A MOSTRAR EN EL FRONTEND DEL AST
+        var imagenast= arbolIns.genDot();
+        //* GENERO EL ARCHIVO DOT
+        var datos = imagenast.node+"\n"+imagenast.enlace;
+        var relleno="\nlayout=dot     \nfontcolor=\"black\"   \nlabel=\"ARBOL DE DERIVACI�N\"      \nlabelloc = \"t\"  \nbgcolor=\"orange:red\"      \nedge [weight=1000 color=black ]  \nnode [shape=ellipse style=\"filled\"  color=\"green:lightblue\" gradientangle=\"315\"]   "
+        var data= "digraph G {\n"+ relleno + datos + "\n}";
+        console.log("********************************************************");
+        console.log(data)
 
+        fs.writeFile('AST_ULTIMO.dot', data, function (err) {
+            if (err) throw err;
+        })
+        exec('dot -Tpng AST_ULTIMO.dot -o AST_ULTIMO.png', (error, stdout,stderr)=>{
+            if (error) {
+                console.log("error: "+error.message)
+                return
+            }
+            if (stderr) {
+                console.log("error: "+stderr)
+                return
+            }
+            console.log(stdout)
+        })
+        exec('dot -Tpng AST_ULTIMO.dot -o AST_ACUMULADO'+ac+'.png', (error, stdout,stderr)=>{
+            if (error) {
+                console.log("error: "+error.message)
+                return
+            }
+            if (stderr) {
+                console.log("error: "+stderr)
+                return
+            }
+            console.log(stdout)
+        })
+        ac++;
+        try {
+            var bitmap = fs.readFileSync('AST_ULTIMO.png');
+            // paso a bin la imagen :v
+            
+            basetemp =  new Buffer.from(bitmap).toString('base64'); 
+            base="";
+            base=basetemp;
+            arbolIns.ast= basetemp
+        } catch (error) {
+            // console.log(error);
+        }
+    } catch (error) {
+        console.log("ENTRO AL ERROR QUE NO DEBE");
+        console.log(arbolIns)
+        // arbolIns.console.push(error);
+    }
     //* necesito retornar
-    if(arbolIns ){
+    if(arbolIns){
+        console.log('***************************CONSOLA*****************************');
+        console.log(arbolIns.console.toString());
+        var textonuevo="";
+        for(var i=0;i<arbolIns.console.length;i++){
+            textonuevo+=arbolIns.console[i].toString()+"";
+        }
         res.send({
             CADENA:cadena,
             Salida: "COMPILADO",
             VARIABLES: arbolIns.variables ,
             ERRORES: arbolIns.error,
-            Consola: arbolIns.console,
+            Consola: textonuevo,
             SIMBOLOS: arbolIns.symbolTable,
-            AST: base
+            AST: arbolIns.ast
         });
     }else{
         res.send({
@@ -112,7 +141,6 @@ exports.analizar= async(req, res) => {
             AST: [],
         });
     }
-    
 }
 // ? ████████████████████████████████ POSTMAN ████████████████████████████████
 exports.postman= async(req, res) => {

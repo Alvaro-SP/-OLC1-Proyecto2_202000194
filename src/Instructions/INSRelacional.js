@@ -10,20 +10,27 @@ const nodoAST = require("./ASTGlobal/nodoAST");
 //! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬5.6 Operadores Relacionales▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 // *Son los símbolos que tienen como finalidad comparar expresiones, dando como resultado
 // *valores booleanos.
-class INSRelacional {
-  constructor(expDer, expIzq, tipo, fila, column) {
+class INSRelacional extends nodo.nodo {
+  constructor(expDer, expIzq, op, fila, column) {
+    super(Tipo.BOOLEAN);
     this.expDer = expDer;
     this.expIzq = expIzq;
-    this.tipo = tipo;
+    this.op = op;
     this.fila = fila;
     this.column = column;
   }
   ejecutar(arbolIns, table) {
     let valortemp = this.expDer.ejecutar(arbolIns, table);
     let valortemp2 = this.expIzq.ejecutar(arbolIns, table);
-    console.log("*************valores a relacionar con INSRELACIONAL: ")
-    console.log(valortemp)
+    console.log("*************valores a relacionar con INSRELACIONAL****************: ")
+    console.log('this.expIzq')
+    console.log(this.expIzq)
+    console.log('this.expIzq VALOR OBTENIDO:')
     console.log(valortemp2)
+    console.log('this.expDer')
+    console.log(this.expDer)
+    console.log('this.expDer VALOR OBTENIDO:')
+    console.log(valortemp)
     console.log("*************************fin relacional*************************")
     // var value = valortemp;
     // var value2 = valortemp2;
@@ -33,8 +40,8 @@ class INSRelacional {
     var value = new val.val(0, 0, 0, valortemp);
     var value2 = new val.val(0, 0, 0, valortemp2);
     //! **********************     SI ES UNA IGUAL:  ***********************************
-    if (this.tipo === 'IGUAL') {
-      this.tipo= Tipo.BOOLEAN
+    if (this.op == 'IGUAL') {
+      // this.op= Tipo.BOOLEAN
       if (this.expDer.tipo == Tipo.INT) {
         //! ENTERO!!!!!!!!!!!!!!!!!!!!!!!!!
         if (this.expIzq.tipo == Tipo.INT) {
@@ -318,8 +325,8 @@ class INSRelacional {
         );
       }
       //! **********************     SI ES UNA NEGACION:  ***********************************
-    } else if (this.tipo === 'NEGACION') {
-      this.tipo= Tipo.BOOLEAN
+    } else if (this.op == 'NEGACION') {
+      // this.op= Tipo.BOOLEAN
       if (this.expDer.tipo == Tipo.INT) {
         //! ENTERO!!!!!!!!!!!!!!!!!!!!!!!!!
         if (this.expIzq.tipo == Tipo.INT) {
@@ -609,8 +616,8 @@ class INSRelacional {
         );
       }
       //! **********************     SI ES MAYOR A:  ***********************************
-    } else if (this.tipo === 'MAYOR') {
-      this.tipo= Tipo.BOOLEAN
+    } else if (this.op == 'MAYOR') {
+      // this.op= Tipo.BOOLEAN
       if (this.expDer.tipo == Tipo.INT) {
         //! ENTERO!!!!!!!!!!!!!!!!!!!!!!!!!
         if (this.expIzq.tipo == Tipo.INT) {
@@ -897,8 +904,8 @@ class INSRelacional {
         );
       }
       //! **********************     SI ES MAYOR O IGUAL A:  ***********************************
-    } else if (this.tipo === 'MAYORIGUAL') {
-      this.tipo= Tipo.BOOLEAN
+    } else if (this.op == 'MAYORIGUAL') {
+      // this.op= Tipo.BOOLEAN
       if (this.expDer.tipo == Tipo.INT) {
         //! ENTERO!!!!!!!!!!!!!!!!!!!!!!!!!
         if (this.expIzq.tipo == Tipo.INT) {
@@ -1188,8 +1195,8 @@ class INSRelacional {
         );
       }
       //! **********************     SI ES MENOR A:  ***********************************
-    } else if (this.tipo === 'MENOR') {
-      this.tipo= Tipo.BOOLEAN
+    } else if (this.op == 'MENOR') {
+      // this.op= Tipo.BOOLEAN
       if (this.expDer.tipo == Tipo.INT) {
         //! ENTERO!!!!!!!!!!!!!!!!!!!!!!!!!
         if (this.expIzq.tipo == Tipo.INT) {
@@ -1479,8 +1486,8 @@ class INSRelacional {
         );
       }
       //! **********************     SI ES MANOR O IGUAL A:  ***********************************
-    } else if (this.tipo === 'MENORIGUAL') {
-      this.tipo= Tipo.BOOLEAN
+    } else if (this.op == 'MENORIGUAL') {
+      // this.op= Tipo.BOOLEAN
       if (this.expDer.tipo == Tipo.INT) {
         //! ENTERO!!!!!!!!!!!!!!!!!!!!!!!!!
         if (this.expIzq.tipo == Tipo.INT) {
@@ -1772,7 +1779,7 @@ class INSRelacional {
     } else {
       arbolIns.setError(
         instruccionesAPI.errorSemantico(
-          "Operador Invalido, revise que exista o que los tipos coincidan " +
+          "Operador Invalido, revise que exista   "+this.op+"  o que los tipos coincidan " +
             this.expDer.tipo +" y " +this.expIzq.tipo,this.fila,this.column));
       return new val.val(this.fila,this.column,Tipo.ERROR,
         "(ERROR SEMANTICO) Operador Invalido, revise que exista o que los tipos coincidan " +

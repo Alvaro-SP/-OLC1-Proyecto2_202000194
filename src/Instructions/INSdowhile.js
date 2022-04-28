@@ -12,32 +12,37 @@ const {INSBreak} = require('./Break');
 const {INSContinue} = require('../Instructions/continue');
 //! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬5.17 Sentencias cíclicas▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 // *5.17.3. Do-While
-class INSdowhile {
+class INSdowhile extends nodo.nodo{
   constructor(condicion, dentrowhile, fila, column) {
+    super(null);
     this.condicion = condicion;
     this.dentrowhile = dentrowhile;
     this.fila = fila;
     this.column = column;
   }
   ejecutar(arbolIns, table) {
+    const addtable = new Tablita.TablaSimbolos(table);
     if(this.condicion!=null){
+      var ya=true;
       let respuesta
       do{
-        respuesta = this.condicion.ejecutar(arbolIns, table);
-        if (respuesta.tipo.tipo == Tipo.BOOLEAN) {
+        respuesta = this.condicion.ejecutar(arbolIns, addtable);
+        if (this.condicion.tipo == Tipo.BOOLEAN) {
           if(this.dentrowhile!=null){
-            if(respuesta){
+            if(respuesta || ya){
               for(let i=0;i<this.dentrowhile.length;i++){
-                let respuesta2 = this.dentrowhile[i].ejecutar(arbolIns, table);
+                let respuesta2 = this.dentrowhile[i].ejecutar(arbolIns, addtable);
                 try {
-                  if(respuesta2.kind=="BREAK"){
-                    return respuesta2;
+                  if(this.dentrowhile[i].tipo=="BREAK"){
+                    return ;
                   }
-                  if(respuesta2.kind=="CONTINUE"){
+                  if(this.dentrowhile[i].tipo=="CONTINUE"){
                     break ;
                   }
+                  if(this.dentrowhile[i].tipo=="RETURN"){
+                    return ;
+                  }
                 } catch (error) {
-                  console.log(error);
                 }
               }
             }
@@ -46,6 +51,7 @@ class INSdowhile {
           arbolIns.setError(instruccionesAPI.errorSemantico("En el while debe existir una condicion BOOLEANA no de tipo: " +respuesta.tipo ,this.fila,this.column));
           return new val.val(this.fila,this.column,Tipo.ERROR,"(ERROR SEMANTICO) En el while debe existir una condicion BOOLEANA no de tipo: " +respuesta.tipo );
         }
+        ya=false;
       }while(respuesta);
     }else{
       //error

@@ -10,17 +10,16 @@ const nodoAST = require("./ASTGlobal/nodoAST");
 //! 5.8 Operadores Lógicos
 // *Son los símbolos que tienen como finalidad comparar expresiones a nivel 
 // *lógico (verdadero o falso). 
-class INSLogico {
-  constructor(expDer, expIzq, tipo, fila, column) {
+class INSLogico extends nodo.nodo{
+  constructor(expDer, expIzq, op, fila, column) {
+    super(Tipo.BOOLEAN);
     this.expDer = expDer;
     this.expIzq = expIzq;
-    this.tipo = tipo;
+    this.op = op;
     this.fila = fila;
     this.column = column;
   }
   ejecutar(arbolIns, table) {
-
-    
     if(this.expDer!==null){
         let valortemp = this.expDer.ejecutar(arbolIns, table);
         let valortemp2 = this.expIzq.ejecutar(arbolIns, table);
@@ -33,8 +32,8 @@ class INSLogico {
         console.log("*************************fin logico*************************")
         if (this.expIzq.tipo!= Tipo.ERROR && this.expDer.tipo!= Tipo.ERROR) {
           //! **********************     SI ES UN AND:  ***********************************
-          if (this.tipo === 'AND') {
-            this.tipo= Tipo.BOOLEAN
+          if (this.op === 'AND') {
+            // this.op= Tipo.BOOLEAN
             if (this.expIzq.tipo=== Tipo.BOOLEAN &&this.expDer.tipo=== Tipo.BOOLEAN) {
               return valortemp && valortemp2;
             } else {
@@ -43,8 +42,8 @@ class INSLogico {
             }
           }
           //! **********************     SI ES UN OR:  ***********************************
-          else if (this.tipo === 'OR') {
-            this.tipo= Tipo.BOOLEAN
+          else if (this.op === 'OR') {
+            // this.op= Tipo.BOOLEAN
             console.log(this.expIzq.tipo+'==='+  Tipo.BOOLEAN +'&&'+ this.expDer.tipo+'==='+ Tipo.BOOLEAN)
             if (this.expIzq.tipo=== Tipo.BOOLEAN &&this.expDer.tipo=== Tipo.BOOLEAN) {
               return valortemp || valortemp2;
@@ -64,8 +63,8 @@ class INSLogico {
         }
     }else{
       let valortemp = this.expIzq.ejecutar(arbolIns, table)
-      if (this.tipo == "NOT") {
-        this.tipo= Tipo.BOOLEAN
+      if (this.op == "NOT") {
+        // this.op= Tipo.BOOLEAN
         // ? si mi operador es de tipo BOOLEANO entonces si podre operar sino error.
         if (this.expIzq.tipo== Tipo.BOOLEAN) {
           return !valortemp

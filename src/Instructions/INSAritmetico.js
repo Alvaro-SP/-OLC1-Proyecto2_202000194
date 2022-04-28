@@ -9,11 +9,12 @@ const instruccionesAPI = require("../Interpreter/interprete").instruccionesAPI; 
 const nodoAST = require("./ASTGlobal/nodoAST");
 //! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬5.5 Operadores Aritméticos▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 // *SUMA RESTA MULTIPLICACION DIVISION POTENCIA MODULO ENTRE OTROS...
-class INSAritmetico{
-    constructor(expDer, expIzq, tipo, fila, column){
+class INSAritmetico extends nodo.nodo{
+    constructor(expDer, expIzq, op, fila, column){
+        super(null)
         this.expDer = expDer;
         this.expIzq = expIzq;
-        this.tipo = tipo;
+        this.op= op;
         this.fila = fila;
         this.column = column;
     }
@@ -22,7 +23,7 @@ class INSAritmetico{
         if(this.expDer===null){
             let valortemp = this.expIzq.ejecutar(arbolIns, table);
             var value = valortemp;
-            if(this.tipo == 'UNITARIA'){
+            if(this.op== 'UNITARIA'){
                 if(this.expIzq.tipo == Tipo.INT){
                     var temp= new val.val(this.fila, this.column, Tipo.INT, value*-1);
                     this.tipo=Tipo.INT
@@ -49,7 +50,7 @@ class INSAritmetico{
             var value2 = new val.val(0, 0, 0, valortemp2);
             if(value != Tipo.ERROR && value2 != Tipo.ERROR){
                 //! **********************     SI ES UNA SUMA:  ***********************************
-                if(this.tipo == 'SUMA'){
+                if(this.op== 'SUMA'){
                     if(this.expDer.tipo == Tipo.INT){ //! ENTERO!!!!!!!!!!!!!!!!!!!!!!!!!
                         if(this.expIzq.tipo == Tipo.INT){ //? ENTERO -----> ENTERO
                             var temp= new val.val(this.fila, this.column, Tipo.INT, value.valor + value2.valor);
@@ -249,19 +250,19 @@ class INSAritmetico{
                             if(this.expIzq.valor == true){
                                 var temp= new val.val(this.fila, this.column, Tipo.STRING, value.valor + 'true');
                                 this.tipo=Tipo.STRING
-                            return temp.valor
-                        }else{
-                                var temp= new val.val(this.fila, this.column, Tipo.STRING, value.valor + 'false');
-                                this.tipo=Tipo.STRING
-                            return temp
+                                return temp.valor
+                            }else{
+                                    var temp= new val.val(this.fila, this.column, Tipo.STRING, value.valor + 'false');
+                                    this.tipo=Tipo.STRING
+                                return temp
+                            }
                         }
-                        }
-                        else if(value2.tipo == Tipo.CARACTER){//? CARACTER -----> STRING
+                        else if(this.expIzq.tipo == Tipo.CARACTER){//? CARACTER -----> STRING
                             var temp= new val.val(this.fila, this.column, Tipo.STRING, value.valor+value2.valor);
                             this.tipo=Tipo.STRING
                             return temp.valor
                         }
-                        else if(value2.tipo == Tipo.STRING){//? CADENA -----> CADENA
+                        else if(this.expIzq.tipo == Tipo.STRING){//? CADENA -----> CADENA
                             var temp= new val.val(this.fila, this.column, Tipo.STRING, value.valor + value2.valor);
                             this.tipo=Tipo.STRING
                             return temp.valor
@@ -277,7 +278,7 @@ class INSAritmetico{
                     }
                 }
                 //! **********************     SI ES UNA RESTA:  ***********************************
-                else if(this.tipo == 'RESTA'){
+                else if(this.op== 'RESTA'){
                     if(this.expDer.tipo == Tipo.INT){ //! ENTERO!!!!!!!!!!!!!!!!!!!!!!!!!
                         if(this.expIzq.tipo == Tipo.INT){ //? ENTERO -----> ENTERO
                             var temp= new val.val(this.fila, this.column, Tipo.INT, value.valor - value2.valor);
@@ -342,7 +343,7 @@ class INSAritmetico{
                             return temp.valor
                         }
                         }
-                        else if(value2.tipo == Tipo.CARACTER){//? CARACTER -----> DOUBLE
+                        else if(this.expIzq.tipo == Tipo.CARACTER){//? CARACTER -----> DOUBLE
                             try {
                                 var temp= new val.val(this.fila, this.column, Tipo.DOUBLE, value.valor - value2.valor.charCodeAt(0));
                                 this.tipo=Tipo.DOUBLE
@@ -483,13 +484,13 @@ class INSAritmetico{
                     }
                 }
                 //! **********************     SI ES UNA MULTIPLICACION:  ***********************************
-                else if(this.tipo == 'MULTIPLICACION'){
+                else if(this.op== 'MULTIPLICACION'){
                     if(this.expDer.tipo == Tipo.INT){ //! ENTERO!!!!!!!!!!!!!!!!!!!!!!!!!
                         if(this.expIzq.tipo == Tipo.INT){ //? ENTERO -----> ENTERO
                             var temp= new val.val(this.fila, this.column, Tipo.INT, value.valor * value2.valor);
                             this.tipo=Tipo.INT
-                            console.log("valor retornado entero y entero: ")
-                            console.log(temp.valor)
+                            // console.log("valor retornado entero y entero: ")
+                            // console.log(temp.valor)
                             return temp.valor
                         }
                         else if(this.expIzq.tipo == Tipo.DOUBLE){//? DOUBLE -----> DOUBLE
@@ -572,7 +573,7 @@ class INSAritmetico{
                     }
                 }
                 //! **********************     SI ES UNA DIVISION:  ***********************************
-                else if(this.tipo == 'DIVISION'){
+                else if(this.op== 'DIVISION'){
                     if(value2.valor==0){
                         arbolIns.setError(instruccionesAPI.errorSemantico("No se puede dividir por 0",this.fila,this.column));
                         arbolIns.console.push("Error Semantico: No se puede dividir por 0");
@@ -664,7 +665,7 @@ class INSAritmetico{
                     }
                 }
                 //! **********************     SI ES UNA POTENCIA:  ***********************************
-                else if(this.tipo == 'POTENCIA'){
+                else if(this.op== 'POTENCIA'){
                     if(this.expDer.tipo == Tipo.INT){ //! ENTERO!!!!!!!!!!!!!!!!!!!!!!!!!
                         if(this.expIzq.tipo == Tipo.INT){ //? ENTERO -----> ENTERO
                             var temp= new val.val(this.fila, this.column, Tipo.INT, Math.pow(value.valor, value2.valor));
@@ -705,7 +706,7 @@ class INSAritmetico{
                     }
                 }
                 //! **********************     SI ES UNA MODULACION...:  ***********************************
-                else if(this.tipo == 'MODULO'){
+                else if(this.op== 'MODULO'){
                     if(this.expDer.tipo == Tipo.INT){ //! ENTERO!!!!!!!!!!!!!!!!!!!!!!!!!
                         if(this.expIzq.tipo == Tipo.INT){ //? ENTERO -----> ENTERO
                             var temp= new val.val(this.fila, this.column, Tipo.DOUBLE, value.valor % value2.valor);

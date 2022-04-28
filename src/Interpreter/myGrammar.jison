@@ -20,6 +20,16 @@
     const {llamar} = require('../Instructions/llamar');
     const {metodos} = require('../Instructions/metodos');
     const {INSTernario} = require('../Instructions/INSTernario');
+    const {FUNClength} = require('../Instructions/FUNClength');
+    const {FUNCround} = require('../Instructions/FUNCround');
+    const {ToCharArray} = require('../Instructions/ToCharArray');
+    const {ToLower} = require('../Instructions/ToLower');
+    const {ToString} = require('../Instructions/ToString');
+    const {ToUpper} = require('../Instructions/ToUpper');
+    const {TypeOf} = require('../Instructions/TypeOf');
+    const {DeclaraVector1} = require('../Instructions/DeclaraVector1');
+    const {AsignaVector1} = require('../Instructions/AsignaVector1');
+    const {Vector1} = require('../Instructions/Vector1');
 
 	//SENTENCIAS
     const {INSif} = require('../Instructions/INSif');
@@ -36,6 +46,7 @@
 	var sintacticerror = "";
 	var acumoftext="";
 	var arbolINSERRORES = new InstructionAST();//por si hay errores
+	var erroreslexicos=[];
 	//PARA MI AST
 	// var arbol = new MiArbolAST();
 	// var MiArbolAST = new InstructionAST();
@@ -198,10 +209,13 @@ relacionales. */
 
 <<EOF>>                 return 'EOF';
 
-.   { 	console.log('Este es un error lexico: ' + yytext + ', en la linea: ' + yylloc.first_line + ', en la columna: ' + yylloc.first_column);
+.   { 	console.log('Este es un error lexico: (  ' + yytext + '  ) en la linea: ' + yylloc.first_line + ', en la columna: ' + yylloc.first_column);
 		// instruccionesAPI.getAST.error.push(instruccionesAPI.errorlexico(yytext,yylloc.first_line,yylloc.first_column));
-		arbolINSERRORES.setError(instruccionesAPI.errorlexico(yytext,yylloc.first_line,yylloc.first_column));
+		// instruccionesAPI.getAST.setError(instruccionesAPI.errorLexico('Carecter irreconocible:  '+yytext,yylloc.first_line,yylloc.first_column));
+		erroreslexicos.push(instruccionesAPI.errorLexico('Carecter irreconocible:  '+yytext,yylloc.first_line,yylloc.first_column));
 		// instruccionesAPI.getErrores.getInstance().insertar(new ErrorList("Lexico","Caracter: \" "+yytext+"\" no es valido" ,yylloc.first_line,yylloc.first_column)); 
+		// return arboolINSERRORES
+		
 	}
 /lex
 
@@ -223,13 +237,13 @@ relacionales. */
  /* ======================Definición de la gramatica==================== */
 ini
 	: instrucciones EOF		{  $$ = [new InstructionAST($1[0]), new nodoAST('ARBOL SINTACTICO',[$1[1]])]; return $$;  }//here i gonna to save my AST 
-	| error  			{ 	var sintacticerror="Detectado error Sintactico se esperaba otro valor y se recibio: "+$$+" reparelo.";
-							console.log('Este es un error sintactico: ' +$$ + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column);
-							// instruccionesAPI.getAST.error.push(instruccionesAPI.errorsintactico(sintacticerror,this._$.first_line,this._$.first_column));
-							arbolINSERRORES.setError(instruccionesAPI.errorsintactico(sintacticerror,this._$.first_line,this._$.first_column));
-							return  arbolINSERRORES
-							// return (instruccionesAPI.errorsintactico(sintacticerror,this._$.first_line,this._$.first_column));
-						}  /*OJITO: se coloca el ptocoma por si hay un error semantico, entonces se va a recuperar*/
+	// | error  			{ 	var sintacticerror="Detectado error Sintactico se esperaba otro valor y se recibio: "+$$.tostring()+" reparelo.";
+	// 						console.log('Este es un error sintactico: ' +$$ + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column);
+	// 						// instruccionesAPI.getAST.error.push(instruccionesAPI.errorsintactico(sintacticerror,this._$.first_line,this._$.first_column));
+	// 						arbolINSERRORES.setError(instruccionesAPI.errorsintactico(sintacticerror,this._$.first_line,this._$.first_column));
+	// 						return  arbolINSERRORES
+	// 						// return (instruccionesAPI.errorsintactico(sintacticerror,this._$.first_line,this._$.first_column));
+	// 					}  /*OJITO: se coloca el ptocoma por si hay un error semantico, entonces se va a recuperar*/
 ;
 
 instrucciones
@@ -269,14 +283,14 @@ instruccion
 /*--------------------------------------  5.19 Funciones  ----------------------------------*/
 funciones
     : VARIABLE PARIZQ parametros PARDER DOSPUNTOS tipo LLAIZQ instrucciones LLADER { $$ = [new metodos($1 ,$3[0], $6[0], $8[0], @1.first_line, @1.first_column),new nodoAST('FUNCIONES',[new nodoAST($1,null), new nodoAST($2,null), $3[1], new nodoAST($4,null), new nodoAST($5,null), $6[1], new nodoAST($7,null), $8[1], new nodoAST($9,null)])]; } /* <ID>(<PARAMETROS>):<TIPO>{ <INSTRUCCIONES>} */
-    | VARIABLE PARIZQ PARDER DOSPUNTOS tipo LLAIZQ instrucciones LLADER            { $$ = [new metodos($1 ,null, $5, $7, @1.first_line, @1.first_column), new nodoAST('FUNCIONES',[new nodoAST($1,null), new nodoAST($2,null), new nodoAST($3,null), new nodoAST($4,null), $5[1], new nodoAST($6,null), $7[1], new nodoAST($8,null),])]; }
+    | VARIABLE PARIZQ PARDER DOSPUNTOS tipo LLAIZQ instrucciones LLADER            { $$ = [new metodos($1 ,null, $5[0], $7[0], @1.first_line, @1.first_column), new nodoAST('FUNCIONES',[new nodoAST($1,null), new nodoAST($2,null), new nodoAST($3,null), new nodoAST($4,null), $5[1], new nodoAST($6,null), $7[1], new nodoAST($8,null),])]; }
 ;
 /*--------------------------------------  5.20 Meodos  ----------------------------------*/
 metodos																										//*variable,param,tipo,ins, line, column
-    : VARIABLE PARIZQ parametros PARDER DOSPUNTOS VOID LLAIZQ instrucciones LLADER { $$ = [new metodos($1 ,$3[0], null, $8[0], @1.first_line, @1.first_column), new nodoAST('METODOS',[new nodoAST($1,null), new nodoAST($2,null), $3[1], new nodoAST($4,null), new nodoAST($5,null), new nodoAST($6,null), new nodoAST($7,null), $8[1], new nodoAST($9,null) ])] ; } /* <ID>(<PARAMETROS>):<TIPO>{ <INSTRUCCIONES>} */
-    | VARIABLE PARIZQ parametros PARDER LLAIZQ instrucciones LLADER				   { $$ = [new metodos($1 ,$3[0], null, $6[0], @1.first_line, @1.first_column), new nodoAST('METODOS',[new nodoAST($1,null), new nodoAST($2,null), $3[1], new nodoAST($4,null), new nodoAST($5,null),  $6[1], new nodoAST($7,null)		])] ; } /* <ID>(<PARAMETROS>){ <INSTRUCCIONES>} */
-    | VARIABLE PARIZQ PARDER DOSPUNTOS VOID LLAIZQ instrucciones LLADER 		   { $$ = [new metodos($1 ,null, null, $7[0], @1.first_line, @1.first_column) , new nodoAST('METODOS',[new nodoAST($1,null), new nodoAST($2,null), new nodoAST($3,null), new nodoAST($4,null), new nodoAST($5,null), new nodoAST($6,null),  $7[1], new nodoAST($8,null) ])] ;  } /* <ID>():<TIPO>{ <INSTRUCCIONES>} */
-    | VARIABLE PARIZQ PARDER LLAIZQ instrucciones LLADER 						   { $$ = [new metodos($1 ,null, null, $5[0], @1.first_line, @1.first_column) , new nodoAST('METODOS',[new nodoAST($1,null), new nodoAST($2,null), new nodoAST($3,null), new nodoAST($4,null),  $5[1], new nodoAST($6,null), ])] ;  } /* <ID>(){ <INSTRUCCIONES>} */
+    // : VARIABLE PARIZQ parametros PARDER DOSPUNTOS VOID LLAIZQ instrucciones LLADER { $$ = [new metodos($1 ,$3[0], null, $8[0], @1.first_line, @1.first_column), new nodoAST('METODOS',[new nodoAST($1,null), new nodoAST($2,null), $3[1], new nodoAST($4,null), new nodoAST($5,null), new nodoAST($6,null), new nodoAST($7,null), $8[1], new nodoAST($9,null) ])] ; } /* <ID>(<PARAMETROS>):<TIPO>{ <INSTRUCCIONES>} */
+    : VARIABLE PARIZQ parametros PARDER LLAIZQ instrucciones LLADER				   { $$ = [new metodos($1 ,$3[0], Tipo.VOID, $6[0], @1.first_line, @1.first_column), new nodoAST('METODOS',[new nodoAST($1,null), new nodoAST($2,null), $3[1], new nodoAST($4,null), new nodoAST($5,null),  $6[1], new nodoAST($7,null)		])] ; } /* <ID>(<PARAMETROS>){ <INSTRUCCIONES>} */
+    // | VARIABLE PARIZQ PARDER DOSPUNTOS VOID LLAIZQ instrucciones LLADER 		   { $$ = [new metodos($1 ,null, null, $7[0], @1.first_line, @1.first_column) , new nodoAST('METODOS',[new nodoAST($1,null), new nodoAST($2,null), new nodoAST($3,null), new nodoAST($4,null), new nodoAST($5,null), new nodoAST($6,null),  $7[1], new nodoAST($8,null) ])] ;  } /* <ID>():<TIPO>{ <INSTRUCCIONES>} */
+    | VARIABLE PARIZQ PARDER LLAIZQ instrucciones LLADER 						   { $$ = [new metodos($1 ,null, Tipo.VOID, $5[0], @1.first_line, @1.first_column) , new nodoAST('METODOS',[new nodoAST($1,null), new nodoAST($2,null), new nodoAST($3,null), new nodoAST($4,null),  $5[1], new nodoAST($6,null), ])] ;  } /* <ID>(){ <INSTRUCCIONES>} */
 ;
 
 /*--------------------------------------  5.21 Llamadas  ----------------------------------*/
@@ -343,7 +357,7 @@ instrucciondowhile
 ;
 /*5.17.2. For*/
 instruccionfor
-    :FOR PARIZQ fordeclarar PTCOMA expresion PTCOMA actualizacion PARDER LLAIZQ instrucciones LLADER  {$$ = [new INSfor(@3[0], @5[0], @7[0], @10[0],@1.first_line, @1.first_column), new nodoAST('FOR', [new nodoAST($1,null),new nodoAST($2,null),$3[1],new  nodoAST($4,null), $5[1], new nodoAST($6,null), $7[1],new nodoAST($8,null),new nodoAST($9,null),$10[1],new nodoAST($11,null)])];}/* for  ((<DECLARACION>|<ASIGNACION>);<CONDICION>;< ACTUALIZACION>){<INSTRUCCIONES>} */
+    :FOR PARIZQ fordeclarar PTCOMA expresion PTCOMA actualizacion PARDER LLAIZQ instrucciones LLADER  {$$ = [new INSfor($3[0], $5[0], $7[0], $10[0],@1.first_line, @1.first_column), new nodoAST('FOR', [new nodoAST($1,null),new nodoAST($2,null),$3[1],new  nodoAST($4,null), $5[1], new nodoAST($6,null), $7[1],new nodoAST($8,null),new nodoAST($9,null),$10[1],new nodoAST($11,null)])];}/* for  ((<DECLARACION>|<ASIGNACION>);<CONDICION>;< ACTUALIZACION>){<INSTRUCCIONES>} */
 ;
 fordeclarar
     : tipo VARIABLE IGUAL expresion { $$ = [new Declarar($1[0], $2, $4[0],  @1.first_line, @1.first_column), new nodoAST('DECLARACION',[$1[1],new nodoAST($2,null),new nodoAST($3,null),$4[1]])];  } /*TIPO> identificador = <EXPRESION>;*/
@@ -385,15 +399,22 @@ declaracion
 	| tipo VARIABLE IGUAL expresion PTCOMA																{ $$ = [new Declarar($1[0], $2, $4[0],  @1.first_line, @1.first_column)  , new nodoAST('DECLARACION',[$1[1], new nodoAST($2,null), new nodoAST($3,null), $4[1], new nodoAST($5,null),])] ;} /*TIPO> identificador = <EXPRESION>;*/
 	| tipo notacioncomas PTCOMA																			{ $$ = [new Declarar($1[0], $2[0], null,  @1.first_line, @1.first_column), new nodoAST('DECLARACION',[$1[1], $2[1], new nodoAST($3,null),])] ; } /*<TIPO> id1, id2, id3, id4;*/
 	| tipo notacioncomas IGUAL expresion PTCOMA 														{ $$ = [new Declarar($1[0], $2[0], $4[0],  @1.first_line, @1.first_column)  , new nodoAST('DECLARACION',[$1[1], $2[1], new nodoAST($3,null), $4[1], new nodoAST($5,null),])] ; } /*<TIPO> id1, id2, id3, id4 = <EXPRESION>;*/
-	| tipo VARIABLE CORIZQ CORDER IGUAL NEW tipo CORIZQ expresion CORDER PTCOMA							{  } /*<TIPO> <ID>[ ] = new <TIPO>[ <EXPRESION> 3.2 ] ;						 DECLARACION TIPO 1 */
+	
+	
+	| tipo VARIABLE CORIZQ CORDER IGUAL NEW tipo CORIZQ expresion CORDER PTCOMA							{ $$ = [new DeclaraVector1($1[0], $2, $7[0], $9[0], @1.first_line, @1.first_column), new nodoAST('EXPRESION', [$1[1], new nodoAST($2,null), new nodoAST($3,null), new nodoAST($4,null), new nodoAST($5,null), new nodoAST($6,null), $7[1], new nodoAST($8,null), $9[1], new nodoAST($10,null), new nodoAST($11,null)])]; } /*<TIPO> <ID>[ ] = new <TIPO>[ <EXPRESION> 3.2 ] ;						 DECLARACION TIPO 1 */
+	| tipo VARIABLE CORIZQ CORDER IGUAL CORIZQ listavalores CORDER PTCOMA								{ $$ = [new DeclaraVector1($1[0], $2, null, $7[0], @1.first_line, @1.first_column), new nodoAST('EXPRESION', [$1[1], new nodoAST($2,null), new nodoAST($3,null), new nodoAST($4,null), new nodoAST($5,null), new nodoAST($6,null), $7[1], new nodoAST($8,null), new nodoAST($9,null)])]; }  /*<TIPO> <ID>[ ] = [ <LISTAVALORES> ] ;							 DECLARACION TIPO 2 */
+	| tipo VARIABLE CORIZQ CORDER IGUAL expresion PTCOMA								{ $$ = [new DeclaraVector1($1[0], $2, $1[0], $6[0], @1.first_line, @1.first_column), new nodoAST('EXPRESION', [$1[1], new nodoAST($2,null), new nodoAST($3,null), new nodoAST($4,null), new nodoAST($5,null),  $6[1], new nodoAST($7,null)])]; }  /*<TIPO> <ID>[ ] = [ <LISTAVALORES> ] ;							 DECLARACION TIPO 2 */
+	
 	| tipo VARIABLE CORIZQ CORDER IGUAL NEW tipo CORIZQ expresion CORDER CORIZQ expresion CORDER PTCOMA	{  } /*<TIPO> <ID>[ ][ ]= new <TIPO>[ <EXPRESION> ][ <EXPRESION> ] ;*/
-	| tipo VARIABLE CORIZQ CORDER IGUAL CORIZQ listavalores CORDER PTCOMA								{  }  /*<TIPO> <ID>[ ] = [ <LISTAVALORES> ] ;							 DECLARACION TIPO 2 */
-	| tipo VARIABLE IGUAL VARIABLE CORIZQ expresion CORDER PTCOMA										{  } /*<TIPO> <ID>[ ] = new <TIPO>[ <EXPRESION> ] ;	 */
-	| tipo VARIABLE IGUAL VARIABLE CORIZQ expresion CORDER CORIZQ expresion CORDER PTCOMA				{  } /*<TIPO> <ID>[ ][ ]= new <TIPO>[ <EXPRESION> ][ <EXPRESION> ] ;*/
+	// | tipo VARIABLE IGUAL VARIABLE CORIZQ expresion CORDER PTCOMA										{  } /*<TIPO> <ID>[ ] = new <TIPO>[ <EXPRESION> ] ;	 */
+	// | tipo VARIABLE IGUAL VARIABLE CORIZQ expresion CORDER CORIZQ expresion CORDER PTCOMA				{  } /*<TIPO> <ID>[ ][ ]= new <TIPO>[ <EXPRESION> ][ <EXPRESION> ] ;*/
+	
+	
 	| notacioncomas IGUAL expresion PTCOMA																{ $$ = [new Asignar($1[0], $3[0], @1.first_line, @1.first_column),new nodoAST('DECLARACION',[$1[1], new nodoAST($2,null), $3[1], new nodoAST($4,null)])];  } /*identificador = <EXPRESION>;*/
 	| VARIABLE IGUAL expresion PTCOMA																	{ $$ = [new Asignar($1, $3[0], @1.first_line, @1.first_column),new nodoAST('DECLARACION',[new nodoAST($1,null), new nodoAST($2,null), $3[1] ,new nodoAST($4,null)])];  } /*identificador = <EXPRESION>;*/
 			/*5.15.1.3 Modificación de Vectores*/
-	| VARIABLE CORIZQ expresion CORDER IGUAL expresion PTCOMA											{  } /*<ID> [ EXPRESION ] = EXPRESION;						 DECLARACION TIPO 1*/
+
+	| VARIABLE CORIZQ expresion CORDER IGUAL expresion PTCOMA											{ $$ = [new AsignaVector1($1, $3[0], $6[0], @1.first_line, @1.first_column), new nodoAST('EXPRESION', [new nodoAST($1,null), new nodoAST($2,null), $3[1],new nodoAST($4,null), new nodoAST($5,null),  $6[1], new nodoAST($7,null)])]; } /*<ID> [ EXPRESION ] = EXPRESION;						 DECLARACION TIPO 1*/
 	| VARIABLE CORIZQ expresion CORDER CORIZQ expresion CORDER IGUAL expresion PTCOMA					{  } /*<> [ EXPRESION ][ EXPRESION ] = EXPRESION;          DECLARACION TIPO 2 */
 ;
 listavalores
@@ -427,30 +448,32 @@ expresion																				/*aqui es UNARIA XD*/
     | expresion OR expresion	  			                { $$ = [new INSLogico($1[0], $3[0], 'OR', @1.first_line, @1.first_column), new nodoAST('EXPRESION', [$1[1],new nodoAST($2,null),$3[1]])]; }
     | expresion AND expresion			                	{ $$ = [new INSLogico($1[0], $3[0], 'AND', @1.first_line, @1.first_column), new nodoAST('EXPRESION', [$1[1],new nodoAST($2,null),$3[1]])]; }
 	| PARIZQ tipo PARDER expresion								{ $$ = [new INSCastear($2[0], $4[0], @1.first_line, @1.first_column), new nodoAST('EXPRESION', [new nodoAST($1,null),$2[1],new nodoAST($3,null),$4[1]])]; } /* (int) 18.6*//*(<TIPO>) <EXPRESION>*/
+	| VARIABLE INC  									{ $$ = [new INSincredecre($1, "INCREMENT", @1.first_line, @1.first_column), new nodoAST('EXPRESION',[new nodoAST($1,null),new nodoAST($2,null)])]; } /* anio++*/
+	| VARIABLE DEC  									{ $$ = [new INSincredecre($1, "DECREMENT", @1.first_line, @1.first_column), new nodoAST('EXPRESION',[new nodoAST($1,null),new nodoAST($2,null)])]; } /* anio++*/
 	| VARIABLE                      						{ $$ = [new id($1, @1.first_line, @1.first_column), new nodoAST('EXPRESION', new nodoAST($1,null))]; }
-	| VENTERO                      							{ $$ = [new INSPrimitivos(Tipo.INT, Number($1), @1.first_line, @1.first_column), new nodoAST('EXPRESION', new nodoAST($1,null))]; }
-	| VDOUBLE                       						{ $$ = [new INSPrimitivos(Tipo.DOUBLE, Number($1), @1.first_line, @1.first_column), new nodoAST('EXPRESION', new nodoAST($1,null))]; }
-	| CADENA												{ $$ = [new INSPrimitivos(Tipo.STRING, $1, @1.first_line, @1.first_column), new nodoAST('EXPRESION', new nodoAST($1,null))]; }
-	| VCARACTER		 										{ $$ = [new INSPrimitivos(Tipo.CARACTER, $1, @1.first_line, @1.first_column), new nodoAST('EXPRESION', new nodoAST($1,null))]; }
-	| TRUE                       							{ $$ = [new INSPrimitivos(Tipo.BOOLEAN, true, @1.first_line, @1.first_column), new nodoAST('EXPRESION', new nodoAST($1,null))]; }
-	| FALSE                       							{ $$ = [new INSPrimitivos(Tipo.BOOLEAN, false, @1.first_line, @1.first_column), new nodoAST('EXPRESION', new nodoAST($1,null))]; }
+	| VENTERO                      							{ $$ = [new INSPrimitivos(Tipo.INT, Number($1), @1.first_line, @1.first_column), new nodoAST('EXPRESION', [new nodoAST('ENTERO', [new nodoAST(yytext,null)])])]; }
+	| VDOUBLE                       						{ $$ = [new INSPrimitivos(Tipo.DOUBLE, Number($1), @1.first_line, @1.first_column), new nodoAST('EXPRESION', [new nodoAST('DOUBLE', [new nodoAST(yytext,null)])])]; }
+	| CADENA												{ $$ = [new INSPrimitivos(Tipo.STRING, $1, @1.first_line, @1.first_column), new nodoAST('EXPRESION', [new nodoAST('CADENA', [new nodoAST(yytext,null)])])]; }
+	| VCARACTER		 										{ $$ = [new INSPrimitivos(Tipo.CARACTER, $1, @1.first_line, @1.first_column), new nodoAST('EXPRESION', [new nodoAST('CARACTER', [new nodoAST(yytext,null)])])]; }
+	| TRUE                       							{ $$ = [new INSPrimitivos(Tipo.BOOLEAN, true, @1.first_line, @1.first_column), new nodoAST('EXPRESION', [new nodoAST('BOOLEANO', [new nodoAST($1,null)])])]; }
+	| FALSE                       							{ $$ = [new INSPrimitivos(Tipo.BOOLEAN, false, @1.first_line, @1.first_column), new nodoAST('EXPRESION', [new nodoAST('BOOLEANO', [new nodoAST($1,null)])])]; }
 	| PARIZQ expresion PARDER       						{ $$ = [$2[0],new nodoAST('EXPRESION', [new nodoAST($1,null),$2[1], new nodoAST($3,null)])]; }
 	// | VARIABLE MAS MAS 										{  } /* anio-- */
 	// | VARIABLE MENOS MENOS 									{  } /* edad-- */
-	| VARIABLE CORIZQ expresion CORDER							{  } /* vector2[0];*/
+	| VARIABLE CORIZQ expresion CORDER							{ $$ = [new Vector1($1, $3[0], @1.first_line, @1.first_column), new nodoAST('EXPRESION', [$1[1],new nodoAST($2,null),$3[1],new nodoAST($4,null)])]; } /* vector2[0];*/
 	| VARIABLE CORIZQ expresion CORDER CORIZQ expresion CORDER 	{  } /* vectorDosd[0][0];*/
 	// | VARIABLE MAS MAS 										{  } /* vectorDosd[0][0]*/
 	| expresion INTERROGA expresion DOSPUNTOS expresion 	{  $$ = [new INSTernario($1[0], $3[0], $5[0], @1.first_line, @1.first_column),new nodoAST('EXPRESION', [$1[1], new nodoAST($2,null), $3[1], new nodoAST($4,null), $5[1]])]; } /*Ternarios*/
-    
-	| TOLOWER PARIZQ expresion PARDER  						{  } /* toLower  (  <EXPRESION>  );*/       
-    | TOUPPER PARIZQ expresion PARDER  						{  } /* toUpper  (  <EXPRESION>  );*/      
-    | ROUND PARIZQ DOUBLE PARDER    						{  } /* round  (  )  ;     */
-    | TYPEOF PARIZQ expresion PARDER   						{  }
-    | TOSTRING PARIZQ expresion PARDER 						{  }
-	| LENGTH PARIZQ expresion PARDER   						{  } /* length  ( <VALOR>  )  ;*/
-	| TYPEOF PARIZQ expresion PARDER   						{  }/* typeof  ( <VALOR>  )  ;*/
-	| TOSTRING PARIZQ expresion PARDER   					{  }/* toString  ( <VALOR>  )  ;*/
-	| TOCHARARRAY PARIZQ expresion PARDER   				{  }/* toCharArray  ( <VALOR>  )  ;*/
+
+	| TOLOWER PARIZQ expresion PARDER  						{ $$ = [new ToLower($3[0], @1.first_line, @1.first_column), new nodoAST('EXPRESION', [new nodoAST($1,null), new nodoAST($2,null), $3[1], new nodoAST($4,null)])];  } /* toLower  (  <EXPRESION>  );*/       
+    | TOUPPER PARIZQ expresion PARDER  						{ $$ = [new ToUpper($3[0], @1.first_line, @1.first_column), new nodoAST('EXPRESION', [new nodoAST($1,null), new nodoAST($2,null), $3[1], new nodoAST($4,null)])]; } /* toUpper  (  <EXPRESION>  );*/      
+    | ROUND PARIZQ VDOUBLE PARDER    						{ $$ = [new FUNCround($3[0], @1.first_line, @1.first_column), new nodoAST('EXPRESION', [new nodoAST($1,null), new nodoAST($2,null), $3[1], new nodoAST($4,null)])]; } /* round  (  )  ;     */
+    | TYPEOF PARIZQ expresion PARDER   						{ $$ = [new TypeOf($3[0], @1.first_line, @1.first_column), new nodoAST('EXPRESION', [new nodoAST($1,null), new nodoAST($2,null), $3[1], new nodoAST($4,null)])]; }
+    | TOSTRING PARIZQ expresion PARDER 						{ $$ = [new ToString($3[0], @1.first_line, @1.first_column), new nodoAST('EXPRESION', [new nodoAST($1,null), new nodoAST($2,null), $3[1], new nodoAST($4,null)])]; }
+	| LENGTH PARIZQ expresion PARDER   						{ $$ = [new FUNClength($3[0], @1.first_line, @1.first_column), new nodoAST('EXPRESION', [new nodoAST($1,null), new nodoAST($2,null), $3[1], new nodoAST($4,null)])]; } /* length  ( <VALOR>  )  ;*/
+	// | TYPEOF PARIZQ expresion PARDER   						{ $$ = [new T($3[0], @1.first_line, @1.first_column), new nodoAST('EXPRESION', [new nodoAST($1,null), new nodoAST($2,null), $3[1] new nodoAST($4,null)])]; }/* typeof  ( <VALOR>  )  ;*/
+	// | TOSTRING PARIZQ expresion PARDER   					{ $$ = [new ToLower($3[0], @1.first_line, @1.first_column), new nodoAST('EXPRESION', [new nodoAST($1,null), new nodoAST($2,null), $3[1] new nodoAST($4,null)])]; }/* toString  ( <VALOR>  )  ;*/
+	| TOCHARARRAY PARIZQ expresion PARDER   				{ $$ = [new ToCharArray($3[0], @1.first_line, @1.first_column), new nodoAST('EXPRESION', [new nodoAST($1,null), new nodoAST($2,null), $3[1], new nodoAST($4,null)])]; }/* toCharArray  ( <VALOR>  )  ;*/
     | llamadas                           					{ $$= [$1[0], new nodoAST('EXPRESION', [$1[1]])]; } /*5.25. Funciones nativas*/
 ;
 

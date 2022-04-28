@@ -9,8 +9,9 @@ const val = require("./val");
 const instruccionesAPI = require("../Interpreter/interprete").instruccionesAPI; //las instrucciones de la API
 const nodoAST = require("./ASTGlobal/nodoAST");
 
-class INSCastear {
+class INSCastear extends nodo.nodo{
   constructor(tipo, valor, fila, column) {
+    super(tipo);
     this.tipo = tipo;
     this.valor = valor; //le envio como padre un nulo de primero.
     this.fila = fila;
@@ -36,6 +37,8 @@ class INSCastear {
           return value.toString();
         } else if (this.tipo.tipo === Tipo.CARACTER) {
           return String.fromCharCode(value);
+        } else if (this.tipo.tipo === Tipo.INT) {
+          return value;
         } else {
           arbolIns.setError(
             instruccionesAPI.errorSemantico(
@@ -68,6 +71,8 @@ class INSCastear {
           return Math.trunc(value);
         } else if (this.tipo.tipo === Tipo.STRING) {
           return value.toString();
+        }  else if (this.tipo.tipo === Tipo.DOUBLE) {
+          return value;
         } else {
           arbolIns.setError(
             instruccionesAPI.errorSemantico(
@@ -100,6 +105,8 @@ class INSCastear {
           return value.charCodeAt(0);
         } else if (this.tipo.tipo === Tipo.DOUBLE) {
           return value.charCodeAt(0);
+        } else if (this.tipo.tipo === Tipo.CARACTER) {
+          return value;
         } else {
           arbolIns.setError(
             instruccionesAPI.errorSemantico(

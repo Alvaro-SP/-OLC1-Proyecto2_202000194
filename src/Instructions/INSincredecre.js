@@ -8,31 +8,39 @@ const val = require("./val");
 const instruccionesAPI = require("../Interpreter/interprete").instruccionesAPI; //las instrucciones de la API
 const nodoAST = require("./ASTGlobal/nodoAST");
 
-class INSincredecre {
+class INSincredecre extends nodo.nodo{
     constructor(id, op, fila, column) {
+      super(null)
         this.id = id;
         this.op = op;
         this.fila = fila;
         this.column = column;
     }
     ejecutar(arbolIns, table) {
+      // console.log("************* INCREMENT/DECREMENT****************: ")
         let value;
         value = table.getSimbol(this.id);
+        // console.log('value:')
+        // console.log(value)
+        this.tipo = value.tipo;
         if (value != null) {
-            if (value.tipo.tipo === Tipo.tipos.ENTERO) {
+            if (value.tipo === Tipo.INT) {
               if (this.op === "INCREMENT") {
-                value.valor = value.valor + 1;
-                return table.getSimbol(this.id).valor;
+                value.data = value.data + 1;
+                var temp= table.getSimbol(this.id)
+                console.log(temp.data)
+                return temp.data;
               } else if (this.op === "DECREMENT") {
-                value.valor = value.valor - 1;
-                return table.getSimbol(this.id).valor;
+                // this.tipo = value.tipo;
+                value.data = value.data - 1;
+                var temp= table.getSimbol(this.id)
+                console.log(temp.data)
+                return temp.data;
               } else {
                 arbolIns.setError(
                   instruccionesAPI.errorSemantico(
-                    "op Invalido, revise que exista o que los tipos coincidan " +
-                      value.tipo +
-                      " y " +
-                      value2.tipo,
+                    "tipo Invalido, revise que exista o que los tipos coincidan " +
+                      value.tipo ,
                     this.fila,
                     this.column
                   )
@@ -41,21 +49,23 @@ class INSincredecre {
                   this.fila,
                   this.column,
                   Tipo.ERROR,
-                  "(ERROR SEMANTICO) op Invalido, revise que exista o que los tipos coincidan " +
-                    value.tipo +
-                    " y " +
-                    value2.tipo
+                  "(ERROR SEMANTICO) tipo Invalido, revise que exista o que los tipos coincidan " +
+                    value.tipo
                 );
               }
-            } else if (value.tipo.tipo === Tipo.DOUBLE) {
+            } else if (value.tipo === Tipo.DOUBLE) {
               if (this.op === "INCREMENT") {
-                value.valor = value.valor + 1;
+                // this.tipo = value.tipo;
+                value.data = value.data + 1;
                 var tempvalue = table.getSimbol(this.id);
-                return tempvalue.valor;
+                console.log(tempvalue.data)
+                return tempvalue.data;
               } else if (this.op === "DECREMENT") {
-                value.valor = value.valor - 1;
+                // this.tipo = value.tipo;
+                value.data = value.data - 1;
                 var tempvalue = table.getSimbol(this.id);
-                return tempvalue.valor;
+                console.log(tempvalue.data)
+                return tempvalue.data;
               } else {
                 arbolIns.setError(
                   instruccionesAPI.errorSemantico(

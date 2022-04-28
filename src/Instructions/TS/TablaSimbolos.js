@@ -29,9 +29,9 @@ class TablaSimbolos {
     });
     let apart;
     for (apart = this; apart != null; apart = apart.root) {
-      console.log("apart.simbolos de TABLA")
+      // console.log("apart.simbolos de TABLA")
       // console.log(apart.simbolos)
-      for (let i = 0; i < apart.simbolos.length; i++) {
+      for (let i = apart.simbolos.length-1; i >=0 ; i--) {
         // console.log(apart.simbolos[i].id.toLowerCase()+" con "+id.toLowerCase());
             if (apart.simbolos[i].id.toLowerCase()==id.toLowerCase()) {
               return apart.simbolos[i];

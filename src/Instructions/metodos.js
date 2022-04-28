@@ -12,9 +12,10 @@ const nodoAST = require("./ASTGlobal/nodoAST");
 const INSRelacional = require('../Instructions/INSRelacional');
 const INSBreak = require('./Break');
 const objMetodo = require('../Instructions/objMetodo');
-class metodos{
+class metodos extends nodo.nodo{
     constructor(variable,param,tipo,ins, fila, column) {
-        this.tipo = tipo;
+        super(tipo)
+        // this.tipo = tipo;
         this.variable = variable;
         this.param = param;
         this.ins = ins;
@@ -28,29 +29,38 @@ class metodos{
             arbolIns.setError(instruccionesAPI.errorSemantico("No se ha encontrado la variable " + this.variable + " se obtuvo null",this.fila,this.column));
             return new val.val(this.fila,this.column,Tipo.ERROR,"No se ha encontrado la variable " + this.variable + " se obtuvo null");
         }else{
-            value+="_M2412"// mi id que se le asigna a todos los metodos :)
+            var a=0;
+            for(var i=0;i<this.param.length;i++){
+                a++;
+            }
+            value=value+a+"_M2412"// mi id que se le asigna a todos los metodos :)
             //* verifico que el metodo no exista en la tabla de simbolos
             var metodo=table.getSimbol(value);
             if(metodo!=null){
-                arbolIns.setError(instruccionesAPI.errorSemantico("No se ha encontrado el metodo " + this.variable + " se obtuvo null",this.fila,this.column));
-                return new val.val(this.fila,this.column,Tipo.ERROR,"No se ha encontrado el metodo " + this.variable + " se obtuvo null");
+                arbolIns.setError(instruccionesAPI.errorSemantico("YA existe un metodo asi: " + this.variable + " se obtuvo null",this.fila,this.column));
+                return new val.val(this.fila,this.column,Tipo.ERROR,"YA existe un metodo asi:" + this.variable + " se obtuvo null");
             }else{
                 //* ahora que ya se que no existe procedo a crear mi objeto parametro-instrucciones
                 var metodo=new objMetodo.objMetodo(this.param,this.ins);
                 //* si el tipo del metodo es null no se debe retornar nada
-                if(this.tipo == null){
+                if(this.tipo == Tipo.VOID){
                     //*es unn metodo         (id, data, tipo,  fila, column)
                     //! la agrego como un objeto simbolo
-                    var simbolo = new Simbolos.Simbolo(value,metodo,Tipo.METODO,this.fila,this.column);
+                    var t2=Tipo.METODO
+                    var simbolo = new Simbolos(value,metodo,this.tipo,this.fila,this.column,t2);
                     table.insertar(simbolo);
+                    arbolIns.variables.push(simbolo);
                 }else{
                     //! la agrego como un objeto simbolo
-                    var simbolo = new Simbolos.Simbolo(value,metodo,Tipo.FUNCION,this.fila,this.column);
+                    var t2=Tipo.FUNCION
+                    var simbolo = new Simbolos(value,metodo,this.tipo,this.fila,this.column,t2);
                     //*es una funcion
-                    table.insertar(value,metodo,Tipo.FUNCION,this.fila,this.column);
+                    table.insertar(simbolo);
+                    arbolIns.variables.push(simbolo);
                 }
             }
         }
     }
 }
 exports.metodos = metodos;
+
