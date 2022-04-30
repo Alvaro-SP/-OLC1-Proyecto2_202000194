@@ -169,8 +169,8 @@ exports.analizar= async(req, res) => {
         res.send({
             CADENA:cadena,
             Salida: "COMPILADO",
-            VARIABLES: arbolIns.variables ,
-            ERRORES: arbolIns.error,
+            VARIABLES: [] ,
+            ERRORES: [],
             Consola: ['Existen errores es por eso de que no se pudo continuar, Revise el listado de errores para conocer a detalle donde se ubica su error y su tipo.'],
             SIMBOLOS: [],
             AST: [],

@@ -309,12 +309,12 @@ llamadas
 // 	| instruccion					{ $$ = [ [$1[0]] , new nodoAST('INSTRUCCIONES',[$1[1]]) ];}
 // ;
 paramllamada
-    :paramllamada COMA expresion      	{ $$ = [$1[0] , new nodoAST('PARAMETRO LLAMADA',[$1[1],new nodoAST($2,null),$3[1]]) ]; $$[0].push($3[0]); } //add to a list array
+    :paramllamada COMA expresion      	{ $$ = [$1[0] , new nodoAST('PARAMETRO LLAMADA',[$1[1],new nodoAST($2,null),$3[1]]) ]; $1[0].push($3[0]); } //add to a list array
     |expresion                        	{ $$ = [[$1[0]] , new nodoAST('PARAMETRO LLAMADA',[$1[1]]) ] ; }
 ;
 
 parametros
-    :parametros COMA tipo VARIABLE  	{ $$ = [ $1[0], new nodoAST('PARAMETROS',[$1[1],new nodoAST($2,null),$3[1],new nodoAST($4,null)]) ]; $$[0].push(new Declarar($3[0], $4, null,  @1.first_line, @1.first_column)); }
+    :parametros COMA tipo VARIABLE  	{ $$ = [ $1[0], new nodoAST('PARAMETROS',[$1[1],new nodoAST($2,null),$3[1],new nodoAST($4,null)]) ]; $1[0].push(new Declarar($3[0], $4, null,  @1.first_line, @1.first_column)); }
     |tipo VARIABLE                   	{ $$= [[new Declarar($1[0], $2, null,  @1.first_line, @1.first_column)] , new nodoAST('PARAMETROS',[$1[1], new nodoAST($2,null)])]; }
 ;
 /* ------------------------------------    IF    ------------------------------------ */
@@ -331,13 +331,13 @@ instruccionswitch
     |SWITCH PARIZQ expresion PARDER LLAIZQ instrucciondefault LLADER          				{ $$ = [new INSswitch($3[0], null, $6[0], @1.first_line, @1.first_column),new nodoAST('INS SWITCH',[new nodoAST($1,null), new nodoAST($2,null), $3[1], new nodoAST($4,null), new nodoAST($5,null), $6[1],new nodoAST($7,null)])]; }/* switch   ( <EXPRESION>  )   { <DEFAULT> } */
 ;
 
-instrucciones
-	: instrucciones instruccion 	{ $$ = [$1[0], new nodoAST('INSTRUCCIONES',[$1[1],$2[1]])]; $1[0].push($2[0]);  }//instruccionesAPI.getAST.ins($2)
-	| instruccion					{ $$ = [ [$1[0]] , new nodoAST('INSTRUCCIONES',[$1[1]]) ];}
-;
+// instrucciones
+// 	: instrucciones instruccion 	{ $$ = [$1[0], new nodoAST('INSTRUCCIONES',[$1[1],$2[1]])]; $1[0].push($2[0]);  }//instruccionesAPI.getAST.ins($2)
+// 	| instruccion					{ $$ = [ [$1[0]] , new nodoAST('INSTRUCCIONES',[$1[1]]) ];}
+// ;
 /* ------------------------------------  caselist  ------------------------------------ */
 instruccioncaselist
-    :instruccioncaselist CASE expresion DOSPUNTOS instrucciones { $$ = [$1[0],new nodoAST('CASE',[$1[1], new nodoAST($2,null), $3[1], new nodoAST($4,null), $5[1],]) ]; $$.push(new INSCase($3[0], $5[0], @1.first_line, @1.first_column)); }
+    :instruccioncaselist CASE expresion DOSPUNTOS instrucciones { $$ = [$1[0],new nodoAST('CASE',[$1[1], new nodoAST($2,null), $3[1], new nodoAST($4,null), $5[1],]) ]; $1[0].push(new INSCase($3[0], $5[0], @1.first_line, @1.first_column)); }
     |CASE expresion DOSPUNTOS instrucciones             		{ $$ = [[new INSCase($2[0], $4[0], @1.first_line, @1.first_column)], new nodoAST('CASE',[new nodoAST($1,null), $2[1], new nodoAST($3,null), $4[1]])]; } /* case   <EXPRESION>   :  <INSTRUCCIONES> */
 ;
 /* ------------------------------------  DEFAULT  ------------------------------------ */

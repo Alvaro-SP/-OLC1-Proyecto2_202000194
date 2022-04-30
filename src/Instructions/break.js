@@ -4,6 +4,7 @@ const nodo = require("./ASTGlobal/nodo");
 //! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬5.18.1. Break▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 class Break extends nodo.nodo{
     constructor(kind,fila, column) {
+        super(null);
         this.kind=kind
         this.fila=fila
         this.column=column

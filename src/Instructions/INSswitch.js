@@ -34,18 +34,21 @@ class INSswitch extends nodo.nodo{
     //* cada uno de las instrucciones dentro del switch e igualmente esto se hara para las demas
     //* estructuras donde no se dependa o no se utilice las variables globalmente ccomo las 
     //* venia manejando con anterioridad.
-        var ya=true;
+        var ya=false;
     //? si hay instrucciones dentro de cases entonces se ejecutan las instrucciones
     if(this.cases!= null){
-        
+        console.log("*******************************");
+        console.log(this.cases);
+        arbolIns.console.push(this.cases);
         for(var i = 0; i < this.cases.length; i++){
-            var otrocase = this.cases[i].ejecutar(arbolIns, addtable);
+            try {
+                var otrocase = this.cases[i].ejecutar(arbolIns, addtable);
                                             // new INSRelacional($1, $3, 'IGUAL',  @1.first_fila, @1.first_column);
             var respuestacondi = new INSRelacional.INSRelacional(this.condicion, otrocase.condicion, 'IGUAL', this.fila, this.column);
             if (respuestacondi.tipo == Tipo.BOOLEAN) {
                 //* si al ejecutar la condicion relacional se tiene un true entonces se
                 //* debe recorrer cada una de las sentencias dentro de las otras instrucciones del case
-                if (respuestacondi.ejecutar(arbolIns, addtable) || ya) {
+                if (respuestacondi.ejecutar(arbolIns, addtable) || !ya) {
                     for (let i = 0; i < otrocase.ins.length; i++) {
                         const respuestacondi2 = otrocase.ins[i].ejecutar(arbolIns, addtable);
                         if(respuestacondi2 instanceof Break){
@@ -57,10 +60,14 @@ class INSswitch extends nodo.nodo{
 
                 }
             }
+            } catch (error) {
+                
+            }
+            
         }
     }
     //? si hay instrucciones dentro del default entonces se ejecutan
-    if(this.def && ya){
+    if(this.def && !ya){
         for(let i = 0; i < this.def.length; i++){
             const respuestacondidef = this.def[i].ejecutar(arbolIns, addtable);
             if(respuestacondidef instanceof Break){
