@@ -60,7 +60,7 @@ class INSif extends nodo.nodo{
                     }
                 } else {// si es false: el else:
                     if(this.dentroelse!=null){
-                        console.log(this.dentroelse)
+                        // console.log(this.dentroelse)
                         for (let i = 0; i < this.dentroelse.length; i++) {
                             //ejecuto cada instruccion dentro del else
                             var res=this.dentroelse[i].ejecutar(arbolIns, addtable);
