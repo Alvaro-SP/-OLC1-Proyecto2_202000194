@@ -33,9 +33,9 @@ class INSif extends nodo.nodo{
     //* estructuras donde no se dependa o no se utilice las variables globalmente ccomo las 
     //* venia manejando con anterioridad.
     var respuesta = this.condicion.ejecutar(arbolIns, addtable);
-    console.log("************* INSTRUCCION IF************************** ")
-    console.log("respuesta obtenida:  ")
-    console.log(respuesta);
+    // console.log("************* INSTRUCCION IF************************** ")
+    // console.log("respuesta obtenida:  ")
+    // console.log(respuesta);
     if(respuesta==null|| respuesta==Tipo.VOID|| respuesta==Tipo.ERROR){
         return null;
     }
