@@ -21,10 +21,10 @@ class INSCastear extends nodo.nodo{
     if(this.valor!= null){
       let valortemp = this.valor.ejecutar(arbolIns, table);
       var value = valortemp;
-      console.log("Este es el valor ejecutado de CASTEAR: ")
-      console.log(value)
-      console.log("y este es el valor a castear: ")
-      console.log(this.valor)
+      // console.log("Este es el valor ejecutado de CASTEAR: ")
+      // console.log(value)
+      // console.log("y este es el valor a castear: ")
+      // console.log(this.valor)
 
       //* El lenguaje aceptará los siguientes casteos:
         //? • Int a double

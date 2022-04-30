@@ -11,7 +11,9 @@ const nodoAST = require("./ASTGlobal/nodoAST");
 const {INSBreak} = require('./Break');
 const {Asignar} = require('../Instructions/Asignar');
 const {Declarar} = require('../Instructions/Declarar');
-const {INSContinue} = require('../Instructions/continue');
+const { INSreturn } = require("./INSreturn");
+const { Break } = require("./Break");
+const { Continue } = require("./Continue");
 //! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬5.17 Sentencias cíclicas▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 // *5.17.2. For
 class INSfor extends nodo.nodo {
@@ -75,6 +77,12 @@ class INSfor extends nodo.nodo {
                                     if(respuesta){
                                         for(let i=0;i<this.ins.length;i++){
                                             let respuesta2 = this.ins[i].ejecutar(arbolIns, addtable);
+                                            if (respuesta2 instanceof Continue) {
+                                                break;
+                                            }
+                                            else if (respuesta2 instanceof Break || respuesta2 instanceof INSreturn) {
+                                                return;
+                                            }
                                             try {
                                                 if(this.ins[i].tipo=="BREAK"){
                                                     return;
@@ -88,13 +96,14 @@ class INSfor extends nodo.nodo {
                                             } catch (error) {
                                             }
                                         }
+                                        this.actua.ejecutar(arbolIns, table);
                                     }
                                 }
                             }else {
                                 arbolIns.setError(instruccionesAPI.errorSemantico("En el for debe existir una condicion BOOLEANA no de tipo: " +respuesta.tipo ,this.fila,this.column));
                                 return new val.val(this.fila,this.column,Tipo.ERROR,"(ERROR SEMANTICO) En el while debe existir una condicion BOOLEANA no de tipo: " +respuesta.tipo );
                             }
-                            this.actua.ejecutar(arbolIns, table);
+                            
                             iguana++
                         }while(respuesta);
                         return null

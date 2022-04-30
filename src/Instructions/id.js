@@ -18,8 +18,8 @@ class id extends nodo.nodo{
     var value;
 
     value = table.getSimbol(this.id);
-    console.log("Este es el Simbolo encontrado de ID: "+this.id)
-    console.log(value)
+    // console.log("Este es el Simbolo encontrado de ID: "+this.id)
+    // console.log(value)
     if (value == null || value == undefined) {
       arbolIns.setError(
         instruccionesAPI.errorSemantico(

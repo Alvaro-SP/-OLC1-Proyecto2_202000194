@@ -22,7 +22,7 @@ class INSTernario extends nodo.nodo{
         this.column = column;
     }
     ejecutar(arbolIns,table){
-        console.log("************** TERNARIO ***************");
+        // console.log("************** TERNARIO ***************");
         var respuesta = this.condicion.ejecutar(arbolIns,table)
         var value= respuesta;
         var tempresponse= this.secumple.ejecutar(arbolIns,table);
@@ -33,17 +33,17 @@ class INSTernario extends nodo.nodo{
         if (tempresponse2 == Tipo.ERROR) {
             return Tipo.ERROR;
         }
-        console.log(value)
-        console.log(tempresponse)
-        console.log(tempresponse2)
+        // console.log(value)
+        // console.log(tempresponse)
+        // console.log(tempresponse2)
         if(respuesta==null|| value==Tipo.VOID|| value==Tipo.ERROR ){
             return Tipo.ERROR;
         }else{
             if(value){
                 this.tipo = this.secumple.tipo;
-                console.log("value ? tempresponse : tempresponse2 == ");
-                console.log(value ? tempresponse : tempresponse2)
-                console.log("************** FIN TERNARIO ***************");
+                // console.log("value ? tempresponse : tempresponse2 == ");
+                // console.log(value ? tempresponse : tempresponse2)
+                // console.log("************** FIN TERNARIO ***************");
                 return value ? tempresponse : tempresponse2;
             }else{
                 this.tipo = this.nosecumple.tipo;
@@ -55,9 +55,9 @@ class INSTernario extends nodo.nodo{
                 // if (tempresponse2 == Tipo.ERROR) {
                 //     return Tipo.ERROR;
                 // }
-                console.log("value ? tempresponse : tempresponse2 == ");
-                console.log(value ? tempresponse : tempresponse2)
-                console.log("************** FIN TERNARIO ***************");
+                // console.log("value ? tempresponse : tempresponse2 == ");
+                // console.log(value ? tempresponse : tempresponse2)
+                // console.log("************** FIN TERNARIO ***************");
                 return value ? tempresponse : tempresponse2;
             }
 

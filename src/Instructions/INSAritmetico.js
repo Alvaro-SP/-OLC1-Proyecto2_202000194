@@ -43,9 +43,9 @@ class INSAritmetico extends nodo.nodo{
         if(this.expDer!==null){
             let valortemp = this.expDer.ejecutar(arbolIns, table);
             let valortemp2 = this.expIzq.ejecutar(arbolIns, table);
-            console.log("valores a operar con INSARITMETICA: ")
-            console.log(valortemp)
-            console.log(valortemp2)
+            // console.log("valores a operar con INSARITMETICA: ")
+            // console.log(valortemp)
+            // console.log(valortemp2)
             var value = new val.val(0, 0, 0, valortemp);
             var value2 = new val.val(0, 0, 0, valortemp2);
             if(value != Tipo.ERROR && value2 != Tipo.ERROR){

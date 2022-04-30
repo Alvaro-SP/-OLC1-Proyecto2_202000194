@@ -48,34 +48,36 @@ class INSif extends nodo.nodo{
                         var res=this.dentroif[i].ejecutar(arbolIns, addtable);
                         //valido si tengo algun parametro que detenga mi sentencia
                         // break, continue, return
-                        console.log('this.dentroif[i].tipo this.dentroif[i].tipo')
-                        console.log(this.dentroif[i].tipo )
+                        // console.log('this.dentroif[i].tipo this.dentroif[i].tipo')
+                        // console.log(this.dentroif[i].tipo )
                         // this.dentroif[i].tipo === Tipo.BREAK || this.dentroif[i].tipo ===Tipo.CONTINUE || this.dentroif[i].tipo === Tipo.RETURN||
                         if ( res instanceof INSreturn || res instanceof Break || res instanceof Continue) {
-                            console.log("SE DEVUELVE ESTO: ")
-                            console.log(res)
-                            console.log("************************* FIN DEL IF *************************")
+                            // console.log("SE DEVUELVE ESTO: ")
+                            // console.log(res)
+                            // console.log("************************* FIN DEL IF *************************")
                             return res
                         }
                     }
                 } else {// si es false: el else:
-                    if(this.dentroelse!=null){console.log(this.dentroelse)
+                    if(this.dentroelse!=null){
+                        console.log(this.dentroelse)
                         for (let i = 0; i < this.dentroelse.length; i++) {
                             //ejecuto cada instruccion dentro del else
                             var res=this.dentroelse[i].ejecutar(arbolIns, addtable);
                             //valido si tengo algun parametro que detenga mi sentencia
                             // break, continue, return
-                            if (this.dentroelse[i].tipo === Tipo.BREAK || this.dentroelse[i].tipo ===Tipo.CONTINUE || this.dentroelse[i].tipo === Tipo.RETURN) {
-                                console.log("SE DEVUELVE ESTO: ")
-                            console.log(res)
-                            console.log("************************* FIN DEL IF *************************")
+                            if (res instanceof INSreturn || res instanceof Break || res instanceof Continue) {
+                            //     console.log("SE DEVUELVE ESTO: ")
+                            // console.log(res)
+                            // console.log("************************* FIN DEL IF *************************")
                             return res
                             }
                         }
                     }
-                }console.log("SE DEVUELVE ESTO: ")
-                console.log(null)
-                console.log("************************* FIN DEL IF *************************")
+                }
+                // console.log("SE DEVUELVE ESTO: ")
+                // console.log(null)
+                // console.log("************************* FIN DEL IF *************************")
                 
                 return null;
             }else{

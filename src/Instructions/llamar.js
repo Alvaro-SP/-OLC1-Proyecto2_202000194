@@ -11,6 +11,8 @@ const nodoAST = require("./ASTGlobal/nodoAST");
 const INSreturn = require('./INSreturn');
 const INSRelacional = require('../Instructions/INSRelacional');
 const INSBreak = require('./Break');
+const { Break } = require("./Break");
+const { Continue } = require("./Continue");
 //! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬  5.21 Llamadas  ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 class llamar extends nodo.nodo{
     constructor(variable, parametros, fila, column) {
@@ -21,13 +23,16 @@ class llamar extends nodo.nodo{
         this.column = column;
     }
     ejecutar(arbolIns, table) {
-        console.log("****************************INS LLAMAR METODO******************************")
+        // console.log("****************************INS LLAMAR METODO******************************")
         var value;
         value=this.variable.toString()
         var addtable = new Tablita.TablaSimbolos(table);
         var a=0;
         //* no se que valores se van a pasar en la funcion entonces necesito ejecutar
         //* cada uno de los parametros para que se guarden sus valores:
+        if(this.parametros==null){
+            this.parametros=[]
+        }
         for (let i = 0; i < this.parametros.length; i++) {
             this.parametros[i].ejecutar(arbolIns, addtable);
             a++;
@@ -37,7 +42,7 @@ class llamar extends nodo.nodo{
         //* la tabla de simbolos
         var funcion = table.getSimbol(value);
         if (funcion == null) {
-            arbolIns.setError(instruccionesAPI.errorSemantico("No se ha encontrado la funcion " + this.variable, this.fila, this.column));
+            arbolIns.setError(instruccionesAPI.errorSemantico("No se ha encontrado la funcion " + value, this.fila, this.column));
             return new val.val(this.fila, this.column, Tipo.ERROR, "No se ha encontrado la funcion " + this.variable);
         }else{
             //* si la funcion existe debo verificar que el numero de parametros sea el mismo
@@ -66,17 +71,17 @@ class llamar extends nodo.nodo{
                     
                     for (let i = 0; i < respuestamethod.length; i++) {
                         let respuesta2 = respuestamethod[i].ejecutar(arbolIns, addtable);//instruccion del metodo
-                        console.log("****************************RESULTADO******************************") 
-                        console.log("****************************RESULTADO******************************") 
-                        console.log("RESULTADO: " );
-                        console.log(respuesta2 );
-                        console.log("**************************** FINNN RESULTADO******************************") 
+                        // console.log("****************************RESULTADO******************************") 
+                        // console.log("****************************RESULTADO******************************") 
+                        // console.log("RESULTADO: " );
+                        // console.log(respuesta2 );
+                        // console.log("**************************** FINNN RESULTADO******************************") 
                         try {
-                            if(respuestamethod[i].tipo=="BREAK"){
+                            if(respuesta2 instanceof Break){
                                 return respuesta2;
                             }
-                            if(respuestamethod[i].tipo=="CONTINUE"){
-                                break ;
+                            if(respuesta2 instanceof Continue){
+                                return respuesta2;
                             }
                             if(respuesta2 instanceof INSreturn.INSreturn){
                                 if(funcion.tipo==Tipo.VOID){
@@ -90,10 +95,10 @@ class llamar extends nodo.nodo{
                                         respuesta2.ejecutar(arbolIns,addtable);
                                         var ret = respuesta2.exp
                                         if(funcion.tipo==respuesta2.expre.tipo){
-                                            console.log("VALOR RETORNADO EN LLAMAR:")
-                                            console.log(respuesta2.expre.valor);
-                                            console.log(respuesta2.exp);
-                                            console.log(respuesta2.expre);
+                                            // console.log("VALOR RETORNADO EN LLAMAR:")
+                                            // console.log(respuesta2.expre.valor);
+                                            // console.log(respuesta2.exp);
+                                            // console.log(respuesta2.expre);
                                             return ret;
                                         }else{
                                             if(funcion.tipo==Tipo.DOUBLE && (respuesta2.exp.tipo==Tipo.INT)){

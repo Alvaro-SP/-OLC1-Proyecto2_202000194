@@ -24,8 +24,8 @@ constructor(variable, valor, fila, column) {
 ejecutar(arbolIns, table) {
     let valortemp = this.valor.ejecutar(arbolIns, table);
     var value = valortemp;
-    console.log("*********************** ASIGNACION***********************");
-    console.log(this.variable)
+    // console.log("*********************** ASIGNACION***********************");
+    // console.log(this.variable)
     //* si la variable es un array eso significa de que son varias asignaciones.
     if(this.variable instanceof Array){
         for (let i = 0; i < this.variable.length; i++) {
@@ -33,8 +33,8 @@ ejecutar(arbolIns, table) {
             if (value.valor != Tipo.ERROR) {
                 //! Busco en mi lista Simbolos el valor para saber el tipo a asignar.
                 var tipoasignar = table.getSimbol(this.variable[i]); // envio el nombre de la variable
-                console.log("variable de la TABLA:")
-                console.log(tipoasignar)
+                // console.log("variable de la TABLA:")
+                // console.log(tipoasignar)
                 if(tipoasignar==null ||tipoasignar.tipo==Tipo.ERROR ||tipoasignar==undefined) {
                     //*error semantico
                     arbolIns.setError(
@@ -57,38 +57,53 @@ ejecutar(arbolIns, table) {
                     //* si lo encontro entonces asigno su tipo correspondiente:
                     if (tipoasignar != null) {
                         //! procedo a agregar valores por defecto.
-                        if (tipoasignar.tipo == Tipo.INT) {
-                        this.valor = new val.val(this.fila, this.column, Tipo.INT, 0);
-                        } else if (tipoasignar.tipo == Tipo.DOUBLE) {
-                        this.valor = new val.val(
-                            this.fila,
-                            this.column,
-                            Tipo.DOUBLE,
-                            0.0
-                        );
-                        } else if (tipoasignar.tipo == Tipo.BOOLEAN) {
-                        this.valor = new val.val(
-                            this.fila,
-                            this.column,
-                            Tipo.BOOLEAN,
-                            true
-                        );
-                        } else if (tipoasignar.tipo == Tipo.CARACTER) {
-                        this.valor = new val.val(
-                            this.fila,
-                            this.column,
-                            Tipo.CARACTER,
-                            ""
-                        );
-                        } else if (tipoasignar.tipo == Tipo.STRING) {
-                        this.valor = new val.val(
-                            this.fila,
-                            this.column,
-                            Tipo.STRING,
-                            ""
-                        );
+                        if (this.tipo == Tipo.INT) {
+                            // new val.val(
+                            //   this.fila,
+                            //   this.column,
+                            //   Tipo.INT,
+                            //   0
+                            // );
+                            this.valor = new INSPrimitivos.INSPrimitivos(Tipo.INT, 0, this.fila,this.column)
+                          } else if (this.tipo == Tipo.DOUBLE) {
+                            // this.valor = new val.val(
+                            //   this.fila,
+                            //   this.column,
+                            //   Tipo.DOUBLE,
+                            //   0.0
+                            // );
+                            this.valor = new INSPrimitivos.INSPrimitivos(Tipo.DOUBLE, 0.00, this.fila,this.column)
+                          } else if (this.tipo == Tipo.BOOLEAN) {
+                            // this.valor = new val.val(
+                            //   this.fila,
+                            //   this.column,
+                            //   Tipo.BOOLEAN,
+                            //   true
+                            // );
+                            this.valor = new INSPrimitivos.INSPrimitivos(Tipo.BOOLEAN, true, this.fila,this.column)
+                          } else if (this.tipo == Tipo.CARACTER) {
+                            // this.valor = new val.val(
+                            //   this.fila,
+                            //   this.column,
+                            //   Tipo.CARACTER,
+                            //   ""
+                            // );
+                            this.valor = new INSPrimitivos.INSPrimitivos(Tipo.CARACTER, " ", this.fila,this.column)
+                          } else if (this.tipo == Tipo.STRING) {
+                            // this.valor = new val.val(
+                            //   this.fila,
+                            //   this.column,
+                            //   Tipo.STRING,
+                            //   ""
+                            // );
+                            this.valor = new INSPrimitivos.INSPrimitivos(Tipo.STRING, 0, this.fila,this.column)
+                          }else{
+                            this.tipo=Tipo.DOUBLE;
+                            this.valor = new INSPrimitivos.INSPrimitivos(Tipo.DOUBLE, 0, this.fila,this.column)
+              
+                          }
+                          value=this.valor
                         }
-                    }
                     //* sino lo encontro enconces F
                     else {
                         //*error semantico
@@ -110,15 +125,15 @@ ejecutar(arbolIns, table) {
                     //? y guardo el valor:
                     if (this.valor.tipo == tipoasignar.tipo) {
                         tipoasignar.data = value;
-                        console.log("variable asignada: " + tipoasignar.id+" con valor "+tipoasignar.data );
+                        // console.log("variable asignada: " + tipoasignar.id+" con valor "+tipoasignar.data );
                     }
                 } //! si el valor ahora no es nulo, entonces necesito guardar su valor
                 else {
                     //? y guardo el valor:
-                    console.log(this.valor.tipo +'=='+ tipoasignar.tipo)
+                    // console.log(this.valor.tipo +'=='+ tipoasignar.tipo)
                     if (this.valor.tipo == tipoasignar.tipo) {
                         tipoasignar.data = value;
-                        console.log("variable asignada: " + tipoasignar.id+" con valor "+tipoasignar.data );
+                        // console.log("variable asignada: " + tipoasignar.id+" con valor "+tipoasignar.data );
                     }
                 }
             }
@@ -129,10 +144,10 @@ ejecutar(arbolIns, table) {
       //! Primero verifico de que no de ningun tipo de errores la EJECUCION
         if (value!=undefined || value.valor != Tipo.ERROR) {
             //! Busco en mi lista Simbolos el valor para saber el tipo a asignar.
-            console.log("variable a buscar: " + this.variable)
+            // console.log("variable a buscar: " + this.variable)
             var tipoasignar = table.getSimbol(this.variable); // envio el nombre de la variable
-            console.log("variable de la TABLA:")
-                console.log(tipoasignar)
+            // console.log("variable de la TABLA:")
+                // console.log(tipoasignar)
                 if(tipoasignar==null ||tipoasignar.tipo==Tipo.ERROR ||tipoasignar==undefined) {
                     //*error semantico
                     arbolIns.setError(
@@ -215,12 +230,12 @@ ejecutar(arbolIns, table) {
 
             if (this.valor.tipo == tipoasignar.tipo) {
                 tipoasignar.data = value;
-                console.log("variable asignada: " + tipoasignar.id+" con valor "+tipoasignar.data );
+                // console.log("variable asignada: " + tipoasignar.id+" con valor "+tipoasignar.data );
             }
             }
         }
     }
-    console.log("*********************** FIN ASIGNACION ***********************");
+    // console.log("*********************** FIN ASIGNACION ***********************");
 }
 }
 exports.Asignar = Asignar;

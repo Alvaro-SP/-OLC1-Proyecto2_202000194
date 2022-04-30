@@ -10,6 +10,9 @@ const INSBreak = require('./Break');
 const Tablita = require("./TS/TablaSimbolos");
 const instruccionesAPI = require("../Interpreter/interprete").instruccionesAPI; //las instrucciones de la API
 const nodoAST = require("./ASTGlobal/nodoAST");
+const { INSreturn } = require("./INSreturn");
+const { Break } = require("./Break");
+const { Continue } = require("./Continue");
 //! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬5.16 Sentencias de control▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 // *SENTENCIA SWITCH
 class INSswitch extends nodo.nodo{
@@ -45,7 +48,7 @@ class INSswitch extends nodo.nodo{
                 if (respuestacondi.ejecutar(arbolIns, addtable) || ya) {
                     for (let i = 0; i < otrocase.ins.length; i++) {
                         const respuestacondi2 = otrocase.ins[i].ejecutar(arbolIns, addtable);
-                        if(respuestacondi2==null || respuestacondi2.tipo.tipo == Tipo.BREAK || respuestacondi2 instanceof INSBreak.Break){
+                        if(respuestacondi2 instanceof Break){
                             return null;
                         }
                     }
@@ -60,7 +63,7 @@ class INSswitch extends nodo.nodo{
     if(this.def && ya){
         for(let i = 0; i < this.def.length; i++){
             const respuestacondidef = this.def[i].ejecutar(arbolIns, addtable);
-            if(respuestacondidef==null || respuestacondidef.tipo.tipo == Tipo.BREAK || respuestacondidef instanceof INSBreak.Break){
+            if(respuestacondidef instanceof Break){
                 return null;
             }
         }

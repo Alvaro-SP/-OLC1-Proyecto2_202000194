@@ -21,18 +21,21 @@ class Declarar extends nodo.nodo{
         this.column = column;
     }
     ejecutar(arbolIns, table) {
+      // arbolIns.console.push(typeof(this.tipo));
+      // arbolIns.console.push(this.tipo +"*******"+typeof(this.tipo));
+        
       // !Primero valido de que la variable sea una lista o no?
-      console.log("***********************DECLARACION***********************");
-      console.log(this.variable)
+      // console.log("***********************DECLARACION***********************");
+      // console.log(this.variable)
       if(this.variable instanceof Array){
         //si es una lista de variables voy a asignarlas normalmente recorriendolas:
         for (let i = 0; i < this.variable.length; i++) {
-          console.log("El this.valor.valor= " + this.valor.valor);
+          // console.log("El this.valor.valor= " + this.valor.valor);
           if (this.valor != null) {
             let valortemp = this.valor.ejecutar(arbolIns, table);
             var value = valortemp;
-            console.log("Este es el Simbolo encontrado de DECLARAR:")
-            console.log(value)
+            // console.log("Este es el Simbolo encontrado de DECLARAR:")
+            // console.log(value)
             //! Primero verifico de que no de ningun tipo de errores la EJECUCION
             if (value.valor != Tipo.ERROR) {
               //! si o si el tipo del valor debe ser igual al tipo del la ejecucion.
@@ -68,7 +71,7 @@ class Declarar extends nodo.nodo{
                 this.fila,
                 this.column,Tipo.VARIABLE
               );
-              console.log("variable declarada: " + simbolo.id+" con valor "+simbolo.data);
+              // console.log("variable declarada: " + simbolo.id+" con valor "+simbolo.data);
               var respuesta = table.insertar(simbolo);
               arbolIns.setVariables(simbolo);
             }
@@ -128,7 +131,7 @@ class Declarar extends nodo.nodo{
               this.fila,
               this.column,Tipo.VARIABLE
             );
-            console.log("variable declarada: " + simbolo.id+" con valor "+simbolo.data);
+            // console.log("variable declarada: " + simbolo.id+" con valor "+simbolo.data);
             var respuesta = table.insertar(simbolo);
             arbolIns.setVariables(simbolo);
           }
@@ -136,16 +139,19 @@ class Declarar extends nodo.nodo{
       }
       else{
         //! sino entonces voy a agregar variables normales.
-        console.log(this.valor)
+        // console.log(this.valor)
         if(this.valor != null){
           let valortemp = this.valor.ejecutar(arbolIns, table);
           var value = valortemp;
-          console.log("Este es el valor ejecutado de DECLARAR SIMPLE: "+this.variable)
-          console.log(value)
+          // console.log("Este es el valor ejecutado de DECLARAR SIMPLE: "+this.variable)
+          // console.log(value)
           //! Primero verifico de que no de ningun tipo de errores la EJECUCION
           if (value.tipo != Tipo.ERROR) {
             //! si o si el tipo del valor debe ser igual al tipo del la ejecucion.
-            console.log("se compara:  "+this.valor.tipo +" != "+ this.tipo)
+            // console.log("se compara:  "+this.valor.tipo +" != "+ this.tipo)
+            // arbolIns.console.push(this.valor.tipo +"\n");
+            // arbolIns.console.push(this.tipo +"\n");
+
             if (this.valor.tipo != this.tipo) {
               //! verifico si el tipo del valor es un double o entero y es del mismo tipo que el tipo de la declaracion
               if (this.tipo == Tipo.DOUBLE &&(this.valor.tipo == Tipo.DOUBLE ||
@@ -174,7 +180,7 @@ class Declarar extends nodo.nodo{
             //! la agrego como un objeto simbolo
             var simbolo = new Simbolo(this.variable,value,this.tipo,this.fila,this.column,Tipo.VARIABLE);
             var respuesta = table.insertar(simbolo);
-            console.log("variable declarada: " + simbolo.id+" con valor "+simbolo.data);
+            // console.log("variable declarada: " + simbolo.id+" con valor "+simbolo.data);
             arbolIns.setVariables(simbolo);
           }
         }
@@ -222,17 +228,21 @@ class Declarar extends nodo.nodo{
               //   ""
               // );
               this.valor = new INSPrimitivos.INSPrimitivos(Tipo.STRING, 0, this.fila,this.column)
+            }else{
+              this.tipo=Tipo.DOUBLE;
+              this.valor = new INSPrimitivos.INSPrimitivos(Tipo.DOUBLE, 0, this.fila,this.column)
+
             }
           }
           //! como tengo una variable por declarar me compete agregarla a la tabla de simbolos
           //! la agrego como un objeto simbolo
           var simbolo = new Simbolo(this.variable,this.valor.valor,this.tipo,this.fila,this.column,Tipo.VARIABLE);
-          console.log("variable declarada: " + simbolo.id+" con valor "+simbolo.data);
+          // console.log("variable declarada: " + simbolo.id+" con valor "+simbolo.data);
           var respuesta = table.insertar(simbolo);
           arbolIns.setVariables(simbolo);
         }
       }
-      console.log("***********************FIN DECLARACION***********************");
+      // console.log("***********************FIN DECLARACION***********************");
     }
 }
 exports.Declarar = Declarar;

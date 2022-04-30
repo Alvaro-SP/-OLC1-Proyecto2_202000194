@@ -19,12 +19,13 @@ class FUNCround extends nodo.nodo {
     ejecutar(arbolIns,table) {
         try {
             const res = this.exp.ejecutar(arbolIns, table);
+            // arbolIns.console.push("FUNCround: "+res);
             try {
-                if (res) {
+                // if (res) {
                     return res.toFixed();
-                }else{
-                    return res;
-                }
+                // }else{
+                //     return res;
+                // }
             } catch (error) {
                 return res;
             }

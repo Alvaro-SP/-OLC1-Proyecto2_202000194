@@ -47,10 +47,10 @@ class INSprint  extends nodo.nodo{
 
         if(value != Tipo.ERROR){
             if (this.isln) {
-                console.log(value);
+                // console.log(value);
                 arbolIns.console.push(value+'\n'); // add value to console
             } else {
-                console.log(value);
+                // console.log(value);
                 arbolIns.console.push(value); // add value to console
             }
         }else{

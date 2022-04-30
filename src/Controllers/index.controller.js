@@ -14,17 +14,17 @@ var erroreslexicos=0;
 // ? ████████████████████████████████ INDEX GET ████████████████████████████████    
 exports.index = async(req, res) => {
     //! SI LA CONSOLA NO ES VACIA, ENTONCES DEVUELVO LA CONSOLA
-    console.log("INDEX");
-    console.log(arbolIns)
-    console.log()
+    // console.log("INDEX");
+    // console.log(arbolIns)
+    // console.log()
     var textonuevo
     
     if(arbolIns){
         for(var i=0;i<arbolIns.console.length;i++){
             textonuevo+=arbolIns.console[i].toString()+"";
         }//console.log(arbolIns)
-        console.log(arbolIns.error.length)
-        console.log(parser.erroreslexicos.length)
+        // console.log(arbolIns.error.length)
+        // console.log(parser.erroreslexicos.length)
         if(arbolIns.error.length<1 && parser.erroreslexicos.length>0){
             for (var i = 0; i < parser.erroreslexicos.length; i++) {
                 arbolIns.setError(parser.erroreslexicos[i]);
@@ -74,7 +74,7 @@ exports.index = async(req, res) => {
 exports.analizar= async(req, res) => {
     // let basetemp=""
     console.log("▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬REQUEST▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
-    console.log(req.body.codigo);
+    // console.log(req.body.codigo);
     // cadena = JSON.stringify(req.body.codigo);  //vere cual de los dos funcio
     cadena = req.body.codigo.toString()  //este jalo xdxd
     // const texto = req.body.text;
@@ -144,7 +144,7 @@ exports.analizar= async(req, res) => {
         }
     } catch (error) {
         console.log("ENTRO AL ERROR QUE NO DEBE");
-        console.log(arbolIns)
+        // console.log(arbolIns)
         // arbolIns.console.push(error);
     }
     //* necesito retornar

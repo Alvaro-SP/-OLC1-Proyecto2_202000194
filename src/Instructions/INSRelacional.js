@@ -22,16 +22,16 @@ class INSRelacional extends nodo.nodo {
   ejecutar(arbolIns, table) {
     let valortemp = this.expDer.ejecutar(arbolIns, table);
     let valortemp2 = this.expIzq.ejecutar(arbolIns, table);
-    console.log("*************valores a relacionar con INSRELACIONAL****************: ")
-    console.log('this.expIzq')
-    console.log(this.expIzq)
-    console.log('this.expIzq VALOR OBTENIDO:')
-    console.log(valortemp2)
-    console.log('this.expDer')
-    console.log(this.expDer)
-    console.log('this.expDer VALOR OBTENIDO:')
-    console.log(valortemp)
-    console.log("*************************fin relacional*************************")
+    // console.log("*************valores a relacionar con INSRELACIONAL****************: ")
+    // console.log('this.expIzq')
+    // console.log(this.expIzq)
+    // console.log('this.expIzq VALOR OBTENIDO:')
+    // console.log(valortemp2)
+    // console.log('this.expDer')
+    // console.log(this.expDer)
+    // console.log('this.expDer VALOR OBTENIDO:')
+    // console.log(valortemp)
+    // console.log("*************************fin relacional*************************")
     // var value = valortemp;
     // var value2 = valortemp2;
     /*Operaciones como cadena-carácter, es error semántico, a menos que se utilice
@@ -47,8 +47,8 @@ class INSRelacional extends nodo.nodo {
         if (this.expIzq.tipo == Tipo.INT) {
           //? ENTERO -----> ENTERO
           var temp=new val.val(this.fila,this.column,Tipo.BOOLEAN,value.valor === value2.valor);
-          console.log("ESTE ES EL VALOR QUE BUSCO:")
-          console.log(temp.valor)
+          // console.log("ESTE ES EL VALOR QUE BUSCO:")
+          // console.log(temp.valor)
           return temp.valor
         } else if (this.expIzq.tipo == Tipo.DOUBLE) {
           //? DOUBLE -----> DOUBLE

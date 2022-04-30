@@ -22,13 +22,13 @@ class ToUpper extends nodo.nodo {
             const res = this.exp.ejecutar(arbolIns,table) ;
             try {
                 if (res) {
-                    if (this.exp.tipo == Tipo.INT || this.exp.tipo == Tipo.DECIMAL || this.exp.tipo == Tipo.BOOLEAN) {
-                        return res.toUpperCase();
-                    }
-                    else {
+                    if (this.exp.tipo == Tipo.INT || this.exp.tipo == Tipo.DOUBLE || this.exp.tipo == Tipo.BOOLEAN) {
                         arbolIns.setError(instruccionesAPI.errorSemantico("No se puede convertir a mayusculas" ,this.fila,this.column));
                         arbolIns.console.push("No se puede convertir a mayusculas"+" en la fila: "+this.fila+" y la columna: "+this.column);
                         return new val.val(this.fila,this.column,Tipo.ERROR,"No se puede convertir a mayusculas");
+                    }
+                    else {
+                        return res.toUpperCase();
                     }
                 }else{
                     return res;

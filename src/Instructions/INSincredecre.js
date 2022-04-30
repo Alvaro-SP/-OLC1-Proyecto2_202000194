@@ -28,13 +28,13 @@ class INSincredecre extends nodo.nodo{
               if (this.op === "INCREMENT") {
                 value.data = value.data + 1;
                 var temp= table.getSimbol(this.id)
-                console.log(temp.data)
+                // console.log(temp.data)
                 return temp.data;
               } else if (this.op === "DECREMENT") {
                 // this.tipo = value.tipo;
                 value.data = value.data - 1;
                 var temp= table.getSimbol(this.id)
-                console.log(temp.data)
+                // console.log(temp.data)
                 return temp.data;
               } else {
                 arbolIns.setError(
@@ -58,13 +58,13 @@ class INSincredecre extends nodo.nodo{
                 // this.tipo = value.tipo;
                 value.data = value.data + 1;
                 var tempvalue = table.getSimbol(this.id);
-                console.log(tempvalue.data)
+                // console.log(tempvalue.data)
                 return tempvalue.data;
               } else if (this.op === "DECREMENT") {
                 // this.tipo = value.tipo;
                 value.data = value.data - 1;
                 var tempvalue = table.getSimbol(this.id);
-                console.log(tempvalue.data)
+                // console.log(tempvalue.data)
                 return tempvalue.data;
               } else {
                 arbolIns.setError(

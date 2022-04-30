@@ -10,6 +10,9 @@ const instruccionesAPI = require("../Interpreter/interprete").instruccionesAPI; 
 const nodoAST = require("./ASTGlobal/nodoAST");
 const {INSBreak} = require('./Break');
 const {INSContinue} = require('../Instructions/continue');
+const { INSreturn } = require("./INSreturn");
+const { Break } = require("./Break");
+const { Continue } = require("./Continue");
 //! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬5.17 Sentencias cíclicas▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 // *5.17.1. While
 class INSwhile extends nodo.nodo{
@@ -36,6 +39,12 @@ class INSwhile extends nodo.nodo{
             if(respuesta){
               for(let i=0;i<this.dentrowhile.length;i++){
                 let respuesta2 = this.dentrowhile[i].ejecutar(arbolIns, addtable);
+                if (respuesta2 instanceof Continue) {
+                  break;
+              }
+              else if (respuesta2 instanceof Break || respuesta2 instanceof INSreturn) {
+                  return;
+              }
                 try {
                   if(this.dentrowhile[i].tipo=="BREAK"){
                     return;

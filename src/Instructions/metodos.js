@@ -17,6 +17,8 @@ class metodos extends nodo.nodo{
         super(tipo)
         // this.tipo = tipo;
         this.variable = variable;
+        // console.log("param         **********************")
+        // console.log(param)
         this.param = param;
         this.ins = ins;
         this.fila = fila;
@@ -29,6 +31,9 @@ class metodos extends nodo.nodo{
             arbolIns.setError(instruccionesAPI.errorSemantico("No se ha encontrado la variable " + this.variable + " se obtuvo null",this.fila,this.column));
             return new val.val(this.fila,this.column,Tipo.ERROR,"No se ha encontrado la variable " + this.variable + " se obtuvo null");
         }else{
+            if(this.param == null){
+                this.param=[]
+            }
             var a=0;
             for(var i=0;i<this.param.length;i++){
                 a++;

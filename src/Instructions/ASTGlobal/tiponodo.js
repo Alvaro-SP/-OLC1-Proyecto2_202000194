@@ -2,7 +2,7 @@ const Tipo = {
   //!   -----------------------       PARA TABLA DE SIMBOLOS      ----------------------------
   DECLARACION: "DECLARACION",
   ASIGNACION: "ASIGNACION",
-  DECIMAL: "DECIMAL", //DOUBLE
+  DOUBLE: "DOUBLE", //DOUBLE
   CARACTER: "CARACTER", //CHAR
   STRING: "STRING",
   BOOLEAN: "BOOLEAN",

@@ -19,14 +19,21 @@ class TypeOf extends nodo.nodo {
         this.column = column;
     }
     ejecutar(arbolIns,table)  {
+        var res = null;
         try {
-            this.exp.ejecutar(arbolIns,table) ;
+            res = this.exp.ejecutar(arbolIns,table) ;
             try {
                 let obtenido;
                 if(this.exp instanceof id){
-                    obtenido = table.getVariable(this.exp.id);
+                    obtenido = table.getSimbol(this.exp.id);
+                    // if(!obtenido.tipo && obtenido.data){
+                    //     obtenido.tipo=Tipo.DOUBLE;
+                    // }
+                    // arbolIns.console.push("\n"+obtenido.data+"------------------\n");
                     return obtenido.tipo.toString().toLowerCase();
                 }else{
+                    // arbolIns.console.push(this.exp.tipo);
+                    // arbolIns.console.push(this.exp.tipo.toString);
                     try {
                         return this.exp.tipo.toString().toLowerCase();
                     } catch (error) {
@@ -35,12 +42,14 @@ class TypeOf extends nodo.nodo {
                 }
             }
             catch (err) {
-                return this.exp.tipo.toString().toLowerCase();
+                // return this.exp.tipo.toString().toLowerCase();
+                // arbolIns.console.push(this.exp.tipo);
+                return res;
             }
         }
         catch (err) {
             arbolIns.setError(instruccionesAPI.errorSemantico("No se puede convertir a caracter/texto" ,this.fila,this.column));
-            arbolIns.console.push("No se puede convertir a caracter/texto"+" en la fila: "+this.fila+" y la columna: "+this.column);
+            arbolIns.console.push("No se puede convertir a caracter/texto"+this.exp.tipo+" en la fila: "+this.fila+" y la columna: "+this.column+" "+err);
             return new val.val(this.fila,this.column,Tipo.ERROR,"No se puede convertir a caracter/texto");
 
         }

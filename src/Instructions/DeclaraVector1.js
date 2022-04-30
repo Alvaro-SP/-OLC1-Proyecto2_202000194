@@ -25,10 +25,10 @@ constructor(tipo,id,tipo2,valores,fila, column) {
 // La diferencia en esta asignacion es de que necesito agregar el ambito de la variable que voy a agregar
 // entonces necesito ese nuevo parametro al ejecutar 
 ejecutar(arbolIns, table) {
-    console.log("*********************** INICIO DECLARAR VECTOR 1 ***********************");
+    // console.log("*********************** INICIO DECLARAR VECTOR 1 ***********************");
     // ? si es un array los valores y no hay tipo2
     if((this.valores instanceof Array) && (this.tipo2==null)){
-        console.log("********************** DECLARACION TIPO 2 ***********************");
+        // console.log("********************** DECLARACION TIPO 2 ***********************");
         /*Declaración tipo 2: En esta declaración, se indica por medio de una lista
         de valores separados por coma, los valores que tendrá el vector, en este
         caso el tamaño del vector será el de la misma cantidad de valores de la
@@ -53,7 +53,7 @@ ejecutar(arbolIns, table) {
         }
         
         var simbolo = new Simbolo(this.id,contenido,this.tipo,this.fila,this.column, Tipo.VECTOR);
-        console.log("variable declarada: " + simbolo.id+" con valor "+simbolo.data);
+        // console.log("variable declarada: " + simbolo.id+" con valor "+simbolo.data);
         
         
         var getvar=table.getSimbol(this.id)
@@ -68,7 +68,7 @@ ejecutar(arbolIns, table) {
 
         }
     }else if(!(this.valores instanceof Array)&& this.tipo2){//? si valores no es un array y hay tipo2
-        console.log("********************** DECLARACION TIPO 1 ***********************");
+        // console.log("********************** DECLARACION TIPO 1 ***********************");
         //Declaración tipo 1: En esta declaración, se indica por medio de una
         // expresión numérica del tamaño que se desea el vector, además toma los
         // valores por default para cada tipo.
@@ -105,7 +105,7 @@ ejecutar(arbolIns, table) {
                 }
                 }
                 var simbolo = new Simbolo(this.id,contenido,this.tipo,this.fila,this.column, Tipo.VECTOR);
-                console.log("variable declarada: " + simbolo.id+" con valor "+simbolo.data);
+                // console.log("variable declarada: " + simbolo.id+" con valor "+simbolo.data);
                 var getvar=table.getSimbol(this.id)
                 if (getvar == null) {
                     var respuesta = table.insertar(simbolo);
@@ -117,7 +117,8 @@ ejecutar(arbolIns, table) {
                 }
             }
         }
-    }else{console.log("*********************** FIN DECLARAR VECTOR 1 ***********************");
+    }else{
+        // console.log("*********************** FIN DECLARAR VECTOR 1 ***********************");
         return null;
     }
     

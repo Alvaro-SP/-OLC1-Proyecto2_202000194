@@ -58,13 +58,18 @@ class nodoAST{
             let enlaces = ''
             //* aqui por cada hijo que exista 
             for (let i = 0; i < this.childs.length; i++) {
-                const child = this.childs[i];
+                try {
+                    const child = this.childs[i];
                 enlaces+=etiqueta+"->node_"+num.num+"\n"
                 // console.log("El hijo child------------------------------")
                 // console.log(child)
                 let temporal = child.dotGen(num)
                 nodos+=temporal.node
                 enlaces+=temporal.enlace
+                } catch (error) {
+                    
+                }
+                
             }
             return {node: nodos, data:this.data, enlace:enlaces}
         }

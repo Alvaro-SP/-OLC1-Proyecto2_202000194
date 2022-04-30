@@ -24,12 +24,12 @@ class INSLogico extends nodo.nodo{
         let valortemp = this.expDer.ejecutar(arbolIns, table);
         let valortemp2 = this.expIzq.ejecutar(arbolIns, table);
         
-        console.log("***********************valores a comparar con INSLOGICO: ")
-        console.log(this.expDer)
-        console.log(valortemp)
-        console.log(this.expIzq)
-        console.log(valortemp2)
-        console.log("*************************fin logico*************************")
+        // console.log("***********************valores a comparar con INSLOGICO: ")
+        // console.log(this.expDer)
+        // console.log(valortemp)
+        // console.log(this.expIzq)
+        // console.log(valortemp2)
+        // console.log("*************************fin logico*************************")
         if (this.expIzq.tipo!= Tipo.ERROR && this.expDer.tipo!= Tipo.ERROR) {
           //! **********************     SI ES UN AND:  ***********************************
           if (this.op === 'AND') {
@@ -44,7 +44,7 @@ class INSLogico extends nodo.nodo{
           //! **********************     SI ES UN OR:  ***********************************
           else if (this.op === 'OR') {
             // this.op= Tipo.BOOLEAN
-            console.log(this.expIzq.tipo+'==='+  Tipo.BOOLEAN +'&&'+ this.expDer.tipo+'==='+ Tipo.BOOLEAN)
+            // console.log(this.expIzq.tipo+'==='+  Tipo.BOOLEAN +'&&'+ this.expDer.tipo+'==='+ Tipo.BOOLEAN)
             if (this.expIzq.tipo=== Tipo.BOOLEAN &&this.expDer.tipo=== Tipo.BOOLEAN) {
               return valortemp || valortemp2;
             } else {

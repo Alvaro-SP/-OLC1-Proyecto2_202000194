@@ -26,8 +26,8 @@ class INSreturn extends nodo.nodo{
             //* si hay valor a retornar se manda el valor de la variable
             this.exp=this.expre.ejecutar(arbolIns, table);
         }
-        console.log('SE ESTA RETORNANDO ESTO: ')
-        console.log(this)
+        // console.log('SE ESTA RETORNANDO ESTO: ')
+        // console.log(this)
         return this
     }
 }

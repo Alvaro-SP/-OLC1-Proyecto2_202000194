@@ -25,7 +25,7 @@ constructor(id,position,valor,fila, column) {
 // La diferencia en esta asignacion es de que necesito agregar el ambito de la variable que voy a agregar
 // entonces necesito ese nuevo parametro al ejecutar 
 ejecutar(arbolIns, table) {
-    console.log("*********************** INICIO ASIGNAR VECTOR 1 ***********************");
+    // console.log("*********************** INICIO ASIGNAR VECTOR 1 ***********************");
     // ? si es un array los valores y no hay tipo2
     const res=this.valor.ejecutar(arbolIns, table);
     if(res.tipo==Tipo.ERROR){
