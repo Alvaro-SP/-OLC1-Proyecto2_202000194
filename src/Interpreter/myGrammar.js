@@ -253,7 +253,7 @@ case 68:
  this.$=[$$[$0-2][0], new nodoAST('NOT COMAS',[$$[$0-2][1],new nodoAST($$[$0-1],null),new nodoAST($$[$0],null)])] ; $$[$0-2][0].push($$[$0]); 
 break;
 case 69:
- this.$=[[$$[$0]], new nodoAST('NOT COMAS',[$$[$0]])];  
+ this.$=[[$$[$0]], new nodoAST('NOT COMAS',[new nodoAST($$[$0],null)])];  
 break;
 case 70:
  this.$ = [new INSAritmetico(null, $$[$0][0], 'UNITARIA',  _$[$0-1].first_line, _$[$0-1].first_column), new nodoAST('EXPRESION', [new nodoAST($$[$0-1],null),$$[$0][1]])]; 

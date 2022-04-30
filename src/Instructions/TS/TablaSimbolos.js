@@ -51,6 +51,28 @@ class TablaSimbolos {
       }
     });
   }
+  modify(id,datain){
+    let res = null;
+    this.simbolos.forEach((simbolo) => {
+      if (simbolo.id == id) {
+        res = simbolo;
+      }
+    });
+    let apart;
+    for (apart = this; apart != null; apart = apart.root) {
+      // console.log("apart.simbolos de TABLA")
+      // console.log(apart.simbolos)
+      for (let i = apart.simbolos.length-1; i >=0 ; i--) {
+        // console.log(apart.simbolos[i].id.toLowerCase()+" con "+id.toLowerCase());
+            if (apart.simbolos[i].id.toLowerCase()==id.toLowerCase()) {
+              apart.simbolos[i].data = datain;
+              return apart.simbolos[i];
+            }
+        }
+    }
+
+    return null;
+  }
   getroot() {
     return this.root;
   }

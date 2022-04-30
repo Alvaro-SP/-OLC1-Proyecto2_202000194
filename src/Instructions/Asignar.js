@@ -125,6 +125,8 @@ ejecutar(arbolIns, table) {
                     //? y guardo el valor:
                     if (this.valor.tipo == tipoasignar.tipo) {
                         tipoasignar.data = value;
+                        // table.modify(this.variable, value);
+
                         // console.log("variable asignada: " + tipoasignar.id+" con valor "+tipoasignar.data );
                     }
                 } //! si el valor ahora no es nulo, entonces necesito guardar su valor
@@ -133,6 +135,8 @@ ejecutar(arbolIns, table) {
                     // console.log(this.valor.tipo +'=='+ tipoasignar.tipo)
                     if (this.valor.tipo == tipoasignar.tipo) {
                         tipoasignar.data = value;
+                        // table.modify(this.variable, value);
+
                         // console.log("variable asignada: " + tipoasignar.id+" con valor "+tipoasignar.data );
                     }
                 }
@@ -147,63 +151,8 @@ ejecutar(arbolIns, table) {
             // console.log("variable a buscar: " + this.variable)
             var tipoasignar = table.getSimbol(this.variable); // envio el nombre de la variable
             // console.log("variable de la TABLA:")
-                // console.log(tipoasignar)
-                if(tipoasignar==null ||tipoasignar.tipo==Tipo.ERROR ||tipoasignar==undefined) {
-                    //*error semantico
-                    arbolIns.setError(
-                    instruccionesAPI.errorSemantico(
-                        "La variable no ha sido declarada " + tipoasignar.tipo,
-                        this.fila,
-                        this.column
-                    )
-                    );
-                    return new val.val(
-                    this.fila,
-                    this.column,
-                    Tipo.ERROR,
-                    "(ERROR SEMANTICO) La variable no ha sido declarada " +
-                        tipoasignar.tipo
-                    );
-                }
-            if (this.valor == null) {
-            //! si el valor es nulo es porque no hay nada que asignar
-            //* si lo encontro entonces asigno su tipo correspondiente:
-            if (tipoasignar != null || tipoasignar!=undefined) {
-                //! procedo a agregar valores por defecto.
-                if (tipoasignar.tipo == Tipo.INT) {
-                this.valor = new val.val(this.fila, this.column, Tipo.INT, 0);
-                } else if (tipoasignar.tipo == Tipo.DOUBLE) {
-                this.valor = new val.val(
-                    this.fila,
-                    this.column,
-                    Tipo.DOUBLE,
-                    0.0
-                );
-                } else if (tipoasignar.tipo == Tipo.BOOLEAN) {
-                this.valor = new val.val(
-                    this.fila,
-                    this.column,
-                    Tipo.BOOLEAN,
-                    true
-                );
-                } else if (tipoasignar.tipo == Tipo.CARACTER) {
-                this.valor = new val.val(
-                    this.fila,
-                    this.column,
-                    Tipo.CARACTER,
-                    ""
-                );
-                } else if (tipoasignar.tipo == Tipo.STRING) {
-                this.valor = new val.val(
-                    this.fila,
-                    this.column,
-                    Tipo.STRING,
-                    ""
-                );
-                }
-            }
-            //* sino lo encontro enconces F
-            else {
+            // console.log(tipoasignar)
+            if(tipoasignar==null ||tipoasignar.tipo==Tipo.ERROR ||tipoasignar==undefined) {
                 //*error semantico
                 arbolIns.setError(
                 instruccionesAPI.errorSemantico(
@@ -220,20 +169,134 @@ ejecutar(arbolIns, table) {
                     tipoasignar.tipo
                 );
             }
-            //? y guardo el valor:
-            if (this.valor.tipo == tipoasignar.tipo) {
-                tipoasignar.data = value;
-            }
-            } //! si el valor ahora no es nulo, entonces necesito guardar su valor
-            else {
-            //? y guardo el valor:
 
-            if (this.valor.tipo == tipoasignar.tipo) {
-                tipoasignar.data = value;
-                // console.log("variable asignada: " + tipoasignar.id+" con valor "+tipoasignar.data );
+            if (this.valor == null) {
+                //! si el valor es nulo es porque no hay nada que asignar
+                //* si lo encontro entonces asigno su tipo correspondiente:
+                if (tipoasignar != null || tipoasignar!=undefined) {
+                    //! procedo a agregar valores por defecto.
+                    if (this.tipo == Tipo.INT) {
+                        // new val.val(
+                        //   this.fila,
+                        //   this.column,
+                        //   Tipo.INT,
+                        //   0
+                        // );
+                        this.valor = new INSPrimitivos.INSPrimitivos(Tipo.INT, 0, this.fila,this.column)
+                    } else if (this.tipo == Tipo.DOUBLE) {
+                    // this.valor = new val.val(
+                    //   this.fila,
+                    //   this.column,
+                    //   Tipo.DOUBLE,
+                    //   0.0
+                    // );
+                    this.valor = new INSPrimitivos.INSPrimitivos(Tipo.DOUBLE, 0.00, this.fila,this.column)
+                    } else if (this.tipo == Tipo.BOOLEAN) {
+                    // this.valor = new val.val(
+                    //   this.fila,
+                    //   this.column,
+                    //   Tipo.BOOLEAN,
+                    //   true
+                    // );
+                    this.valor = new INSPrimitivos.INSPrimitivos(Tipo.BOOLEAN, true, this.fila,this.column)
+                    } else if (this.tipo == Tipo.CARACTER) {
+                    // this.valor = new val.val(
+                    //   this.fila,
+                    //   this.column,
+                    //   Tipo.CARACTER,
+                    //   ""
+                    // );
+                    this.valor = new INSPrimitivos.INSPrimitivos(Tipo.CARACTER, " ", this.fila,this.column)
+                    } else if (this.tipo == Tipo.STRING) {
+                    // this.valor = new val.val(
+                    //   this.fila,
+                    //   this.column,
+                    //   Tipo.STRING,
+                    //   ""
+                    // );
+                    this.valor = new INSPrimitivos.INSPrimitivos(Tipo.STRING, 0, this.fila,this.column)
+                    }else{
+                    this.tipo=Tipo.DOUBLE;
+                    this.valor = new INSPrimitivos.INSPrimitivos(Tipo.DOUBLE, 0, this.fila,this.column)
+        
+                    }
+                }
+                //* sino lo encontro enconces F
+                else {
+                    //*error semantico
+                    arbolIns.setError(
+                    instruccionesAPI.errorSemantico(
+                        "La variable no ha sido declarada " + tipoasignar.tipo,
+                        this.fila,
+                        this.column
+                    )
+                    );
+                    return new val.val(
+                    this.fila,
+                    this.column,
+                    Tipo.ERROR,
+                    "(ERROR SEMANTICO) La variable no ha sido declarada " +
+                        tipoasignar.tipo
+                    );
+                }
+                // //? y guardo el valor:
+                // if (this.valor.tipo == tipoasignar.tipo) {
+                //     tipoasignar.data = value;
+                // }
             }
+            // else { //! si el valor ahora no es nulo, entonces necesito guardar su valor
+            //         //? y guardo el valor:
+
+            //         if (this.valor.tipo == tipoasignar.tipo) {
+            //             tipoasignar.data = value;
+            //             // console.log("variable asignada: " + tipoasignar.id+" con valor "+tipoasignar.data );
+            //         }
+            // }
+
+            if (this.valor.tipo != tipoasignar.tipo) {
+                if (tipoasignar.tipo.tipo == Tipo.DOUBLE && (this.valor.tipo == Tipo.DOUBLE || this.valor.tipo == Tipo.INT)) {
+                    this.valor.tipo = Tipo.DOUBLE;
+                }
+                else {
+                    //*error semantico
+                    arbolIns.setError(
+                        instruccionesAPI.errorSemantico(
+                            "La variable no ha sido declarada por ser de distintos tipos" + tipoasignar.tipo,
+                            this.fila,
+                            this.column
+                        )
+                        );
+                        return new val.val(
+                        this.fila,
+                        this.column,
+                        Tipo.ERROR,
+                        "(ERROR SEMANTICO) La variable no ha sido declarada por ser de distintos tipos" +
+                            tipoasignar.tipo
+                        );
+                }
             }
+    
+            var variableresultado = value;
+            try {
+                let variable;
+                variable = table.getSimbol(this.valor.id);
+                if (variable.t2 == Tipo.VECTOR) {
+                    variableresultado = this.valor;
+                }
+            }
+            catch (err) {
+                variableresultado = value;
+            }
+            
+            tipoasignar.data = variableresultado;
+            table.modify(this.variable, variableresultado);
+
+
+
+
+
         }
+        return null;
     }
     // console.log("*********************** FIN ASIGNACION ***********************");
 }

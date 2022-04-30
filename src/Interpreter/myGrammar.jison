@@ -423,7 +423,7 @@ listavalores
 ;
 notacioncomas
 	: notacioncomas COMA VARIABLE  	{ $$=[$1[0], new nodoAST('NOT COMAS',[$1[1],new nodoAST($2,null),new nodoAST($3,null)])] ; $1[0].push($3); }
-	| VARIABLE 						{ $$=[[$1], new nodoAST('NOT COMAS',[$1])];  }
+	| VARIABLE 						{ $$=[[$1], new nodoAST('NOT COMAS',[ new nodoAST($1,null)])];  }
 ;
 /* ------------------------------------ EXPRESIONES ------------------------------------ */
 expresion																				/*aqui es UNARIA XD*/

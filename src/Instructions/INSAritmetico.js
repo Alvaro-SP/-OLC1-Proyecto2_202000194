@@ -427,7 +427,7 @@ class INSAritmetico extends nodo.nodo{
                         }
                         }
                         else if(this.expIzq.tipo == Tipo.DOUBLE){//? DOUBLE -----> DOUBLE
-                            var temp= new val.val(this.fila, this.column, Tipo.DOUBLE, value2.valor - value.valor.charCodeAt(0));
+                            var temp= new val.val(this.fila, this.column, Tipo.DOUBLE, value.valor - value2.valor.charCodeAt(0));
                             this.tipo=Tipo.DOUBLE
                             return temp.valor
                         }
